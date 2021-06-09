@@ -1,0 +1,26 @@
+{
+  "name": "dogerbot-v2",
+  "version": "1.0.0",
+  "description": "Refactoring of dogerbot",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dogerish/dogerbot-v2.git"
+  },
+  "keywords": [
+    "discord",
+    "bot"
+  ],
+  "author": "dogerish",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dogerish/dogerbot-v2/issues"
+  },
+  "homepage": "https://github.com/dogerish/dogerbot-v2#readme",
+  "dependencies": {
+    "discord.js": "^12.5.3"
+  }
+}
