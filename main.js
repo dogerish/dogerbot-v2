@@ -2,9 +2,17 @@ const Discord = require("discord.js");
 const cfg     = require("./config/cfg.json");
 
 const client  = new Discord.Client();
-function echo(msg, arg0, arg1, arg2) { msg.reply(`${arg0} ${arg1} ${arg2}`); }
 const Parser  = new require("./parser.js");
-const parser = new Parser({ "echo": echo }, { "asdf": "echo", "adsf yeetus!": "echo asdf yeeeeeeet", "asdfa": "echo lol" });
+
+function echo(msg, arg0, arg1, arg2) { msg.reply(`${arg0} ${arg1} ${arg2}`); }
+const parser = new Parser(
+	{ "echo": echo },
+	{
+		"asdf": "echo",
+		"adsf yeetus!": "echo asdf yeeeeeeet",
+		"asdfa": "echo lol"
+	}
+);
 client.on("message", msg =>
 {
 	console.log(`Recieved message: ${msg}`);
