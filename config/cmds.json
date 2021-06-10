@@ -1,0 +1,14 @@
+[
+	{
+		"file": "echo.js",
+		"orig": "echo",
+		"aliases":
+		{
+			"asdf": "echo",
+			"asdf yeetus!": "echo yeet!",
+			"speak": "echo bruh bruh bruh omg omg i\\'m so excited weeeeeeee",
+			"🤯": "echo head go boom"
+		},
+		"ctorArgs": []
+	}
+]
