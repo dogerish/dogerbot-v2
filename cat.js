@@ -36,9 +36,15 @@ class CatCmd extends BaseCmd
 	// checks that user ID is allowed to manage
 	canManage(/*Discord.Snowflake*/ snowflake) { return this.managers.includes(snowflake); }
 
-	call(/*Discord.Message*/ msg, /*String...*/ ...args)
+	// 0 on success
+	/*Number*/ call(/*Discord.Message*/ msg, /*String...*/ ...args)
 	{
-		const err = (/*String*/ brief) => msg.channel.send(utils.ferr(args[0], brief));
+		if (super.call(msg, ...args)) return 1;
+		const err = (/*String*/ brief) =>
+		{
+			msg.channel.send(utils.ferr(args[0], brief));
+			return 1;
+		};
 		const getopt = new GetOpt("n,neg,a,add,d,del,", args);
 		let neg = false, add = false, del = false;
 		while (getopt.next())
@@ -61,7 +67,7 @@ class CatCmd extends BaseCmd
 			if (!urls.length) return err("No attachments or arguments found.");
 			this.add(urls);
 			msg.channel.send("Added URLs\n```\n" + urls.join('\n') + "\n```");
-			return;
+			return 0;
 		}
 		let n = args[getopt.optind];
 		// get pic n or random as long as we aren't deleting
@@ -78,7 +84,7 @@ class CatCmd extends BaseCmd
 			if (n <= 0 || n > this.urls.length) return err(`#${n} is out of bounds.`);
 			this.del(n - 1);
 			msg.channel.send("Deleted URL\n```\n" + url + "\n```");
-			return;
+			return 0;
 		}
 		n = '#' + n;
 
@@ -106,6 +112,7 @@ class CatCmd extends BaseCmd
 			).catch(() => err(`**${n}** is invalid.\n\`\`\`\n${url}\n\`\`\``));
 			break;
 		}
+		return 0;
 	}
 }
 
