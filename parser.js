@@ -25,18 +25,28 @@ class Parser
 		let torpc  = "";   // the original string of arg TO RePlaCe when substituting
 		let argi   = 0;    // index of this argument
 		let flip   = true; // true if we just started an argument
+		let first  = true; // true if we just started parsing
 		for (let i = 0; i <= msg.length; i++)
 		{
-			// substitute alias if one exists and start over
+			// substitute alias if one exists and start over once
 			let cmd;
-			if ((flip && argi == 1 || i == msg.length) && (cmd = this.aliases[args[0]]))
+			if (
+				   first
+				&& (flip && argi || i >= msg.length)
+				&& (cmd = this.aliases[args[0]])
+			)
 			{
 				msg = msg.replace(torpc, cmd);
 				args[argi = i = 0] = "";
+				first = false;
 			}
 			if (i >= msg.length) break;
-			if (flip) torpc = "";
-			flip = false;
+			if (flip)
+			{
+				first = first && !argi;
+				torpc = "";
+				flip = false;
+			}
 
 			let c = msg[i];
 			torpc += c;
@@ -49,7 +59,7 @@ class Parser
 				// unadd this character
 				torpc = torpc.substr(0, torpc.length - 1);
 				// ignore sequential whitespaces
-				if (!args[argi].length) break;
+				if (!torpc.length) break;
 				args[++argi] = "";
 				flip = true;
 				break;
@@ -80,7 +90,7 @@ class Parser
 					break;
 				}
 				args[argi] += msg[++i];
-				torpc += msg[i];
+				torpc      += msg[i];
 				break;
 			default:
 				args[argi] += c;
@@ -88,7 +98,6 @@ class Parser
 			}
 		}
 		if (!this.commands[args[0]]) return -1;
-		if (!args[args.length - 1]) args.pop();
 		this.commands[args[0]].call(message, ...args);
 		return 0;
 	}
