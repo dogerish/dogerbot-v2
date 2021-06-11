@@ -20,6 +20,6 @@ for (let cmd of cmds)
 const client = new Discord.Client();
 const parser = new Parser(commands, aliases);
 
-client.on("message", msg => parser.parse(msg));
+client.on("message", msg => parser.onMessage(msg));
 client.on("ready", ()  => console.log(`${client.user.username} online.`));
 client.login(cfg.token);
