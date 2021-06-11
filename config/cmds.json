@@ -2,13 +2,66 @@
 	{
 		"file": "echo.js",
 		"orig": "echo",
-		"aliases":
-		{
-			"asdf": "echo",
-			"asdf yeetus!": "echo yeet!",
-			"speak": "echo bruh bruh bruh omg omg i\\'m so excited weeeeeeee",
-			"🤯": "echo head go boom"
-		},
+		"aliases": {},
 		"ctorArgs": []
+	},
+
+	{
+		"file": "cat.js",
+		"orig": "stanpic",
+		"aliases": {
+			"stan": "stanpic",
+			"sna" : "stanpic"
+		},
+		"ctorArgs": ["Stanley", "160616449742864385", "0x0c6a66", "stan"]
+	},
+	{
+		"file": "cat.js",
+		"orig": "borispic",
+		"aliases": {
+			"boris": "borispic"
+		},
+		"ctorArgs": ["Boris", "222977034870063104", "0x78ba36"]
+	},
+	{
+		"file": "cat.js",
+		"orig": "kalipic",
+		"aliases": {
+			"kali": "kalipic"
+		},
+		"ctorArgs": ["Kali", "675811287296638987", "0x00a513"]
+	},
+	{
+		"file": "cat.js",
+		"orig": "dorypic",
+		"aliases": {
+			"dory": "dorypic"
+		},
+		"ctorArgs": ["Dory", "410416782025949195", "0x2471a3"]
+	},
+	{
+		"file": "cat.js",
+		"orig": "miapic",
+		"aliases": {
+			"mia": "miapic"
+		},
+		"ctorArgs": ["Mia", "410416782025949195", "0x2471a3"]
+	},
+	{
+		"file": "cat.js",
+		"orig": "mimipic",
+		"aliases": {
+			"mimi": "mimipic"
+		},
+		"ctorArgs": ["Mimí", "410416782025949195", "0x2471a3", "mimi"]
+	},
+	{
+		"file": "cat.js",
+		"orig": "charliepic",
+		"aliases": {
+			"charlie": "charliepic"
+		},
+		"ctorArgs": ["Charlie", "410416782025949195", "0x2471a3"]
 	}
+
 ]

@@ -89,7 +89,7 @@ class Parser
 		}
 		if (!this.commands[args[0]]) return -1;
 		if (!args[args.length - 1]) args.pop();
-		this.commands[args[0]](message, ...args);
+		this.commands[args[0]].call(message, ...args);
 		return 0;
 	}
 }
