@@ -1,6 +1,6 @@
-const BaseCmd = require("./basecmd.js");
-const GetOpt  = require("./getopt.js");
-const utils   = require("./utils.js");
+const BaseCmd = require("../cmd-types/basecmd.js");
+const GetOpt  = require("../utils/getopt.js");
+const utils   = require("../utils/utils.js");
 
 // echo command
 class EchoCmd extends BaseCmd

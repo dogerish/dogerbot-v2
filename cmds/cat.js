@@ -1,8 +1,8 @@
 const fs      = require("fs");
-const utils   = require("./utils.js");
-const BaseCmd = require("./basecmd.js");
-const GetOpt  = require("./getopt.js");
-const cfg     = require("./config/cfg.json");
+const utils   = require("../utils/utils.js");
+const BaseCmd = require("../cmd-types/basecmd.js");
+const GetOpt  = require("../utils/getopt.js");
+const cfg     = require("../config/cfg.json");
 
 // cat command
 class CatCmd extends BaseCmd

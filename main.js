@@ -11,7 +11,7 @@ let aliases  = {};
 let tmp;
 for (let cmd of cmds)
 {
-	tmp = require("./" + cmd.file);
+	tmp = require("./cmds/" + cmd.file);
 	commands[cmd.orig] = new tmp(...cmd.ctorArgs);
 	Object.assign(aliases, cmd.aliases);
 }

@@ -1,5 +1,5 @@
 const cfg   = require("./config/cfg.json");
-const utils = require("./utils.js");
+const utils = require("./utils/utils.js");
 
 class Parser
 {
