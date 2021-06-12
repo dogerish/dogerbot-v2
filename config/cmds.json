@@ -5,6 +5,12 @@
 		"aliases": {},
 		"ctorArgs": []
 	},
+	{
+		"file": "quit.js",
+		"orig": "quit",
+		"aliases": {},
+		"ctorArgs": -1
+	},
 
 	{
 		"file": "cat.js",
