@@ -21,7 +21,12 @@ class EchoCmd extends BaseCmd
 			}
 			delim = go.optarg;
 		}
-		msg.channel.send(args.slice(go.optind).join(delim) || "** **");
+		msg.channel.send(
+			utils.cleanString(
+				args.slice(go.optind).join(delim) || "** **",
+				msg
+			)
+		);
 		return 0;
 	}
 }

@@ -11,6 +11,22 @@
 		"aliases": {},
 		"ctorArgs": -1
 	},
+	{
+		"file": "ping.js",
+		"orig": "ping",
+		"aliases": {},
+		"ctorArgs": []
+	},
+	{
+		"file": "greet.js",
+		"orig": "greet",
+		"aliases": {
+			"hi"     : "greet",
+			"hello"  : "greet",
+			"welcome": "greet"
+		},
+		"ctorArgs": []
+	},
 
 	{
 		"file": "cat.js",
