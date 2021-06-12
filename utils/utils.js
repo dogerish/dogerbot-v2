@@ -10,8 +10,8 @@ mex.ferr = (/*String*/ ctx, /*String*/ brief) => `:x: \`${ctx}\`: ${brief}`;
 /*String*/ mex.cleanString = (/*String*/ str, /*Discord.Message*/ msg) =>
 {
 	str =  Discord.Util.cleanContent(str, msg);
-	str =  str.replace(/@here/g, "here");
-	return str.replace(/@everyone/g, "everyone");
+	str =  str.replace(/@+here/g, "here");
+	return str.replace(/@+everyone/g, "everyone");
 };
 
 // add random() method to Array
