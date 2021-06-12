@@ -18,14 +18,34 @@
 		"ctorArgs": []
 	},
 	{
-		"file": "greet.js",
+		"file": "fmtcmd.js",
 		"orig": "greet",
 		"aliases": {
 			"hi"     : "greet",
 			"hello"  : "greet",
 			"welcome": "greet"
 		},
-		"ctorArgs": []
+		"ctorArgs": [
+			"Hello, {}",
+			"Nice to see you, {}",
+			"Hello there {}",
+			"Wassup {}, you lookin fine today!"
+		]
+	},
+	{
+		"file": "fmtcmd.js",
+		"orig": "laugh",
+		"aliases": {
+			"funny": "laugh",
+			"haha" : "laugh"
+		},
+		"ctorArgs": [
+			"{}, you're so funny!",
+			"{} that is so funny that I *remembered* to laugh!",
+			"{} is the funniest being known to human kind.",
+			"Hey {}, you should become a comedian!",
+			"Bruh, {} got the whole squad laughing!"
+		]
 	},
 
 	{

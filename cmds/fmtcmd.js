@@ -1,19 +1,15 @@
 const BaseCmd = require("../cmd-types/basecmd.js");
 const utils   = require("../utils/utils.js");
 
-class GreetCmd extends BaseCmd
+// formats a random response, replaces the first {} in a response selection
+class FmtCmd extends BaseCmd
 {
 	constructor(/*String...*/ ...responses)
 	{
 		super();
-		this.responses = responses.length ? responses :
-		[
-			"Hello, {}",
-			"Nice to see you, {}",
-			"Hello there {}",
-			"Wassup {}, you lookin fine today!"
-		];
+		this.responses = responses;
 	}
+
 	// 0 on success
 	/*Number*/ call(/*Discord.Message*/ msg, /*String...*/ ...args)
 	{
@@ -27,4 +23,4 @@ class GreetCmd extends BaseCmd
 	}
 }
 
-module.exports = GreetCmd;
+module.exports = FmtCmd;
