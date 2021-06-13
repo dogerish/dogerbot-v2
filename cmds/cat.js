@@ -37,9 +37,9 @@ class CatCmd extends BaseCmd
 	canManage(/*Discord.Snowflake*/ snowflake) { return this.managers.includes(snowflake); }
 
 	// 0 on success
-	/*Number*/ call(/*Discord.Message*/ msg, /*String...*/ ...args)
+	/*Number*/ call(/*Discord.Message*/ msg, /*Array(String)*/ args)
 	{
-		if (super.call(msg, ...args)) return 1;
+		if (super.call(msg, args)) return 1;
 		const err = (/*String*/ brief) =>
 		{
 			msg.channel.send(utils.ferr(args[0], brief));

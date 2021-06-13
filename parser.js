@@ -4,11 +4,11 @@ const utils = require("./utils/utils.js");
 class Parser
 {
 	/*
-	commands: { "<primary alias>": <function to call>... }
-		function(message, arg0, arg1, arg2...);
-			message: Discord.Message
-			arg0   : The alias which called this
-			arg1...: The arguments given to the command
+	commands: { "<primary alias>": <Object with call() method>... }
+		function(message, args);
+			message: Discord.Message - The message object that called the command
+			args   : Array(String)   - The arguments given to the command
+			    [0]: The primary alias that was called
 	aliases : { "<alias>" : "<substitution>"... }
 	*/
 	constructor(commands, aliases)
@@ -34,7 +34,7 @@ class Parser
 			message.channel.send(utils.ferr(args[0], "Unknown command."));
 			return -1;
 		}
-		this.commands[args[0]].call(message, ...args);
+		this.commands[args[0]].call(message, args);
 		return 0;
 	}
 	

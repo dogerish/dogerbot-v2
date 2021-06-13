@@ -11,9 +11,9 @@ class PermCmd extends GuildCmd
 	}
 
 	// 0 on success
-	/*Number*/ call(/*Discord.Message*/ msg, /*String*/ ...args)
+	/*Number*/ call(/*Discord.Message*/ msg, /*Array(String)*/ args)
 	{
-		if (super.call(msg, ...args)) return 1;
+		if (super.call(msg, args)) return 1;
 		if (this.perms.some(perm => msg.member.permissions.has(perm, this.checkAdmin)))
 			return 0;
 		msg.channel.send(

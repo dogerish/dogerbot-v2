@@ -11,9 +11,9 @@ class FmtCmd extends BaseCmd
 	}
 
 	// 0 on success
-	/*Number*/ call(/*Discord.Message*/ msg, /*String...*/ ...args)
+	/*Number*/ call(/*Discord.Message*/ msg, /*Array(String)*/ args)
 	{
-		if (super.call(msg, ...args)) return 1;
+		if (super.call(msg, args)) return 1;
 		msg.channel.send(
 			this.responses.random().replace("{}", 
 				utils.cleanString(args.slice(1).join(' '), msg)
