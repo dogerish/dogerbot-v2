@@ -35,13 +35,14 @@ class CookieCmd extends BaseCmd
 	}
 
 	// gets the message embed to send to each user
-	/*Discord.MessageEmbed*/ getMsg(/*Discord.Message*/ msg, /*String*/ arg0)
+	/*Discord.MessageEmbed*/ getMsg(/*Discord.Message*/ msg, /*String*/ arg0, /*String*/ m)
 	{
+		m = m ? m : msg.author.username + " sent you a cookie!";
 		return {
 			embed:
 			{
 				title      : ":cookie:",
-				description: msg.author.username + " sent you a cookie!",
+				description: m,
 				color      : 0x8a4b38,
 				fields     :
 				[
@@ -66,14 +67,15 @@ class CookieCmd extends BaseCmd
 		/*Discord.Message*/     msg,
 		/*Array(Discord.User)*/ users,
 		/*String*/              arg0,
-		/*Boolean*/             quiet
+		/*Boolean*/             quiet,
+		/*String*/              m
 	)
 	{
 		let ret = { fails: [], gotck: false };
 		// nothing to do
 		if (!users.length) { msg.react('🍪'); return ret; }
 		let promises = [];
-		let tosend   = this.getMsg(msg, arg0);
+		let tosend   = this.getMsg(msg, arg0, m);
 		// starting to send
 		msg.react('🛫');
 		for (let user of users)
@@ -103,9 +105,13 @@ class CookieCmd extends BaseCmd
 	{
 		if (super.call(msg, args)) return 1;
 		// parse options
-		const go = new GetOpt("i:id:b,blacklist,w,whitelist,l,list,q,quiet,", args);
+		const go = new GetOpt(
+			"i:b,w,l,q,m:" +
+			"id:blacklist,whitelist,list,quiet,message:",
+			args
+		);
 		let quiet = false, done = false;
-		let ids = [];
+		let ids = [], m;
 		while (go.next())
 		{
 			if (go.opterr)
@@ -123,8 +129,9 @@ class CookieCmd extends BaseCmd
 			case 'l': case "list":
 				msg.react(this.wantsDMs(msg.author.id) ? '⬜' : '⬛');
 				done = true; break;
-			case 'q': case "quiet": quiet = true; break;
-			case 'i': case "id": ids.push(go.optarg); break;
+			case 'q': case "quiet"  : quiet = true;        break;
+			case 'i': case "id"     : ids.push(go.optarg); break;
+			case 'm': case "message": m = go.optarg;       break;
 			}
 		}
 		if (!quiet && !ids.length && done) return 0;
@@ -140,11 +147,12 @@ class CookieCmd extends BaseCmd
 			);
 			return 1;
 		}
-		let { fails, gotck } = await this.sendCookies(msg, users, args[0], quiet);
+		let { fails, gotck } = await this.sendCookies(msg, users, args[0], quiet, m);
 		if (!fails.length) { msg.react('✅'); return 0; }
 		// send fails the boring way
 		msg.channel.send(
 			  `Cookies for \`${fails.join("`, `")}\`: ${"🍪 ".repeat(fails.length)}\n`
+			+ (m ? `*"${m}"*\n` : "")
 			+ (gotck ? `Thanks ${msg.author.username} ${this.hearts.random()}` : "")
 		);
 		return 1;
