@@ -18,6 +18,29 @@
 		"ctorArgs": []
 	},
 	{
+		"file": "cookie.js",
+		"orig": "cookie",
+		"aliases": {},
+		"ctorArgs": [
+			"cookie.json",
+			":heart:", ":green_heart:", ":gift_heart:", ":hearts:", ":heart_on_fire:",
+			":blue_heart:", ":brown_heart:", ":kissing_heart:", ":orange_heart:",
+			":purple_heart:", ":smiling_face_with_3_hearts:", ":sparkling_heart:",
+			":white_heart:", ":yellow_heart:", ":couple_ww:", ":couple_mm:",
+			":couple_with_heart_woman_man:", ":couple_with_heart:", ":two_hearts:",
+			":heartpulse:", ":heart_decoration:", ":heart_exclamation:",
+			":anatomical_heart:", ":black_heart:", ":revolving_hearts:", ":heartbeat:",
+
+			"<:aniLove:853748800060915732>", "<:aniWow:853748800224362496>",
+			"<:biheart:853748799993937920>", "<:CuteHeartRoo:853748800093814784>",
+			"<:D2S_BlobHeart:853748799297683457>", "<:D2S_BlobHug:853748799645548574>",
+			"<:D2S_D_Kiss:853748800131694625>", "<:D2S_GrandHeart:853748800123306004>",
+			"<:D2S_K_kannaheart:853748800094994492>", "<:gayheart:853748799943737374>",
+			"<:pepeheart:853748799851724831>", "<:pugs:853748800030900264>",
+			"<:transheart:853748799737430017>"
+		]
+	},
+	{
 		"file": "fmtcmd.js",
 		"orig": "greet",
 		"aliases": {
