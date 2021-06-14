@@ -3,7 +3,7 @@ const utils    = require("../utils/utils.js");
 
 class PermCmd extends GuildCmd
 {
-	constructor(/*Array(Discord.PermissionResolvable)*/ perms, /*Boolean*/ checkAdmin = true)
+	constructor(/*Array<Discord.PermissionResolvable>*/ perms, /*Boolean*/ checkAdmin = true)
 	{
 		super();
 		this.perms = perms;
@@ -11,7 +11,7 @@ class PermCmd extends GuildCmd
 	}
 
 	// 0 on success
-	/*Number*/ call(/*Discord.Message*/ msg, /*Array(String)*/ args)
+	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{
 		if (super.call(msg, args)) return 1;
 		if (this.perms.some(perm => msg.member.permissions.has(perm, this.checkAdmin)))

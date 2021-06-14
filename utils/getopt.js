@@ -10,7 +10,7 @@ class GetOpt
 			, - ignored
 		ex: "r:o;i|"
 	*/
-	constructor(/*String*/ optstr, /*Array(String)*/ args)
+	constructor(/*String*/ optstr, /*Array<String>*/ args)
 	{
 		this.opts = {};
 		let opt = "";

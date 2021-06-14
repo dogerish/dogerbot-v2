@@ -60,12 +60,12 @@ class CookieCmd extends BaseCmd
 	/*
 	send cookies to the users
 	Return: Object.
-		fails => Array(String)  - Array of the usernames that it failed for
+		fails => Array<String>  - Array of the usernames that it failed for
 		gotck => Boolean        - true if the client recieved a cookie
 	*/
 	/*Object*/ async sendCookies(
 		/*Discord.Message*/     msg,
-		/*Array(Discord.User)*/ users,
+		/*Array<Discord.User>*/ users,
 		/*String*/              arg0,
 		/*Boolean*/             quiet,
 		/*String*/              m
@@ -101,7 +101,7 @@ class CookieCmd extends BaseCmd
 	}
 
 	// 0 on success
-	/*Number*/ async call(/*Discord.Message*/ msg, /*Array(String)*/ args)
+	/*Number*/ async call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{
 		if (super.call(msg, args)) return 1;
 		// parse options

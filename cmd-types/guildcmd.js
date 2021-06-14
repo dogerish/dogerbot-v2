@@ -5,7 +5,7 @@ const utils   = require("../utils/utils.js");
 class GuildCmd extends BaseCmd
 {
 	// returns 0 on pass
-	/*Number*/ call(/*Discord.Message*/ msg, /*Array(String)*/ args)
+	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{
 		if (super.call(msg, args)) return 1;
 		if (!["dm", "unknown"].includes(msg.channel.type)) return 0;

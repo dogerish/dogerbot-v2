@@ -21,7 +21,7 @@ class CatCmd extends BaseCmd
 	// writes the url list to the file
 	save() { fs.writeFile(this.file, this.urls.join('\n') + '\n', utils.fsErrHand); }
 	// adds urls and then saves
-	add(/*Array(String)*/ urls)
+	add(/*Array<String>*/ urls)
 	{
 		this.urls.push(...urls);
 		this.save();
@@ -37,7 +37,7 @@ class CatCmd extends BaseCmd
 	canManage(/*Discord.Snowflake*/ snowflake) { return this.managers.includes(snowflake); }
 
 	// 0 on success
-	/*Number*/ call(/*Discord.Message*/ msg, /*Array(String)*/ args)
+	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{
 		if (super.call(msg, args)) return 1;
 		const err = (/*String*/ brief) =>

@@ -7,7 +7,7 @@ class Parser
 	commands: { "<primary alias>": <Object with call() method>... }
 		function(message, args);
 			message: Discord.Message - The message object that called the command
-			args   : Array(String)   - The arguments given to the command
+			args   : Array<String>   - The arguments given to the command
 			    [0]: The primary alias that was called
 	aliases : { "<alias>" : "<substitution>"... }
 	*/
@@ -39,7 +39,7 @@ class Parser
 	}
 	
 	// parses the message and calls the command, returns the args from arg0 on
-	/*Array(String)*/ parse(/*String*/ cmdstr)
+	/*Array<String>*/ parse(/*String*/ cmdstr)
 	{
 		let args   = [""];
 		let torpc  = "";   // the original string of arg TO RePlaCe when substituting
