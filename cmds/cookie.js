@@ -10,7 +10,7 @@ class CookieCmd extends BaseCmd
 	constructor(/*String*/ listcfg, /*String*/ ...hearts)
 	{
 		super();
-		this.listcfg = `config/${listcfg}`;
+		this.listcfg = `config/user/${listcfg}`;
 		this.blacklist = new Map();
 		for (let id of require("../" + this.listcfg)) this.blacklist.set(id);
 		this.hearts = hearts;
