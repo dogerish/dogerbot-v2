@@ -9,7 +9,7 @@
 		"file": "quit.js",
 		"orig": "quit",
 		"aliases": {},
-		"ctorArgs": -1
+		"ctorArgs": []
 	},
 	{
 		"file": "ping.js",

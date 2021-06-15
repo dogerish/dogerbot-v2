@@ -21,9 +21,6 @@ for (let cmd of cmds)
 	else
 		switch (cmd.ctorArgs)
 		{
-		case -1:
-			commands[cmd.orig] = new tmp(client);
-			break;
 		default:
 			console.error(
 				`Method for constructing ${cmd.orig} unknown (${cmd.ctorArgs}).
