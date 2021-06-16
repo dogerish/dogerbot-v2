@@ -37,15 +37,50 @@ class Parser
 		this.commands[args[0]].call(message, args);
 		return 0;
 	}
-	
+
+	// evaluates backlash escapes of a string and returns the result, with sequences substituted
+	/*String*/ evalbses(/*String*/ str)
+	{
+		for (let i = str.indexOf('\\'); ++i; i = str.indexOf('\\', i))
+		{
+			let rep = `\\${str[i]}`;
+			let nc;
+			switch (str[i])
+			{
+			case 't': nc = '\t'; break;
+			case 'n': nc = '\n'; break;
+			case 'b'/*backspace*/:
+				// take the character before this as well
+				if (str[i - 2]) rep = str[i - 2] + rep;
+				nc = ""; break;
+			case 'x'/*single byte hexadecimal char code*/:
+				nc = str.substr(i + 1).match(/.{1,2}/);
+				if (nc) rep += nc[0];
+				nc = String.fromCodePoint(`0x${nc ? nc[0] : '0'}`);
+				break;
+			case 'u'/*hexadecimal until ;*/:
+				nc = str.substr(i + 1).match(/(.*)[;]/);
+				if (nc) { rep += nc[0]; nc = nc[1]; }
+				else nc = "0";
+				nc = String.fromCodePoint(`0x${nc}`);
+				break;
+			default: continue;
+			}
+			i  -= rep.length - nc.length;
+			str = str.replace(rep, nc);
+		}
+		return str;
+	}
+
 	// parses the message and calls the command, returns the args from arg0 on
 	/*Array<String>*/ parse(/*String*/ cmdstr)
 	{
 		let args   = [""];
-		let torpc  = "";   // the original string of arg TO RePlaCe when substituting
-		let argi   = 0;    // index of this argument
-		let flip   = true; // true if we just started an argument
-		let first  = true; // true if we just started parsing
+		let torpc  = "";    // the original string of arg TO RePlaCe when substituting
+		let argi   = 0;     // index of this argument
+		let flip   = true;  // true if we just started an argument
+		let first  = true;  // true if we just started parsing
+		let dolstr = false; // true if in a dollar string ($'')
 		for (let i = 0; i <= cmdstr.length; i++)
 		{
 			// substitute alias if one exists and start over once
@@ -83,23 +118,27 @@ class Parser
 				args[++argi] = "";
 				flip = true;
 				break;
+			case '$':
+				if (cmdstr[i + 1] === "'") dolstr = true;
+				else args[argi] += c;
+				break;
 			case '"':
 			case "'":
-				// copy until next quote
-				for (i++; cmdstr[i] != c && i < cmdstr.length; i++)
-				{
-					torpc += cmdstr[i];
-					// increment i if the next character is escped
-					// backlashes ignored in single-quote strings
-					if (c != "'" && cmdstr[i] == '\\')
-					{
-						i++;
-						if (i >= cmdstr.length) break;
-						torpc += cmdstr[i];
-					}
-					args[argi] += cmdstr[i];
-				}
-				if (i < cmdstr.length) torpc += cmdstr[i];
+				let ss = cmdstr.substr(i + 1);
+				// str til next unescaped quote
+				args[argi] = ss.match(new RegExp(`(.*?)(?<!\\\\)${c}`));
+				// search failed, take until end of message
+				if (!args[argi]) args[argi] = [ss, ss];
+				// turn all escaped quotes into normal quotes
+				args[argi][1] = args[argi][1].replace(
+					new RegExp(`\\\\${c}`, 'g'),
+					c
+				);
+				torpc += args[argi][0];
+				i     += torpc.length - 1 - dolstr;
+				// evaluate bses in a dollar string ($'')
+				args[argi] = dolstr ? this.evalbses(args[argi][1]) : args[argi][1];
+				dolstr = false; // reset
 				break;
 			case '\\':
 				// don't read next char if it's not there
