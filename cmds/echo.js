@@ -1,6 +1,7 @@
 const BaseCmd = require("../cmd-types/basecmd.js");
 const GetOpt  = require("../utils/getopt.js");
 const utils   = require("../utils/utils.js");
+const Parser  = require("../parser.js");
 
 // echo command
 class EchoCmd extends BaseCmd
@@ -9,9 +10,9 @@ class EchoCmd extends BaseCmd
 	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{
 		if (super.call(msg, args)) return 1;
-		// get delimiter, default is a space
-		let delim = ' ';
-		const go = new GetOpt("d:delim:", args);
+		// DELIMiter, Evaluate Backslash Escapes
+		let delim = ' ', ebe = false;
+		const go = new GetOpt("d:delim:e,ebe,", args);
 		while (go.next())
 		{
 			if (go.opterr)
@@ -19,11 +20,19 @@ class EchoCmd extends BaseCmd
 				msg.channel.send(utils.ferr(args[0], go.opterr));
 				return 1;
 			}
-			delim = go.optarg;
+			switch (go.opt)
+			{
+			case 'd': case "delim": delim = go.optarg; break;
+			case 'e': case "ebe"  : ebe   = true;      break;
+			}
 		}
+		let newargs = args.slice(go.optind);
 		msg.channel.send(
 			utils.cleanString(
-				args.slice(go.optind).join(delim) || "** **",
+				(ebe ? newargs.map(Parser.evalbses) : newargs)
+					.join(delim)
+					.trim()
+				|| "** **",
 				msg
 			)
 		);

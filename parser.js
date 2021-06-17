@@ -39,7 +39,7 @@ class Parser
 	}
 
 	// evaluates backlash escapes of a string and returns the result, with sequences substituted
-	/*String*/ evalbses(/*String*/ str)
+	static /*String*/ evalbses(/*String*/ str)
 	{
 		for (let i = str.indexOf('\\'); ++i; i = str.indexOf('\\', i))
 		{
@@ -137,7 +137,7 @@ class Parser
 				torpc += args[argi][0];
 				i     += torpc.length - 1 - dolstr;
 				// evaluate bses in a dollar string ($'')
-				args[argi] = dolstr ? this.evalbses(args[argi][1]) : args[argi][1];
+				args[argi] = dolstr ? Parser.evalbses(args[argi][1]) : args[argi][1];
 				dolstr = false; // reset
 				break;
 			case '\\':
