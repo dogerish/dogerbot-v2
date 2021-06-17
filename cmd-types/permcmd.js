@@ -3,9 +3,13 @@ const utils    = require("../utils/utils.js");
 
 class PermCmd extends GuildCmd
 {
-	constructor(/*Array<Discord.PermissionResolvable>*/ perms, /*Boolean*/ checkAdmin = true)
+	constructor(
+		/*String*/ orig,
+		/*Array<Discord.PermissionResolvable>*/ perms,
+		/*Boolean*/ checkAdmin = true
+	)
 	{
-		super();
+		super(orig);
 		this.perms = perms;
 		this.checkAdmin = checkAdmin;
 	}

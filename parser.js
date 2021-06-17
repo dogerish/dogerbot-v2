@@ -72,6 +72,13 @@ class Parser
 		return str;
 	}
 
+	// de-alias cmdname to its command object
+	/*Array<arg0, ?BaseCmd>*/ deAliasCmd(/*String*/ cmdname)
+	{
+		let arg0 = this.parse(cmdname)[0];
+		return [arg0, this.commands[arg0]];
+	}
+
 	// parses the message and calls the command, returns the args from arg0 on
 	/*Array<String>*/ parse(/*String*/ cmdstr)
 	{

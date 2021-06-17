@@ -18,6 +18,13 @@
 		"ctorArgs": []
 	},
 	{
+		"file": "set.js",
+		"orig": "set",
+		"aliases": {},
+		"ctorArgs": "CUSTOM_SET",
+		"ARGS": [["MANAGE_CHANNELS"]]
+	},
+	{
 		"file": "cookie.js",
 		"orig": "cookie",
 		"aliases": {},

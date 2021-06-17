@@ -2,6 +2,8 @@ const BaseCmd = require("../cmd-types/basecmd.js");
 
 class TemplateCmd extends BaseCmd
 {
+	// constructor(/*String*/ orig) { super(orig); }
+
 	// 0 on success
 	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{

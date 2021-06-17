@@ -7,20 +7,23 @@ const cmds    = require("./config/cmds.json");
 
 /* instances */
 const client = new Discord.Client();
+const parser = new Parser({}, {});
 
 let commands = {};
 let aliases  = {};
 // load the commands
-let tmp;
 for (let cmd of cmds)
 {
-	tmp = require("./cmds/" + cmd.file);
+	let tmp = require("./cmds/" + cmd.file);
 	// exceptions to constructor args
 	if (cmd.ctorArgs instanceof Array)
-		commands[cmd.orig] = new tmp(...cmd.ctorArgs);
+		commands[cmd.orig] = new tmp(cmd.orig, ...cmd.ctorArgs);
 	else
 		switch (cmd.ctorArgs)
 		{
+		case "CUSTOM_SET":
+			commands[cmd.orig] = new tmp(cmd.orig, parser, ...cmd.ARGS);
+			break;
 		default:
 			console.error(
 				`Method for constructing ${cmd.orig} unknown (${cmd.ctorArgs}).
@@ -30,9 +33,8 @@ for (let cmd of cmds)
 		}
 	Object.assign(aliases, cmd.aliases);
 }
-
-/* instances */
-const parser = new Parser(commands, aliases);
+parser.commands = commands;
+parser.aliases  = aliases;
 
 client.on("message", msg => parser.onMessage(msg));
 client.on("ready", ()  => console.log(`${client.user.username} online.`));

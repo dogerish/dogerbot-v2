@@ -7,9 +7,15 @@ const cfg     = require("../config/cfg.json");
 // cat command
 class CatCmd extends BaseCmd
 {
-	constructor(/*String*/ name, /*String*/ owner, /*NumberResolvable*/ color, /*String*/ namef)
+	constructor(
+		/*String*/ orig,
+		/*String*/ name,
+		/*String*/ owner,
+		/*NumberResolvable*/ color,
+		/*String*/ namef
+	)
 	{
-		super();
+		super(orig);
 		this.name  = name;
 		this.file  = `resources/${namef || name.toLowerCase()}pics.txt`;
 		this.urls  = String(fs.readFileSync(this.file)).split('\n');
