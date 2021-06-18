@@ -1,0 +1,21 @@
+#TITLE {cmdname}
+#DESCR Usage: `{cfg.prefix}{cmdname} [-de] [<arg...>]`
+#OPTIONS
+`-d`, `--delim` `<delimiter>`
+	Use `<delimiter>` instead of a space to separate each argument.
+`-e`, `--ebe`
+	Evaluate Backslash Escapes in the arguments.
+	`\n` - newline
+	`\t` - tab
+	`\b` - backspace, delete the character before this one
+	`\xBB` - Character code `BB`. Takes one byte of hexadecimal data (BB).
+	`\u<codepoint>;` - Unicode code point `<codepoint>`. Reads until semicolon.
+#ARGUMENTS
+`[<arg...>]`
+	The arguments to be echoed back. Zero or more.
+#REMARKS
+Any and all mentions will be neutralized.
+#EXAMPLES
+Spit straight facts: `{cfg.prefix}{cmdname} {msg.author.username} is super cool!`
+Send a cookie using unicode: `{cfg.prefix}{cmdname} -e '\u1f36a;' Cookie!`
+Delimit arguments with baguettes: `{cfg.prefix}{cmdname} -d ' 🥖 ' Everyone should love baguettes. Baguettes are the best kind of bread, everyone knows.`
