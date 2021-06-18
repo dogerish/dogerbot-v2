@@ -4,9 +4,9 @@ const cfg         = require("../config/cfg.json");
 
 class SetCmd extends PermCmd
 {
-	constructor(/*String*/ orig, /*Parser*/ parser, ...args)
+	constructor(baseArgs, /*Parser*/ parser, ...args)
 	{
-		super(orig, ...args);
+		super(baseArgs, ...args);
 		this.parser = parser;
 	}
 	

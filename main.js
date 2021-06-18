@@ -16,13 +16,14 @@ for (let cmd of cmds)
 {
 	let tmp = require("./cmds/" + cmd.file);
 	// exceptions to constructor args
+	cmd.baseArgs = [cmd.orig, cmd.manpage];
 	if (cmd.ctorArgs instanceof Array)
-		commands[cmd.orig] = new tmp(cmd.orig, ...cmd.ctorArgs);
+		commands[cmd.orig] = new tmp(cmd.baseArgs, ...cmd.ctorArgs);
 	else
 		switch (cmd.ctorArgs)
 		{
 		case "CUSTOM_SET":
-			commands[cmd.orig] = new tmp(cmd.orig, parser, ...cmd.ARGS);
+			commands[cmd.orig] = new tmp(cmd.baseArgs, parser, ...cmd.ARGS);
 			break;
 		default:
 			console.error(

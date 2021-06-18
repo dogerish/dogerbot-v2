@@ -7,9 +7,9 @@ const cfg     = require("../config/cfg.json");
 class CookieCmd extends BaseCmd
 {
 	// listcfg: filename of the blacklist config
-	constructor(/*String*/ orig, /*String*/ listcfg, /*String*/ ...hearts)
+	constructor(baseArgs, /*String*/ listcfg, /*String*/ ...hearts)
 	{
-		super(orig);
+		super(...baseArgs);
 		this.listcfg = `config/user/${listcfg}`;
 		this.blacklist = new Map();
 		for (let id of require("../" + this.listcfg)) this.blacklist.set(id);

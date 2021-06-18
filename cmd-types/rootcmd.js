@@ -5,6 +5,7 @@ const cfg     = require("../config/cfg.json");
 // only accesible to root users
 class RootCmd extends BaseCmd
 {
+	constructor(baseArgs) { super(...baseArgs); }
 	// 0 on success
 	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{

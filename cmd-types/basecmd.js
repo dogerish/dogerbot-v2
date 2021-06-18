@@ -2,7 +2,7 @@ const fs = require("fs");
 // base for a command
 class BaseCmd
 {
-	constructor(/*String*/ orig)
+	constructor(/*String*/ orig, /*String*/ manpage)
 	{
 		// config file for channels
 		this.chancfg = `config/user/set/${orig}.txt`;
@@ -20,6 +20,10 @@ class BaseCmd
 				+ " Defaulting to empty disabled channel list."
 			);
 		}
+		this.manpage = manpage ? `man/${manpage}` : `man/${orig}.txt`;
+		fs.access(this.manpage, err => {
+			if (err) console.log(`Warning: ${orig}: '${this.manpage}' doesn't exist.`);
+		});
 	}
 
 	// whether or not command is allowed in channel id

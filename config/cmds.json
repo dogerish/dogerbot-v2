@@ -25,6 +25,13 @@
 		"ARGS": [["MANAGE_CHANNELS"]]
 	},
 	{
+		"file": "man.js",
+		"orig": "man",
+		"aliases": {},
+		"ctorArgs": "CUSTOM_SET",
+		"ARGS": []
+	},
+	{
 		"file": "cookie.js",
 		"orig": "cookie",
 		"aliases": {},
@@ -81,6 +88,7 @@
 	{
 		"file": "cat.js",
 		"orig": "stanpic",
+		"manpage": "cat.txt",
 		"aliases": {
 			"stan": "stanpic",
 			"sna" : "stanpic"
@@ -90,6 +98,7 @@
 	{
 		"file": "cat.js",
 		"orig": "borispic",
+		"manpage": "cat.txt",
 		"aliases": {
 			"boris": "borispic"
 		},
@@ -98,6 +107,7 @@
 	{
 		"file": "cat.js",
 		"orig": "kalipic",
+		"manpage": "cat.txt",
 		"aliases": {
 			"kali": "kalipic"
 		},
@@ -106,6 +116,7 @@
 	{
 		"file": "cat.js",
 		"orig": "dorypic",
+		"manpage": "cat.txt",
 		"aliases": {
 			"dory": "dorypic"
 		},
@@ -114,6 +125,7 @@
 	{
 		"file": "cat.js",
 		"orig": "miapic",
+		"manpage": "cat.txt",
 		"aliases": {
 			"mia": "miapic"
 		},
@@ -122,6 +134,7 @@
 	{
 		"file": "cat.js",
 		"orig": "mimipic",
+		"manpage": "cat.txt",
 		"aliases": {
 			"mimi": "mimipic"
 		},
@@ -130,10 +143,10 @@
 	{
 		"file": "cat.js",
 		"orig": "charliepic",
+		"manpage": "cat.txt",
 		"aliases": {
 			"charlie": "charliepic"
 		},
 		"ctorArgs": ["Charlie", "410416782025949195", "0x2471a3"]
 	}
-
 ]

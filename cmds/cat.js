@@ -8,14 +8,14 @@ const cfg     = require("../config/cfg.json");
 class CatCmd extends BaseCmd
 {
 	constructor(
-		/*String*/ orig,
+		baseArgs,
 		/*String*/ name,
 		/*String*/ owner,
 		/*NumberResolvable*/ color,
 		/*String*/ namef
 	)
 	{
-		super(orig);
+		super(...baseArgs);
 		this.name  = name;
 		this.file  = `resources/${namef || name.toLowerCase()}pics.txt`;
 		this.urls  = String(fs.readFileSync(this.file)).split('\n');

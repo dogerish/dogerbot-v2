@@ -4,9 +4,9 @@ const utils   = require("../utils/utils.js");
 // formats a random response, replaces the first {} in a response selection
 class FmtCmd extends BaseCmd
 {
-	constructor(/*String*/ orig, /*String...*/ ...responses)
+	constructor(baseArgs, /*String...*/ ...responses)
 	{
-		super(orig);
+		super(...baseArgs);
 		this.responses = responses;
 	}
 
