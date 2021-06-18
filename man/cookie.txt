@@ -1,0 +1,22 @@
+#TITLE {cmdname}
+#DESCR Usage: `{cfg.prefix}{cmdname} [-ibwlqm] [<@user...>]`
+#OPTIONS
+`-i`, `--id` `<id>`
+	Send a cookie to user ID `<id>`.
+`-b`, `--blacklist`
+	Add yourself to the blacklist. You won't get cookies in DMs.
+`-w`, `--whitelist`
+	Remove yourself from the blacklist. You will get cookies in DMs.
+`-l`, `--list`
+	Display which list you're on. The bot will react with a black or white square as appropriate.
+`-q`, `--quiet`
+	Instead of sending cookies in DMs, the bot will send them in the current channel as a plain message.
+`-m`, `--message` `<msg>`
+	Send cookies with the message `<msg>` instead of the default, "{msg.author.username} sent you a cookie!".
+#ARGUMENTS
+`[<@user...>]`
+	@Mentions of the users to send cookies to. Zero or more.
+#EXAMPLES
+Send a cookie to you: `{cfg.prefix}{cmdname} {msg.author}`
+Send a cookie to you, with a custom message: `{cfg.prefix}{cmdname} -m "Sent with love from {msg.client.user.username}!" {msg.author}`
+Move yourself to the blacklist and then report which list: `{cfg.prefix}{cmdname} -bl`
