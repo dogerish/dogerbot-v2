@@ -1,0 +1,4 @@
+#TITLE {cmdname}
+#DESCR Usage: `{cfg.prefix}{cmdname}`
+#OPTIONS
+#ARGUMENTS
