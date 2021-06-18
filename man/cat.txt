@@ -1,0 +1,16 @@
+#TITLE {cmdname}
+#DESCR Usage: `{cfg.prefix}{cmdname} [-n|a|d] [<n>]|<url...>`
+#OPTIONS
+`-n`, `--neg`
+	Index pictures from the end instead of the beginning (negative)
+`-a`, `--add`
+	Interpret the arguments as URLs to add to the database. This is only available for root and {cmd.name}'s owner. **NOTE:** All attachments will also be added. After adding the URLs, the bot will respond with a list of URLs that were added.
+`-d`, `--del`
+	Delete picture `[<n>]` (first and only optional argument). The bot will respond with the URL that was deleted. If `[<n>]` is unspecified, the last picture will be deleted.
+#ARGUMENTS
+`[<n>]`
+	The number of the picture in question. When omitted with no options, it will be randomly generated. [optional] 
+`<url...>`
+	In the case that the `-a` option is present, the arguments should be URLs to pictures to add to the database. Attachments will also be added.
+#ATTACHMENTS
+If the `-a` option is present, all will be added to the database. Otherwise ignored.
