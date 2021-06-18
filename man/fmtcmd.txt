@@ -1,0 +1,10 @@
+#TITLE {cmdname}
+#DESCR Usage: `{cfg.prefix}{cmdname} [<arg...>]`
+#ARGUMENTS
+`[<arg...>]`
+	All arguments will be joined with a space and all mentions removed. This will be used as the filler in the random phrase `{cmdname}` chooses.
+#OVERVIEW
+Sends a random response filled in at parts with the arguments.
+#PHRASES
+The curly braces are replaced with the filler. The following are the phrases this command chooses from:
+"{cmd.responses.join('"\n"')}"

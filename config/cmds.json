@@ -55,8 +55,9 @@
 		]
 	},
 	{
-		"file": "fmtcmd.js",
-		"orig": "greet",
+		"file"   : "fmtcmd.js",
+		"orig"   : "greet",
+		"manpage": "fmtcmd.txt",
 		"aliases": {
 			"hi"     : "greet",
 			"hello"  : "greet",
@@ -70,8 +71,9 @@
 		]
 	},
 	{
-		"file": "fmtcmd.js",
-		"orig": "laugh",
+		"file"   : "fmtcmd.js",
+		"orig"   : "laugh",
+		"manpage": "fmtcmd.txt",
 		"aliases": {
 			"funny": "laugh",
 			"haha" : "laugh"
