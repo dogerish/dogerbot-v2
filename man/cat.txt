@@ -14,3 +14,8 @@
 	In the case that the `-a` option is present, the arguments should be URLs to pictures to add to the database. Attachments will also be added.
 #ATTACHMENTS
 If the `-a` option is present, all will be added to the database. Otherwise ignored.
+#EXAMPLES
+Send the last picture of {cmd.name}: `{cfg.prefix}{cmdname} 0`
+Send the second to last picture of {cmd.name}: `{cfg.prefix}{cmdname} -n 1`
+Delete the last picture of {cmd.name}: `{cfg.prefix}{cmdname} -d`
+Add https://i.imgur.com/KhpEN6U.jpeg to the database: `{cfg.prefix}{cmdname} -a 'https://i.imgur.com/KhpEN6U.jpeg'`
