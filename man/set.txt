@@ -1,0 +1,12 @@
+#TITLE {cmdname}
+#DESCR Usage: `{cfg.prefix}{cmdname} <command> [<value>]`
+
+#ARGUMENTS
+`<command>`
+	The command to enable or disable in this channel.
+`[<value>]`
+	This should be specified as `on` if `<command>` should be enabled in this channel. In any other case, including omitting this argument entirely, `<command>` will be disabled.
+#OVERVIEW
+Enables or disables a command in the channel that the commanding message was sent. The bot will react with :red_circle: or :green_circle: if the command is now disabled or enabled, respectively. Following this, if any non-root user attempts to use `<command>` in the channel, the bot will simply react with :x:. All commands with exception to `{cmdname}` can be disabled.
+#PERMISSIONS
+To use this command, you must have one of the following permissions: `{cmd.perms.join("`, `")}`. Root may also use this command.

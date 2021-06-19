@@ -1,0 +1,4 @@
+#TITLE {cmdname}
+#DESCR Usage: `{cfg.prefix}{cmdname}`
+#OVERVIEW
+Shuts down the bot. This is only available to root.
