@@ -22,18 +22,12 @@ class SetCmd extends PermCmd
 			return 1;
 		}
 		cmd = this.parser.deAliasCmd(cmd);
-		if (!cmd[1])
+		if (!cmd[1] || cmd[1] === this)
 		{
-			msg.channel.send(utils.ferr(args[0], `Unknown command \`${cmd[0]}\``));
-			return 1;
-		}
-		else if (cmd[1] === this)
-		{
-			msg.channel.send(utils.ferr(args[0], `Can't manage \`${cmd[0]}\``));
+			msg.channel.send(utils.ferr(args[0], `\`${cmd[0]}\` can't be set.`));
 			return 1;
 		}
 		cmd = cmd[1];
-				
 		cmd[((val == "on") ? "un" : "") + "blockChan"](msg.channel.id);
 		cmd.saveChans();
 		                                         /*red_circle : green_circle*/
