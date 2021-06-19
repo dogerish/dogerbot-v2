@@ -1,0 +1,4 @@
+#TITLE {cmdname}
+#DESCR Usage: `{cfg.prefix}{cmdname}`
+#OVERVIEW
+Replies with the time, in milliseconds, from when the message was sent to when the bot received it.

@@ -1,0 +1,10 @@
+#TITLE {cmdname}
+#DESCR Usage: `{cfg.prefix}{cmdname} <command>`
+#ARGUMENTS
+`<command>`
+	The command to get a manual page for.
+#OVERVIEW
+Sends detailed information about the `<command>`. If you feel something is missing, feel free to make a bug report or feature recommendation by creating a GitHub issue: https://github.com/dogerish/dogerbot-v2/issues. Feedback is appreciated nearly as much as you!
+#EXAMPLES
+Get information for the `{tmp = Object.keys(cmd.parser.commands)[0]}` command: `{cfg.prefix}{cmdname} {tmp}`
+Get information for the `{tmp = Object.keys(cmd.parser.commands)[1]}` command: `{cfg.prefix}{cmdname} {tmp}`
