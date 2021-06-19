@@ -27,6 +27,11 @@ class SetCmd extends PermCmd
 			msg.channel.send(utils.ferr(args[0], `Unknown command \`${cmd[0]}\``));
 			return 1;
 		}
+		else if (cmd[1] === this)
+		{
+			msg.channel.send(utils.ferr(args[0], `Can't manage \`${cmd[0]}\``));
+			return 1;
+		}
 		cmd = cmd[1];
 				
 		cmd[((val == "on") ? "un" : "") + "blockChan"](msg.channel.id);
