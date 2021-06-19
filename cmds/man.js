@@ -13,7 +13,8 @@ class ManCmd extends BaseCmd
 
 	// substitute keys in with their values
 	// text inside of {} will be evaluated with eval(),
-	// and ERROR will be used if there is any error while evaluating
+	// and <INTERNAL ERROR> will be used if there is any error while evaluating
+	// the only variable you can safely write to in eval's context is "tmp".
 	/*String*/ static subKeys(
 		/*Discord.Message*/ msg,
 		/*String*/          cmdname,
@@ -23,8 +24,19 @@ class ManCmd extends BaseCmd
 	{
 		let matches = str.match(/\{.+?\}/g);
 		if (!matches) return str;
+		let tmp; // for inside the man page
 		for (let m of matches)
-			str = str.replace(m, eval(m.substr(1, m.length - 2)));
+		{
+			try { str = str.replace(m, eval(m.substr(1, m.length - 2))); }
+			catch (e)
+			{
+				console.error(
+					`Error (${m}:${cmd.manpage}):`,
+					e
+				);
+				str = str.replace(m, "<INTERNAL ERROR>");
+			}
+		}
 		return str;
 	}
 
@@ -32,7 +44,6 @@ class ManCmd extends BaseCmd
 	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{
 		if (super.call(msg, args)) return 1;
-		debugger;
 		if (!args[1])
 		{
 			msg.channel.send(utils.ferr(args[0], "No command specified."));
@@ -91,7 +102,6 @@ class ManCmd extends BaseCmd
 		embed.fields.forEach((f, i) => {
 			if (!f.value) { f.value = "empty"; embed.fields[i] = f; }
 		});
-		debugger;
 		msg.channel.send({ embed: embed }).catch(e =>
 		{
 			console.error(`Error (${args[0]}, ${e.code}):`, e);
