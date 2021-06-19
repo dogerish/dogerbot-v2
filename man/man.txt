@@ -1,8 +1,11 @@
 #TITLE {cmdname}
-#DESCR Usage: `{cfg.prefix}{cmdname} <command>`
+#DESCR Usage: `{cfg.prefix}{cmdname} [-f] [<command>]`
+#OPTIONS
+`-f`, `--whatis`
+	Sends the one line usage description of the command.
 #ARGUMENTS
-`<command>`
-	The command to get a manual page for.
+`[<command>]`
+	The command to get a manual page for. `{cmdname}` by default.
 #OVERVIEW
 Sends detailed information about the `<command>`. If you feel something is missing, feel free to make a bug report or feature recommendation by creating a GitHub issue: https://github.com/dogerish/dogerbot-v2/issues. Feedback is appreciated nearly as much as you!
 #EXAMPLES

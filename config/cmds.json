@@ -27,7 +27,9 @@
 	{
 		"file": "man.js",
 		"orig": "man",
-		"aliases": {},
+		"aliases": {
+			"help": "man -f"
+		},
 		"ctorArgs": "CUSTOM_SET",
 		"ARGS": []
 	},
