@@ -5,37 +5,33 @@ const Parser  = require("./parser.js");
 const cfg     = require("./config/cfg.json");
 const cmds    = require("./config/cmds.json");
 
+let commands = new Map();
+let aliases  = new Map();
 /* instances */
 const client = new Discord.Client();
-const parser = new Parser({}, {});
+const parser = new Parser(commands, aliases);
 
-let commands = {};
-let aliases  = {};
 // load the commands
 for (let cmd of cmds)
 {
-	let tmp = require("./cmds/" + cmd.file);
-	// exceptions to constructor args
+	let tmp      = require("./cmds/" + cmd.file);
 	cmd.baseArgs = [cmd.orig, cmd.manpage];
-	if (cmd.ctorArgs instanceof Array)
-		commands[cmd.orig] = new tmp(cmd.baseArgs, ...cmd.ctorArgs);
+	let addcmd   = (...args) => commands.set(cmd.orig, new tmp(cmd.baseArgs, ...args));
+	if (cmd.ctorArgs instanceof Array) addcmd(...cmd.ctorArgs);
+	// exceptions to constructor args
 	else
 		switch (cmd.ctorArgs)
 		{
-		case "CUSTOM_SET":
-			commands[cmd.orig] = new tmp(cmd.baseArgs, parser, ...cmd.ARGS);
-			break;
+		case "CUSTOM_SET": addcmd(parser, ...cmd.ARGS); break;
 		default:
 			console.error(
-				`Method for constructing ${cmd.orig} unknown (${cmd.ctorArgs}).
-				Not constructed.`
+				  `Method for constructing ${cmd.orig} unknown (${cmd.ctorArgs}).`
+				+ ` Not constructed.`
 			);
 			continue;
 		}
-	Object.assign(aliases, cmd.aliases);
+	for (let kv of Object.entries(cmd.aliases)) aliases.set(...kv);
 }
-parser.commands = commands;
-parser.aliases  = aliases;
 
 client.on("message", msg => parser.onMessage(msg));
 client.on("ready", ()  => console.log(`${client.user.username} online.`));

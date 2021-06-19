@@ -8,6 +8,8 @@
 	The command to get a manual page for. `{cmdname}` by default.
 #OVERVIEW
 Sends detailed information about the `<command>`. If you feel something is missing, feel free to make a bug report or feature recommendation by creating a GitHub issue: https://github.com/dogerish/dogerbot-v2/issues. Feedback is appreciated nearly as much as you!
+#COMMANDS
+Available commands: `{(tmp = [Array.from(cmd.parser.commands.keys()), null])[0].join("`, `")}`
 #EXAMPLES
-Get information for the `{tmp = Object.keys(cmd.parser.commands)[0]}` command: `{cfg.prefix}{cmdname} {tmp}`
-Get information for the `{tmp = Object.keys(cmd.parser.commands)[1]}` command: `{cfg.prefix}{cmdname} {tmp}`
+Get information for the `{tmp[1] = tmp[0].random()}` command: `{cfg.prefix}{cmdname} {tmp[1]}`
+Get a brief overview for the `{tmp[1] = tmp[0].random()}` command: `{cfg.prefix}{cmdname} -f {tmp[1]}`

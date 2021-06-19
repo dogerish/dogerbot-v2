@@ -4,12 +4,12 @@ const utils = require("./utils/utils.js");
 class Parser
 {
 	/*
-	commands: { "<primary alias>": <Object with call() method>... }
+	commands: Map<String, Object>: { "<primary alias>": <Object with call() method>... }
 		function(message, args);
 			message: Discord.Message - The message object that called the command
 			args   : Array<String>   - The arguments given to the command
 			    [0]: The primary alias that was called
-	aliases : { "<alias>" : "<substitution>"... }
+	aliases : Map<String, String>: { "<alias>" : "<substitution>"... }
 	*/
 	constructor(commands, aliases)
 	{
@@ -29,12 +29,12 @@ class Parser
 		if (!message.content.startsWith(cfg.prefix) || message.author.bot) return 1;
 		let args = this.parse(message.content.substr(cfg.prefix.length));
 		// undefined command
-		if (!this.commands[args[0]])
+		if (!this.commands.get(args[0]))
 		{
 			message.channel.send(utils.ferr(args[0], "Unknown command."));
 			return -1;
 		}
-		this.commands[args[0]].call(message, args);
+		this.commands.get(args[0]).call(message, args);
 		return 0;
 	}
 
@@ -76,7 +76,7 @@ class Parser
 	/*Array<arg0, ?BaseCmd>*/ deAliasCmd(/*String*/ cmdname)
 	{
 		let arg0 = this.parse(cmdname)[0];
-		return [arg0, this.commands[arg0]];
+		return [arg0, this.commands.get(arg0)];
 	}
 
 	// parses the message and calls the command, returns the args from arg0 on
@@ -95,7 +95,7 @@ class Parser
 			if (
 				   first
 				&& (flip && argi || i >= cmdstr.length)
-				&& (cmd = this.aliases[args[0]])
+				&& (cmd = this.aliases.get(args[0]))
 			)
 			{
 				cmdstr = cmdstr.replace(torpc, cmd);

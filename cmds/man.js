@@ -16,16 +16,17 @@ class ManCmd extends BaseCmd
 	// text inside of {} will be evaluated with eval(),
 	// and <INTERNAL ERROR> will be used if there is any error while evaluating
 	// the only variable you can safely write to in eval's context is "tmp".
-	/*String*/ static subKeys(
+	// returns the new string and tmp in that order in an array.
+	/*Array<String, tmp>*/ static subKeys(
 		/*Discord.Message*/ msg,
 		/*String*/          cmdname,
 		/*BaseCmd*/         cmd,
-		/*String*/          str
+		/*String*/          str,
+		                    tmp
 	)
 	{
 		let matches = str.match(/\{.+?\}/g);
-		if (!matches) return str;
-		let tmp; // for inside the man page
+		if (!matches) return [str, tmp];
 		for (let m of matches)
 		{
 			try { str = str.replace(m, eval(m.substr(1, m.length - 2))); }
@@ -38,7 +39,7 @@ class ManCmd extends BaseCmd
 				str = str.replace(m, "<INTERNAL ERROR>");
 			}
 		}
-		return str;
+		return [str, tmp];
 	}
 
 	// 0 on success
@@ -92,7 +93,13 @@ class ManCmd extends BaseCmd
 			));
 		}
 		// shortcut to sub the keys of a string in this context
-		let subit = str => ManCmd.subKeys(msg, cmdname, cmd, str);
+		let tmp;
+		let subit = str =>
+		{
+			let r = ManCmd.subKeys(msg, cmdname, cmd, str, tmp);
+			tmp = r[1];
+			return r[0];
+		};
 		// parse lines
 		for (let line of data)
 		{
