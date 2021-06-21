@@ -88,6 +88,15 @@
 			"Bruh, {} got the whole squad laughing!"
 		]
 	},
+	{
+		"file": "fractal-tree.js",
+		"orig": "fractal-tree",
+		"aliases": {
+			"ft": "fractal-tree",
+			"fractal": "fractal-tree"
+		},
+		"ctorArgs": []
+	},
 
 	{
 		"file": "cat.js",
