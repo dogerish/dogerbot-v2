@@ -10,7 +10,7 @@
 	*Default: 30*
 `-m`, `--maxdepth` `<depth>`
 	The maximum amount of recursion, or the number of generations. The higher `<depth>` is, the longer it will take to create the fractal.
-	*Default: 15*
+	*Default: 15; Maximum: 17*
 `-l`, `--startlen` `<length>`
 	The length of the first branch, or the trunk/stem, in pixels.
 	*Default: 150*

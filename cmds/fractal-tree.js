@@ -35,7 +35,7 @@ class FractalTreeCmd extends BaseCmd
 			{
 			case 'c': case "coef"    : coef     = n;               break;
 			case 'a': case "angInc"  : angInc   = n * Math.PI/180; break;
-			case 'm': case "maxdepth": maxdepth = n;               break;
+			case 'm': case "maxdepth": maxdepth = Math.min(n, 17); break;
 			case 'l': case "startlen": startlen = n;               break;
 			case 'b': case "bgcolor" : bgcolor  = go.optarg;       break;
 			case 's': case "stroke"  : stroke   = go.optarg;       break;
