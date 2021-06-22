@@ -13,8 +13,8 @@ class FractalTreeCmd extends BaseCmd
 	{
 		if (super.call(msg, args)) return 1;
 		let coef     = 0.75,
-		    angInc   = Math.PI / 12,
-		    maxdepth = 14,
+		    angInc   = Math.PI / 6,
+		    maxdepth = 15,
 		    startlen = 150,
 		    bgcolor  = "rgba(0, 0, 0, 0)",
 		    stroke   = "black";
