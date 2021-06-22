@@ -1,5 +1,6 @@
 node_modules/
 config/cfg.json
 config/user/*
+logs/
 Session.vim
 *.swp

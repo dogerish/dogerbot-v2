@@ -1,0 +1,6 @@
+#! /bin/bash
+# uploads logs to google drive using rclone
+
+if [ "$1" != "" ]; then cd "$1"; fi
+source scripts/cfg.sh
+rclone sync $LOGDIR gdrive:$LOGDIR

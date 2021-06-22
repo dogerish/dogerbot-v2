@@ -1,0 +1,14 @@
+#! /bin/bash
+# starts the bot
+
+if [ "$1" != "" ]; then cd "$1"; fi
+source scripts/cfg.sh
+
+# print current directory and give user chance to abort if in wrong dir
+pwd && read -n 1
+mkdir -p "$LOGDIR"
+# add date to logs
+echo "
+----- `date` -----
+" | tee -a "$LOG" "$ERR"
+node main.js >> "$LOG" 2>> "$ERR" &

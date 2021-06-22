@@ -1,0 +1,9 @@
+#! /bin/bash
+# watches the log folder and uploads the file when it is modified
+
+if [ "$1" != "" ]; then cd "$1"; fi
+source scripts/cfg.sh
+
+(inotifywait -rme modify "$LOGDIR" --format "%w%f" | while read file
+do rclone copy "$file" "gdrive:$LOGDIR"
+done) &

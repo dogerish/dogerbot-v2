@@ -1,0 +1,9 @@
+#! /bin/bash
+# clears the log files
+
+if [ "$1" != "" ]; then cd "$1"; fi
+source scripts/cfg.sh
+# write date to all the files
+echo "
+----- `date` -----
+" | tee `find "$LOGDIR" -type f`
