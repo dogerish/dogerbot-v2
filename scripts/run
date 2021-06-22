@@ -5,7 +5,7 @@ if [ "$1" != "" ]; then cd "$1"; fi
 source scripts/cfg.sh
 
 # print current directory and give user chance to abort if in wrong dir
-pwd && read -n 1
+pwd && sleep 5
 mkdir -p "$LOGDIR"
 # add date to logs
 echo "
