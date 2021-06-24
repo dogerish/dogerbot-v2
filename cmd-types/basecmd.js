@@ -12,14 +12,7 @@ class BaseCmd
 			let tmp = String(fs.readFileSync(this.chancfg)).split(/\W/);
 			for (let id of tmp) this.chans.set(id);
 		}
-		catch (e)
-		{
-			if (e.code != "ENOENT") throw e;
-			console.error(
-				  `Warning: '${e.path}' doesn't exist.`
-				+ " Defaulting to empty disabled channel list."
-			);
-		}
+		catch (e) { if (e.code != "ENOENT") throw e; } // ignore missing config file
 		this.manpage = manpage ? `man/${manpage}` : `man/${orig}.txt`;
 		fs.access(this.manpage, err => {
 			if (err) console.log(`Warning: ${orig}: '${this.manpage}' doesn't exist.`);
