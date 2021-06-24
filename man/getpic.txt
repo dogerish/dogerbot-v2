@@ -1,0 +1,9 @@
+#TITLE {cmdname}
+#DESCR Usage: `{cfg.prefix}{cmdname} <map>`
+#ARGUMENTS
+`<map>`
+	The name of the map to get the picture for.
+#OVERVIEW
+Gets the picture at `base/<map>.jpg`. If `base/` doesn't exist, this command will not be functional. Status: {cmd.functional ? "Functional" : "Not functional"}.
+#EXAMPLES
+*Get picture for `reissen`:* `{cfg.prefix}{cmdname} reissen`

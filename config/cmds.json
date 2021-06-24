@@ -97,6 +97,12 @@
 		},
 		"ctorArgs": []
 	},
+	{
+		"file": "getpic.js",
+		"orig": "getpic",
+		"aliases": {},
+		"ctorArgs": []
+	},
 
 	{
 		"file": "cat.js",
