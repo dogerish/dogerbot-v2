@@ -4,3 +4,4 @@ config/user/*
 logs/
 Session.vim
 *.swp
+base

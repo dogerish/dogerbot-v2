@@ -1,9 +1,13 @@
 #TITLE {cmdname}
-#DESCR Usage: `{cfg.prefix}{cmdname} <map>`
+#DESCR Usage: `{cfg.prefix}{cmdname} [-u] <map>`
+#OPTIONS
+`-u`, `--update`
+	Updates the functionality status of `{cmdname}`. This should be used in order to ensure that the functionality reading it has is actually accurate. The command will finish right after this argument, regardless of other arguments or options following it.
 #ARGUMENTS
 `<map>`
 	The name of the map to get the picture for.
 #OVERVIEW
 Gets the picture at `base/<map>.jpg`. If `base/` doesn't exist, this command will not be functional. Status: {cmd.functional ? "Functional" : "Not functional"}.
 #EXAMPLES
-*Get picture for `reissen`:* `{cfg.prefix}{cmdname} reissen`
+Get picture for `reissen`: `{cfg.prefix}{cmdname} reissen`
+Update functionality: `{cfg.prefix}{cmdname} -u`

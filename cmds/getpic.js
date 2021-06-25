@@ -1,5 +1,6 @@
 const BaseCmd = require("../cmd-types/basecmd.js");
 const fs      = require("fs");
+const GetOpt  = require("../utils/getopt.js");
 const utils   = require("../utils/utils.js");
 
 class GetpicCmd extends BaseCmd
@@ -8,13 +9,22 @@ class GetpicCmd extends BaseCmd
 	{
 		super(...baseArgs);
 		this.functional = true;
-		fs.access('base/', err =>
+		this.udfunc(err =>
 		{
 			if (err) console.log(
 				  "Warning: getpic: 'base/' doesn't exist. This command will not be"
 				+ " functional."
 			);
-			this.functional = !err;
+		});
+	}
+
+	// UpDate FUNCtional
+	udfunc(/*function(err)*/ callback = err => err)
+	{
+		fs.access("base/", err =>
+		{
+			this.functional = !err
+			callback(err);
 		});
 	}
 
@@ -22,7 +32,23 @@ class GetpicCmd extends BaseCmd
 	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{
 		if (super.call(msg, args)) return 1;
-		let name = args[1];
+		let go = new GetOpt("u,update,", args);
+		while (go.next())
+		{
+			if (go.opterr)
+			{
+				msg.channel.send(utils.ferr(args[0], go.opterr));
+				return 1;
+			}
+			switch (go.opt)
+			{
+			case 'u': case "update":
+				this.udfunc();
+				msg.channel.send("Updating.");
+				return 0;
+			}
+		}
+		let name = args[go.optind];
 		// not functional or no name given
 		if (!this.functional || !name)
 		{
