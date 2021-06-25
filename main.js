@@ -34,5 +34,9 @@ for (let cmd of cmds)
 }
 
 client.on("message", msg => parser.onMessage(msg));
-client.on("ready", ()  => console.log(`${client.user.username} online.`));
+client.on("ready", ()  =>
+{
+	console.log(`${client.user.username} online.`);
+	client.user.setPresence(cfg.dftPres || {});
+});
 client.login(cfg.token);
