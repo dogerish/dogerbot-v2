@@ -3,8 +3,6 @@ const GetOpt  = require("../utils/getopt.js");
 const utils   = require("../utils/utils.js");
 const cfg     = require("../config/cfg.json");
 
-cfg.dftPres.activity.name = eval(`\`${cfg.dftPres.activity.name}\``);
-
 class PresenceCmd extends RootCmd
 {
 	// 0 on success
