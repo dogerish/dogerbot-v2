@@ -1,5 +1,12 @@
 {
 	"token" :    "<token>",
 	"prefix":    ">",
-	"rootusers": ["<user ID>"]
+	"rootusers": ["<user ID>"],
+	"dftPres": {
+		"status": "online",
+		"activity": {
+			"type": "LISTENING",
+			"name": "${cfg.prefix}man"
+		}
+	}
 }
