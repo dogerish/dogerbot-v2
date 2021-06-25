@@ -28,7 +28,7 @@ class PresenceCmd extends RootCmd
 			}
 		}
 
-		let toSet = (go.optind > 1 || args.length > go.optind)
+		let toSet = (args.length > 1)
 			? {
 				status  : status,
 				activity:
