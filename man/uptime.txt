@@ -1,0 +1,6 @@
+#TITLE {cmdname}
+#DESCR Usage: `{cfg.prefix}{cmdname}`
+#OVERVIEW
+Sends information about the client's uptime. It includes time elapsed since the client was first ready, the date at which the client was readied, and the number of milliseconds of uptime, as of the time of constructing the message, NOT delivering it.
+#EXAMPLES
+Show uptime: `{cfg.prefix}{cmdname}`

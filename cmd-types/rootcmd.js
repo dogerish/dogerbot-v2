@@ -2,7 +2,7 @@ const BaseCmd = require("./basecmd.js");
 const utils   = require("../utils/utils.js");
 const cfg     = require("../config/cfg.json");
 
-// only accesible to root users
+// only accessible to root users
 class RootCmd extends BaseCmd
 {
 	constructor(baseArgs) { super(...baseArgs); }

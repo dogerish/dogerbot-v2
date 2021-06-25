@@ -103,6 +103,21 @@
 		"aliases": {},
 		"ctorArgs": []
 	},
+	{
+		"file": "presence.js",
+		"orig": "presence",
+		"aliases": {
+			"pres": "presence",
+			"status": "presence"
+		},
+		"ctorArgs": []
+	},
+	{
+		"file": "uptime.js",
+		"orig": "uptime",
+		"aliases": {},
+		"ctorArgs": []
+	},
 
 	{
 		"file": "cat.js",

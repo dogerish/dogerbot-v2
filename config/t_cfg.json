@@ -1,5 +1,12 @@
 {
 	"token" :    "<token>",
-	"prefix":    ">",
-	"rootusers": ["<user ID>"]
+	"prefix":    "<prefix>",
+	"rootusers": ["<user ID>"],
+	"dftPres": {
+		"status": "online",
+		"activity": {
+			"type": "LISTENING",
+			"name": "<prefix>man"
+		}
+	}
 }

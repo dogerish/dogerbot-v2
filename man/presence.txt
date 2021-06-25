@@ -1,0 +1,19 @@
+#TITLE {cmdname}
+#DESCR Usage: `{cfg.prefix}{cmdname} [-s <status>] [-t <type>] [-u <url>] [<name>...]`
+#OPTIONS
+`-s`, `--status` `<status>`
+	Set the icon part of the status/presence to `<status>`. `<status>` may be `online`, `idle`, `dnd`, or `invisible`.
+`-t`, `--type` `<type>`
+	Set the status type to `<type>`. This may be `PLAYING`, `STREAMING`, `LISTENING`, `WATCHING`, or `COMPETING`.
+	*Default: PLAYING*
+`-u`, `--url` `<url>`
+	Set the url for the presence to `<url>`.
+#ARGUMENTS
+`[<name>...]`
+	The name of the activity (the part after the "Playing," "Listening to," etc.). All arguments are joined with spaces to form this.
+#OVERVIEW
+Sets the bot's status/presence. Only available for root. If there are no options or arguments given, the status will be set to the one defined in the configuration file.
+#EXAMPLES
+Set status to "Playing a guitar": `{cfg.prefix}{cmdname} a guitar`
+Set status to do not disturb, listening to bedtime stories: `{cfg.prefix}{cmdname} -t LISTENING -s dnd bedtime stories`
+Reset to default status: `{cfg.prefix}{cmdname}`
