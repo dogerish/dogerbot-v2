@@ -1,0 +1,7 @@
+#TITLE {cmdname}
+#DESCR Usage: `{cfg.prefix}{cmdname} *`
+#*
+Takes all arguments and options and hands them straight to the randomly chosen command.
+#OVERVIEW
+Randomly chooses a cat command and calls it. `{cmdname}` randomly chooses one of the following commands:
+{Array.from(cmd.cats.entries()).reduce((acc, [key, cmd]) => acc + '`'+key+"` ("+cmd.name+")\n", "")}
