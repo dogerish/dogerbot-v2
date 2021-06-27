@@ -196,5 +196,16 @@
 			"charlie": "charliepic"
 		},
 		"ctorArgs": ["Charlie", "410416782025949195", "0x2471a3"]
+	},
+	{
+		"file": "randomcat.js",
+		"orig": "randomcat",
+		"aliases": {
+			"rcat": "randomcat",
+			"cat": "randomcat",
+			"catpic": "randomcat"
+		},
+		"ctorArgs": "CUSTOM_SET",
+		"ARGS": []
 	}
 ]
