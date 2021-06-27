@@ -25,10 +25,24 @@
 		"ARGS": [["MANAGE_CHANNELS"]]
 	},
 	{
-		"file": "man.js",
-		"orig": "man",
+		"file": "manual.js",
+		"orig": "manual",
 		"aliases": {
-			"help": "man -f"
+			"man": "manual",
+			"usage": "manual -f",
+			"descr": "manual -f",
+			"describe": "manual -f",
+			"brief": "manual -f"
+		},
+		"ctorArgs": "CUSTOM_SET",
+		"ARGS": []
+	},
+	{
+		"file": "list.js",
+		"orig": "list",
+		"aliases": {
+			"commands": "list",
+			"help": "list"
 		},
 		"ctorArgs": "CUSTOM_SET",
 		"ARGS": []
