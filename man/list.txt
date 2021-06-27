@@ -1,0 +1,4 @@
+#TITLE {cmdname}
+#DESCR Usage: `{cfg.prefix}{cmdname}`
+#OVERVIEW
+Sends a list of available commands.
