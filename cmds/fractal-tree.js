@@ -55,7 +55,16 @@ class FractalTreeCmd extends BaseCmd
 			a  += (a > 0) ? -angInc : angInc;
 			sl *= coef;
 		}
-		let cv  = createCanvas(x * 2, y);
+		let cv;
+		try { cv  = createCanvas(x * 2, y); }
+		catch (e)
+		{
+			msg.channel.send(utils.ferr(
+				args[0],
+				"Failed to create canvas. Area likely too big."
+			));
+			return 1;
+		}
 		let ctx = cv.getContext("2d");
 
 		// recursively draw branches
@@ -90,7 +99,7 @@ class FractalTreeCmd extends BaseCmd
 		{
 			msg.channel.send(utils.ferr(
 				args[0],
-				"Internal error. Perhaps don't use zeroes."
+				"Failed to send canvas as buffer. Perhaps don't use zeroes."
 			));
 			return 1;
 		}

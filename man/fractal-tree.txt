@@ -34,5 +34,5 @@ Recursively generates and sends a fractal tree with the given attributes using `
 *Make a fractal tree with only 5 branches, and an angle increment of 35 degrees:*
 `{cfg.prefix}{cmdname} --maxdepth 5 --angInc 35`
 
-#INTERNAL ERRORS
-Internal errors happen when something goes wrong while the bot attempts to convert the image into a buffer for sending. They are usually caused by the Canvas having zero total pixels. This is because the calculated size of the fractal tree is zero, because the starting length, maximum depth, angle increment, or coef are zero or essentially zero.
+#ERRORS
+Errors happen when something goes wrong while creating the canvas or when the bot attempts to convert the canvas into a buffer for sending. They are usually caused by the canvas having zero or too many total pixels. The zero case is because the calculated size of the fractal tree is zero, because the starting length, maximum depth, angle increment, or coef are zero or essentially zero.
