@@ -203,6 +203,15 @@
 		"ARGS": []
 	},
 	{
+		"file": "aicatpic.js",
+		"orig": "aicatpic",
+		"aliases": {
+			"aicat": "aicatpic",
+			"thiscatdoesnotexist": "aicat"
+		},
+		"ctorArgs": []
+	},
+	{
 		"file": "dickroll.js",
 		"orig": "dickroll",
 		"aliases": {
