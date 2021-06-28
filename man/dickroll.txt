@@ -1,0 +1,4 @@
+#TITLE dickpic
+#DESCR Usage: `{cfg.prefix}dickpic`
+#OVERVIEW
+~~Sends a dick pic~~. For you, <@609573530769817641>.

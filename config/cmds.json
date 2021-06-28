@@ -201,5 +201,13 @@
 		},
 		"ctorArgs": "CUSTOM_SET",
 		"ARGS": []
+	},
+	{
+		"file": "dickroll.js",
+		"orig": "dickroll",
+		"aliases": {
+			"dickpic": "dickroll"
+		},
+		"ctorArgs": []
 	}
 ]
