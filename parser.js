@@ -133,18 +133,19 @@ class Parser
 			case "'":
 				let ss = cmdstr.substr(i + 1);
 				// str til next unescaped quote
-				args[argi] = ss.match(new RegExp(`(.*?)(?<!\\\\)${c}`));
+				let tmp = ss.match(new RegExp(`(.*?)(?<!\\\\)${c}`));
 				// search failed, take until end of message
-				if (!args[argi]) args[argi] = [ss, ss];
+				if (!tmp) tmp = [ss, ss];
 				// turn all escaped quotes into normal quotes
-				args[argi][1] = args[argi][1].replace(
+				tmp[1] = tmp[1].replace(
 					new RegExp(`\\\\${c}`, 'g'),
 					c
 				);
-				torpc += args[argi][0];
-				i     += torpc.length - 1 - dolstr;
+				torpc += tmp[0];
+				i     += tmp[0].length;
 				// evaluate bses in a dollar string ($'')
-				args[argi] = dolstr ? Parser.evalbses(args[argi][1]) : args[argi][1];
+				tmp = dolstr ? Parser.evalbses(tmp[1]) : tmp[1];
+				args[argi] += tmp;
 				dolstr = false; // reset
 				break;
 			case '\\':

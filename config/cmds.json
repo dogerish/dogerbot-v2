@@ -224,5 +224,12 @@
 			"dickpic": "dickroll"
 		},
 		"ctorArgs": []
+	},
+
+	{
+		"file": "player.js",
+		"orig": "player",
+		"aliases": {},
+		"ctorArgs": []
 	}
 ]
