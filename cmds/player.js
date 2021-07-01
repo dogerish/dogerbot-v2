@@ -76,7 +76,7 @@ class PlayerCmd extends SauerTrackerCmd
 			msg.channel.send(ferr(args[0], "No name specified."));
 			return 1;
 		}
-		msg.react('🤔'); // :thinking:
+		msg.react('🤔').catch(e => msg.channel.send('🤔')); // :thinking:
 		let req =
 		request(`http://${this.host}/api/v2/player/${encodeURIComponent(args[1])}`, res =>
 		{
