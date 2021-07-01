@@ -192,6 +192,15 @@
 		"ctorArgs": ["Charlie", "410416782025949195", "0x2471a3"]
 	},
 	{
+		"file": "cat.js",
+		"orig": "wilmapic",
+		"manpage": "cat.txt",
+		"aliases": {
+			"wilma": "wilmapic"
+		},
+		"ctorArgs": ["Wilma", "690236857153486996", "0x42f5e0"]
+	},
+	{
 		"file": "randomcat.js",
 		"orig": "randomcat",
 		"aliases": {
