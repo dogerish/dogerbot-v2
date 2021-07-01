@@ -1,0 +1,7 @@
+#TITLE {cmdname}
+#DESCR Usage: `{cfg.prefix}{cmdname} <name>`
+#ARGUMENTS
+`<name>`
+	The name of the player to get stats for. **NOTE**: Quotes will still be evaluated and must be escaped accordingly. For example, to give the name `!s]DarkFire'`, you must escape the single quote: `!s]DarkFire\'` OR `"!s]DarkFire'"`.
+#OVERVIEW
+Sends an embed containing information about the player name `<name>` using SauerTracker's API. SauerTracker: {cmd.url}

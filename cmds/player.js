@@ -71,6 +71,11 @@ class PlayerCmd extends SauerTrackerCmd
 	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{
 		if (super.call(msg, args)) return 1;
+		if (!args[1])
+		{
+			msg.channel.send(ferr(args[0], "No name specified."));
+			return 1;
+		}
 		msg.react('🤔'); // :thinking:
 		let req =
 		request(`http://${this.host}/api/v2/player/${encodeURIComponent(args[1])}`, res =>
@@ -79,11 +84,10 @@ class PlayerCmd extends SauerTrackerCmd
 			res.on("data", chunk => data += chunk);
 			res.on("end", () =>
 			{
-				debugger;
 				if (res.statusCode != 200) msg.channel.send(ferr(
 					args[0],
 					  `${res.statusCode}: ${res.statusMessage}`
-					+ ` (\`${res.req.path}\`)`
+					+ ` (\`${res.req.path}\`, recieved name: \`${args[1]}\`)`
 				));
 				else this.onresponse(msg, JSON.parse(data));
 			});
