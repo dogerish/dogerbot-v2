@@ -240,5 +240,14 @@
 		"orig": "player",
 		"aliases": {},
 		"ctorArgs": []
+	},
+	{
+		"file": "find.js",
+		"orig": "find",
+		"aliases": {
+			"findplayer": "find",
+			"search": "find"
+		},
+		"ctorArgs": []
 	}
 ]
