@@ -1,5 +1,5 @@
 const   SauerTrackerCmd     = require("../cmd-types/sauertrackercmd.js");
-const { ferr              } = require("../utils/utils.js");
+const { ferr, percent     } = require("../utils/utils.js");
 const { request           } = require("http");
 
 class PlayerCmd extends SauerTrackerCmd
@@ -7,17 +7,16 @@ class PlayerCmd extends SauerTrackerCmd
 	// generate an EmbedField for a stat
 	static /*EmbedField*/ statfield(/*Object*/ data, /*String*/ name, /*String*/ stat)
 	{
-		let mdata = stat ? data : { SF_COPY: data };
-		stat = stat || "SF_COPY";
+		let i = stat ? data[stat] : data;
 		return {
 			name: name,
 			value:
-				  `Frags: ${mdata[stat].frags}\n`
-				+ `Flags: ${mdata[stat].flags}\n`
-				+ `Deaths: ${mdata[stat].deaths}\n`
-				+ `Teamkills: ${mdata[stat].tks}\n`
-				+ `K/D: ${mdata[stat].kpd}\n`
-				+ `Accuracy: ${mdata[stat].acc}`,
+				  `Frags: ${i.frags}\n`
+				+ `Flags: ${i.flags}\n`
+				+ `Deaths: ${i.deaths}\n`
+				+ `Teamkills: ${i.tks}\n`
+				+ `K/D: ${i.kpd}\n`
+				+ `Accuracy: ${i.acc}%`,
 			inline: true
 		}
 	}
@@ -42,9 +41,9 @@ class PlayerCmd extends SauerTrackerCmd
 				{
 					name: "Duels",
 					value:
-						  `Wins: ${DW} (${Math.round(DW / DC * 100)}%)\n`
-						+ `Losses: ${DL} (${Math.round(DL / DC * 100)}%)\n`
-						+ `Ties: ${DT} (${Math.round(DT / DC * 100)}%)\n`
+						  `Wins: ${DW} (${percent(DW, DC)}%)\n`
+						+ `Losses: ${DL} (${percent(DL, DC)}%)\n`
+						+ `Ties: ${DT} (${percent(DT, DC)}%)\n`
 						+ `Total: ${DC}`,
 					inline: true
 				},
@@ -53,7 +52,7 @@ class PlayerCmd extends SauerTrackerCmd
 					value:
 						  (data.clan ? `Clan: ${data.clan}\n` : "")
 						+ `Country: ${data.countryName || "Unknown"}\n`
-						+ `Online: ${data.online}\n`
+						+ `Status: ${data.online ? "On" : "Off"}line\n`
 						+ (data.latestGames.length ? `Date of last game:\n${
 							new Date(data.latestGames[0].time)
 								.toUTCString()
