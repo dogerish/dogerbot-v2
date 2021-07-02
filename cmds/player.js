@@ -54,10 +54,10 @@ class PlayerCmd extends SauerTrackerCmd
 						  (data.clan ? `Clan: ${data.clan}\n` : "")
 						+ `Country: ${data.countryName || "Unknown"}\n`
 						+ `Online: ${data.online}\n`
-						+ `Date of last game:\n${
+						+ (data.latestGames.length ? `Date of last game:\n${
 							new Date(data.latestGames[0].time)
 								.toUTCString()
-						}`,
+						}` : ""),
 					inline: true
 				},
 				PlayerCmd.statfield(data, "Insta Stats", "instaStats"),
