@@ -13,6 +13,7 @@ mex.ferr = (/*String*/ ctx, /*String*/ brief) => `:x: \`${ctx}\`: ${brief}`;
 	str =  str.replace(/@+here/g, "here");
 	return str.replace(/@+everyone/g, "everyone");
 };
+mex.percent = (portion, total) => Math.round(portion / total * 100);
 
 // add random() method to Array
 Array.prototype.random = function() { return this[Math.floor(Math.random() * this.length)]; };
