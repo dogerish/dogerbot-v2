@@ -1,51 +1,36 @@
-const   SauerTrackerCmd   = require("../cmd-types/sauertrackercmd.js");
-const { request         } = require("http");
-const { ferr            } = require("../utils/utils.js");
+const   STCmd      = require("../cmd-types/stcmd.js");
+const { ferr     } = require("../utils/utils.js");
+const { STPlayer } = require("sauertracker");
 
-class FindCmd extends SauerTrackerCmd
+class FindCmd extends STCmd
 {
-	onresponse(/*Discord.Message*/ msg, /*Array<String>*/ args, /*Object*/ data)
+	// 0 on success
+	async /*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{
-		let embed = {
-			title: `Top results for \`${args[1]}\`${
-				args[2] ? `in \`${args[2]}\`` : ""
-			}`,
-			url: `https://${this.host}/players/find?name=${
-				encodeURIComponent(args[1])
-			}${
-				args[2] ? `&country=${encodeURIComponent(args[2])}` : ""
-			}`,
-			// `playername` (frags, country) for top 10
-			description: data.slice(0, 10).reduce(
-				(acc, p, i) =>
-					  acc
-					+ `\`${p.name}\` `
-					+ `(${p.frags} frags, ${p.countryName || "Unknown"})\n`,
+		if (super.call(msg, args)) return 1;
+		let players;
+		try { players = await STPlayer.find(...args.slice(1)); }
+		catch (e)
+		{
+			msg.channel.send(e.message);
+			return 1;
+		}
+		msg.channel.send({ embed:
+		{
+			title:
+				`Top results for ${
+					args[1] ? `\`${args[1]}\`` : "all players"
+				} in ${
+					args[2] ? `\`${args[2]}\`` : "any country"
+				}`,
+			description: players.slice(0, 10).reduce(
+				(acc, p) =>
+					  `${acc}\`${p.name}\` `
+					+ `(${p.stats.total.frags} frags, ${p.country.name})\n`,
 				""
 			)
 		}
-		msg.channel.send({ embed: embed });
-	}
-	// 0 on success
-	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
-	{
-		if (super.call(msg, args)) return 1;
-		args[1] = args[1] || "";
-		let req = request(
-			`http://${this.host}/api/v2/players/find?name=${
-				encodeURIComponent(args[1])
-			}${
-				args[2] ? `&country=${encodeURIComponent(args[2])}` : ""
-			}`,
-			res =>
-			{
-				let data = "";
-				res.on("data", chunk => data += chunk);
-				res.on("end", () => this.onresponse(msg, args, JSON.parse(data)));
-			}
-		);
-		req.on("error", err => {console.error(err); msg.channel.send(ferr(args[0], err));});
-		req.end();
+		});
 		return 0;
 	}
 }
