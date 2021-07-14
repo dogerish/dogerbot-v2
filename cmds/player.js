@@ -1,73 +1,27 @@
-const   SauerTrackerCmd     = require("../cmd-types/sauertrackercmd.js");
-const { ferr, percent     } = require("../utils/utils.js");
-const { request           } = require("http");
+const   STCmd      = require("../cmd-types/stcmd.js");
+const { ferr     } = require("../utils/utils.js");
+const { STPlayer } = require("sauertracker");
 
-class PlayerCmd extends SauerTrackerCmd
+class PlayerCmd extends STCmd
 {
 	// generate an EmbedField for a stat
-	static /*EmbedField*/ statfield(/*Object*/ data, /*String*/ name, /*String*/ stat)
+	static /*EmbedField*/ statfield(/*STStats*/ stats, /*String*/ name)
 	{
-		let i = stat ? data[stat] : data;
 		return {
 			name: name,
 			value:
-				  `Frags: ${i.frags}\n`
-				+ `Flags: ${i.flags}\n`
-				+ `Deaths: ${i.deaths}\n`
-				+ `Teamkills: ${i.tks}\n`
-				+ `K/D: ${i.kpd}\n`
-				+ `Accuracy: ${i.acc}%`,
+				  `Frags: ${stats.frags}\n`
+				+ `Flags: ${stats.flags}\n`
+				+ `Deaths: ${stats.deaths}\n`
+				+ `Teamkills: ${stats.tks}\n`
+				+ `K/D: ${stats.kpd}\n`
+				+ `Accuracy: ${stats.acc}%`,
 			inline: true
 		}
 	}
-	onresponse(/*Discord.Message*/ msg, /*Object*/ data)
-	{
-		let { duelWins: DW, duelLosses: DL, duelTies: DT, duelCount: DC } = data;
-		let embed =
-		{
-			title: data.name,
-			url: `${this.url}/player/${encodeURIComponent(data.name)}`,
-			thumbnail: { url: `${this.url}/images/flags/${data.country}.png` },
-			fields:
-			[
-				{
-					name: "Rank",
-					value:
-						  `Rank: #${data.rank}\n`
-						+ `ELO: ${data.elo}\n`
-						+ `Games: ${data.totalGames}\n`,
-					inline: true
-				},
-				{
-					name: "Duels",
-					value:
-						  `Wins: ${DW} (${percent(DW, DC)}%)\n`
-						+ `Losses: ${DL} (${percent(DL, DC)}%)\n`
-						+ `Ties: ${DT} (${percent(DT, DC)}%)\n`
-						+ `Total: ${DC}`,
-					inline: true
-				},
-				{
-					name: "General Information",
-					value:
-						  (data.clan ? `Clan: ${data.clan}\n` : "")
-						+ `Country: ${data.countryName || "Unknown"}\n`
-						+ `Status: ${data.online ? "On" : "Off"}line\n`
-						+ (data.latestGames.length ? `Date of last game:\n${
-							new Date(data.latestGames[0].time)
-								.toUTCString()
-						}` : ""),
-					inline: true
-				},
-				PlayerCmd.statfield(data, "Insta Stats", "instaStats"),
-				PlayerCmd.statfield(data, "Effic Stats", "efficStats"),
-				PlayerCmd.statfield(data, "Total Stats")
-			]
-		};
-		msg.channel.send({ embed: embed });
-	}
+
 	// 0 on success
-	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
+	async /*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{
 		if (super.call(msg, args)) return 1;
 		if (!args[1])
@@ -76,27 +30,56 @@ class PlayerCmd extends SauerTrackerCmd
 			return 1;
 		}
 		msg.react('🤔').catch(e => msg.channel.send('🤔')); // :thinking:
-		let req =
-		request(`http://${this.host}/api/v2/player/${encodeURIComponent(args[1])}`, res =>
+
+		let player = new STPlayer(args[1]);
+		try { await player.fetch(); }
+		catch (e)
 		{
-			let data = "";
-			res.on("data", chunk => data += chunk);
-			res.on("end", () =>
-			{
-				if (res.statusCode != 200) msg.channel.send(ferr(
-					args[0],
-					  `${res.statusCode}: ${res.statusMessage}`
-					+ ` (\`${res.req.path}\`, recieved name: \`${args[1]}\`)`
-				));
-				else this.onresponse(msg, JSON.parse(data));
-			});
-		});
-		req.on("error", e =>
+			msg.channel.send(ferr(args[0], e.message));
+			return 1;
+		}
+
+		let duels = player.duels;
+		msg.channel.send({ embed:
 		{
-			console.error(e);
-			msg.channel.send(ferr(args[0], "Failed to get from SauerTracker."));
+			title: player.name,
+			thumbnail: { url: player.country.flag },
+			fields:
+			[
+				{
+					name: "Rank",
+					value:
+						  `Rank: #${player.rank}\n`
+						+ `elo: ${player.elo}\n`
+						+ `Games: ${player.totalGames}`,
+					inline: true
+				},
+				{
+					name: "Duels",
+					value:
+						  `Wins: ${duels.wins} (${duels.winRate()}%)\n`
+						+ `Losses: ${duels.losses} (${duels.lossRate()}%)\n`
+						+ `Ties: ${duels.ties} (${duels.tieRate()}%)\n`
+						+ `Total: ${duels.count}`,
+					inline: true
+				},
+				{
+					name: "General Information",
+					value:
+						  (player.clan ? `Clan: ${player.clan.tag}\n` : "")
+						+ `Country: ${player.country.name || "Unknown"}\n`
+						+ `Status: ${player.online ? "On" : "Off"}line\n`
+						+ (player.latestGames.length ? `Last game on:\n${
+							player.latestGames[0].date.toUTCString()
+						   }` : ""),
+					inline: true
+				},
+				PlayerCmd.statfield(player.stats.insta, "Instagib Stats"),
+				PlayerCmd.statfield(player.stats.effic, "Efficiency Stats"),
+				PlayerCmd.statfield(player.stats.total, "Total Stats")
+			]
+		}
 		});
-		req.end();
 		return 0;
 	}
 }

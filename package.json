@@ -22,6 +22,7 @@
   "homepage": "https://github.com/dogerish/dogerbot-v2#readme",
   "dependencies": {
     "canvas": "^2.8.0",
-    "discord.js": "^12.5.3"
+    "discord.js": "^12.5.3",
+    "sauertracker": "^2.0.1"
   }
 }
