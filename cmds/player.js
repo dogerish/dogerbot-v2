@@ -1,6 +1,6 @@
-const   STCmd   = require("../cmd-types/stcmd.js");
-const { ferr  } = require("../utils/utils.js");
-const { STPlayer, utils: { requests: { HOST } } } = require("sauertracker");
+const   STCmd      = require("../cmd-types/stcmd.js");
+const { ferr     } = require("../utils/utils.js");
+const { STPlayer } = require("sauertracker");
 
 class PlayerCmd extends STCmd
 {
@@ -43,7 +43,6 @@ class PlayerCmd extends STCmd
 		msg.channel.send({ embed:
 		{
 			title: player.name,
-			url: `${HOST}/player/${encodeURIComponent(player.name)}`,
 			thumbnail: { url: player.country.flag },
 			fields:
 			[
