@@ -23,7 +23,7 @@ class Parser
 		 1: OK, message was ignored.
 		-1: Fail, unknown command
 	*/
-	/*Number*/ onMessage(/*Discord.Message*/ message)
+	async /*Number*/ onMessage(/*Discord.Message*/ message)
 	{
 		// check prefix and ignore bots
 		if (!message.content.startsWith(cfg.prefix) || message.author.bot) return 1;
@@ -34,7 +34,22 @@ class Parser
 			message.channel.send(utils.ferr(args[0], "Unknown command."));
 			return -1;
 		}
-		this.commands.get(args[0]).call(message, args);
+		// try calling the command, if it fails say so without dying
+		try { await this.commands.get(args[0]).call(message, args); }
+		catch (e)
+		{
+			console.error(e);
+			message.channel.send(
+				utils.ferr(args[0],
+					  `Internal \`${e.name}\`:\n`
+					+ `\`\`\`\n${e.message}\n\`\`\`\n`
+					+ `<@${cfg.rootusers[0]}> needs to fix this - make an issue`
+					+ " if one doesn't already cover this: "
+					+ "<https://github.com/dogerish/dogerbot-v2/issues>"
+				)
+			);
+			return 1;
+		}
 		return 0;
 	}
 
