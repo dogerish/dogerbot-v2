@@ -23,6 +23,6 @@
   "dependencies": {
     "canvas": "^2.8.0",
     "discord.js": "^12.5.3",
-    "sauertracker": "^2.0.0"
+    "sauertracker": "^2.0.1"
   }
 }
