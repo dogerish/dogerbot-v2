@@ -4,4 +4,5 @@
 ## Notes
  Before running the *first* time, make sure there is a directory/folder called "set" in `config/user/` and that `config/user/cookie.json` contains `[]`.
  
- ![Ah shit, here we go again.](https://blueprint-api-production.s3.amazonaws.com/uploads/story/thumbnail/94729/87bbadf6-ba42-450c-ba38-804a04599435.png)
+## Collaboration
+ Anyone is welcome to make commands or other contributions, but pull requests will of course be looked over. See more about making commands in [the wiki](https://github.com/dogerish/dogerbot-v2/wiki).
