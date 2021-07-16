@@ -1,8 +1,8 @@
-const BaseCmd = require("../cmd-types/basecmd.js");
-const fs      = require("fs");
-const utils   = require("../utils/utils.js");
-const cfg     = require("../config/cfg.json");
-const GetOpt  = require("../utils/getopt.js");
+const BaseCmd      = require("../cmd-types/basecmd.js");
+const { readFile } = require("fs/promises");
+const utils        = require("../utils/utils.js");
+const cfg          = require("../config/cfg.json");
+const GetOpt       = require("../utils/getopt.js");
 
 class ManCmd extends BaseCmd
 {
@@ -43,7 +43,7 @@ class ManCmd extends BaseCmd
 	}
 
 	// 0 on success
-	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
+	async /*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{
 		if (super.call(msg, args)) return 1;
 		// get options
@@ -73,7 +73,7 @@ class ManCmd extends BaseCmd
 		let embed = { fields: [] }, curField;
 		let data;
 		// try reading and notify of failures
-		try { data = String(fs.readFileSync(cmd.manpage)).split('\n'); }
+		try { data = (await readFile(cmd.manpage)).toString().split('\n'); }
 		catch (e)
 		{
 			// file not there, undocumented (already logged this on startup)
@@ -108,17 +108,19 @@ class ManCmd extends BaseCmd
 			// header/field name
 			case '#':
 				let pre = line.substr(1, 5);
+				let post = subit(line.substr(7));
 				switch (pre)
 				{
-				case "TITLE": embed.title = subit(line.substr(7)); continue;
+				case "TITLE": embed.title = post; continue;
 				case "DESCR":
-					embed.description = subit(line.substr(7));
 					if (whatis)
 					{
-						msg.channel.send(embed.description || "<UNDEFINED>");
+						msg.channel.send(post || "<UNDEFINED>");
 						return 0;
 					}
+					embed.description = post;
 					continue;
+				case "COLOR": embed.color = Number(post); continue;
 				default:
 					curField = embed.fields.push(
 						{ name: line.substr(1), value: "" }
