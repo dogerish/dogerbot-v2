@@ -249,5 +249,11 @@
 			"search": "find"
 		},
 		"ctorArgs": []
+	},
+	{
+		"file": "catfact.js",
+		"orig": "catfact",
+		"aliases": {},
+		"ctorArgs": []
 	}
 ]

@@ -1,0 +1,4 @@
+#TITLE {cmdname}
+#DESCR Usage: `{cfg.prefix}{cmdname}`
+#OVERVIEW
+Sends a cat fact given by https://catfact.ninja/fact.
