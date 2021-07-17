@@ -13,7 +13,7 @@ class ManCmd extends BaseCmd
 	}
 
 	// substitute keys in with their values
-	// text inside of {} will be evaluated with eval(),
+	// text inside of matching {} will be evaluated with eval(),
 	// and <INTERNAL ERROR> will be used if there is any error while evaluating
 	// the only variable you can safely write to in eval's context is "tmp".
 	// returns the new string and tmp in that order in an array.
@@ -25,8 +25,27 @@ class ManCmd extends BaseCmd
 		                    tmp
 	)
 	{
-		let matches = str.match(/\{.+?\}/g);
-		if (!matches) return [str, tmp];
+		let matches = [];
+		debugger;
+		for (let idx = 0; idx < str.length;)
+		{
+			// find start and end index (first '{' and matching '}')
+			let sdx = idx = str.indexOf('{', idx);
+			if (sdx < 0) break;
+			idx++;
+			// skip over matching curly braces within
+			let e, s;
+			do
+			{
+				s = str.indexOf('{', idx);
+				e = str.indexOf('}', idx);
+				idx = e + 1;
+			// keep going while there is a { before a }
+			} while (s >= 0 && e >= 0 && s < e)
+			if (e < 0) idx = e = str.length;
+			matches.push(str.substr(sdx, e - sdx + 1));
+		}
+		if (!matches.length) return [str, tmp];
 		for (let m of matches)
 		{
 			try { str = str.replace(m, eval(m.substr(1, m.length - 2))); }
