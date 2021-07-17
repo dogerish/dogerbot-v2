@@ -42,7 +42,11 @@ class ManCmd extends BaseCmd
 				idx = e + 1;
 			// keep going while there is a { before a }
 			} while (s >= 0 && e >= 0 && s < e)
-			if (e < 0) idx = e = str.length;
+			if (e < 0)
+			{
+				str += '}';
+				idx = e = str.length;
+			}
 			matches.push(str.substr(sdx, e - sdx + 1));
 		}
 		if (!matches.length) return [str, tmp];
