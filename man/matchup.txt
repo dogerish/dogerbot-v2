@@ -1,0 +1,14 @@
+#TITLE {cmdname}
+#DESCR Usage: `{cfg.prefix}{cmdname} player1 player2...`
+#ARGUMENTS
+`player...`
+	Two or more players to split into teams. Each argument is a player name.
+
+#OVERVIEW
+Takes a list of players and splits them into two "semi balanced teams" using SauerTracker's API. See more here: https://github.com/AngrySnout/SauerTracker/wiki/API-v1#apiplayersteams.
+
+#EXAMPLE
+Get teams for these players:
+```
+{cfg.prefix}{cmdname} =DK=Avior Midnyte~ |DM|Skillzful dogerish firefly "!s]DarkFire'"
+```

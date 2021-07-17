@@ -251,6 +251,15 @@
 		"ctorArgs": []
 	},
 	{
+		"file": "matchup.js",
+		"orig": "matchup",
+		"aliases": {
+			"teamsplit": "matchup",
+			"teams": "matchup"
+		},
+		"ctorArgs": []
+	},
+	{
 		"file": "catfact.js",
 		"orig": "catfact",
 		"aliases": {},
