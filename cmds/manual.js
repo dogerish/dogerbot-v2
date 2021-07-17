@@ -26,7 +26,6 @@ class ManCmd extends BaseCmd
 	)
 	{
 		let matches = [];
-		debugger;
 		for (let idx = 0; idx < str.length;)
 		{
 			// find start and end index (first '{' and matching '}')

@@ -1,7 +1,7 @@
 #TITLE {cmdname}
-#DESCR Usage: `{cfg.prefix}{cmdname} player1 player2...`
+#DESCR Usage: `{cfg.prefix}{cmdname} <player1> <player2>...`
 #ARGUMENTS
-`player...`
+`<player>...`
 	Two or more players to split into teams. Each argument is a player name.
 
 #OVERVIEW
