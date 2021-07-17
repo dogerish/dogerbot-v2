@@ -1,8 +1,8 @@
-const BaseCmd = require("../cmd-types/basecmd.js");
-const fs      = require("fs");
-const utils   = require("../utils/utils.js");
-const cfg     = require("../config/cfg.json");
-const GetOpt  = require("../utils/getopt.js");
+const BaseCmd      = require("../cmd-types/basecmd.js");
+const { readFile } = require("fs/promises");
+const utils        = require("../utils/utils.js");
+const cfg          = require("../config/cfg.json");
+const GetOpt       = require("../utils/getopt.js");
 
 class ManCmd extends BaseCmd
 {
@@ -13,7 +13,7 @@ class ManCmd extends BaseCmd
 	}
 
 	// substitute keys in with their values
-	// text inside of {} will be evaluated with eval(),
+	// text inside of matching {} will be evaluated with eval(),
 	// and <INTERNAL ERROR> will be used if there is any error while evaluating
 	// the only variable you can safely write to in eval's context is "tmp".
 	// returns the new string and tmp in that order in an array.
@@ -25,8 +25,31 @@ class ManCmd extends BaseCmd
 		                    tmp
 	)
 	{
-		let matches = str.match(/\{.+?\}/g);
-		if (!matches) return [str, tmp];
+		let matches = [];
+		debugger;
+		for (let idx = 0; idx < str.length;)
+		{
+			// find start and end index (first '{' and matching '}')
+			let sdx = idx = str.indexOf('{', idx);
+			if (sdx < 0) break;
+			idx++;
+			// skip over matching curly braces within
+			let e, s;
+			do
+			{
+				s = str.indexOf('{', idx);
+				e = str.indexOf('}', idx);
+				idx = e + 1;
+			// keep going while there is a { before a }
+			} while (s >= 0 && e >= 0 && s < e)
+			if (e < 0)
+			{
+				str += '}';
+				idx = e = str.length;
+			}
+			matches.push(str.substr(sdx, e - sdx + 1));
+		}
+		if (!matches.length) return [str, tmp];
 		for (let m of matches)
 		{
 			try { str = str.replace(m, eval(m.substr(1, m.length - 2))); }
@@ -43,7 +66,7 @@ class ManCmd extends BaseCmd
 	}
 
 	// 0 on success
-	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
+	async /*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{
 		if (super.call(msg, args)) return 1;
 		// get options
@@ -73,7 +96,7 @@ class ManCmd extends BaseCmd
 		let embed = { fields: [] }, curField;
 		let data;
 		// try reading and notify of failures
-		try { data = String(fs.readFileSync(cmd.manpage)).split('\n'); }
+		try { data = (await readFile(cmd.manpage)).toString().split('\n'); }
 		catch (e)
 		{
 			// file not there, undocumented (already logged this on startup)
@@ -108,17 +131,19 @@ class ManCmd extends BaseCmd
 			// header/field name
 			case '#':
 				let pre = line.substr(1, 5);
+				let post = subit(line.substr(7));
 				switch (pre)
 				{
-				case "TITLE": embed.title = subit(line.substr(7)); continue;
+				case "TITLE": embed.title = post; continue;
 				case "DESCR":
-					embed.description = subit(line.substr(7));
 					if (whatis)
 					{
-						msg.channel.send(embed.description || "<UNDEFINED>");
+						msg.channel.send(post || "<UNDEFINED>");
 						return 0;
 					}
+					embed.description = post;
 					continue;
+				case "COLOR": embed.color = Number(post); continue;
 				default:
 					curField = embed.fields.push(
 						{ name: line.substr(1), value: "" }

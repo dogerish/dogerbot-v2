@@ -1,5 +1,6 @@
 #TITLE {cmdname}
 #DESCR Usage: `{cfg.prefix}{cmdname} [-n|a|d] [<n>]|<url...>`
+#COLOR {cmd.color}
 #OPTIONS
 `-n`, `--neg`
 	Index pictures from the end instead of the beginning (negative)
