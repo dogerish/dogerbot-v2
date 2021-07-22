@@ -150,7 +150,7 @@
 		"aliases": {
 			"boris": "borispic"
 		},
-		"ctorArgs": ["Boris", "222977034870063104", "0x78ba36"]
+		"ctorArgs": ["Boris", "222977034870063104", "0x78ba36", null, "7-22"]
 	},
 	{
 		"file": "cat.js",

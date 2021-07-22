@@ -12,7 +12,8 @@ class CatCmd extends BaseCmd
 		/*String*/ name,
 		/*String*/ owner,
 		/*NumberResolvable*/ color,
-		/*String*/ namef
+		/*String*/ namef,
+		/*String*/ bday // birthday, specify as M-D format (January 2 -> 1-2)
 	)
 	{
 		super(...baseArgs);
@@ -22,6 +23,21 @@ class CatCmd extends BaseCmd
 		this.urls.pop();
 		this.managers = [...cfg.rootusers, owner];
 		this.color = Number(color);
+		this.bday = bday;
+	}
+
+	// returns true if today is the cat's birthday
+	/*Boolean*/ isBday()
+	{
+		let today = new Date();
+		return `${today.getMonth() + 1}-${today.getDate()}` == this.bday;
+	}
+	// returns string depending on whether or not it's the cat's birthday
+	/*String*/ getBdayString()
+	{
+		return this.isBday()
+			? `:partying_face: Happy birthday ${this.name}!`
+			: `${this.name}`;
 	}
 
 	// writes the url list to the file
@@ -110,7 +126,7 @@ class CatCmd extends BaseCmd
 				{
 					embed:
 					{
-						title: `${this.name} ${n}`,
+						title: `${this.getBdayString()} ${n}`,
 						image: { url: url },
 						color: this.color
 					}
