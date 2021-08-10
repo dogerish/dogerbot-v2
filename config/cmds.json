@@ -126,6 +126,12 @@
 		"aliases": {},
 		"ctorArgs": []
 	},
+	{
+		"file": "timer.js",
+		"orig": "timer",
+		"aliases": {},
+		"ctorArgs": []
+	},
 
 	{
 		"file": "cat.js",
