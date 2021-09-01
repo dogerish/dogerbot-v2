@@ -163,42 +163,6 @@
 	},
 	{
 		"file": "cat.js",
-		"orig": "dorypic",
-		"manpage": "cat.txt",
-		"aliases": {
-			"dory": "dorypic"
-		},
-		"ctorArgs": ["Dory", "410416782025949195", "0x2471a3"]
-	},
-	{
-		"file": "cat.js",
-		"orig": "miapic",
-		"manpage": "cat.txt",
-		"aliases": {
-			"mia": "miapic"
-		},
-		"ctorArgs": ["Mia", "410416782025949195", "0x2471a3"]
-	},
-	{
-		"file": "cat.js",
-		"orig": "mimipic",
-		"manpage": "cat.txt",
-		"aliases": {
-			"mimi": "mimipic"
-		},
-		"ctorArgs": ["Mimí", "410416782025949195", "0x2471a3", "mimi"]
-	},
-	{
-		"file": "cat.js",
-		"orig": "charliepic",
-		"manpage": "cat.txt",
-		"aliases": {
-			"charlie": "charliepic"
-		},
-		"ctorArgs": ["Charlie", "410416782025949195", "0x2471a3"]
-	},
-	{
-		"file": "cat.js",
 		"orig": "wilmapic",
 		"manpage": "cat.txt",
 		"aliases": {
