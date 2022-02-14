@@ -48,6 +48,14 @@
 		"ARGS": []
 	},
 	{
+		"file": "delete.js",
+		"orig": "delete",
+		"aliases": {
+			"del": "delete"
+		},
+		"ctorArgs": []
+	},
+	{
 		"file": "cookie.js",
 		"orig": "cookie",
 		"aliases": {},
