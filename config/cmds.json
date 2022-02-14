@@ -171,6 +171,15 @@
 		"ctorArgs": ["Wilma", "690236857153486996", "0x42f5e0"]
 	},
 	{
+		"file": "cat.js",
+		"orig": "yetipic",
+		"manpage": "cat.txt",
+		"aliases": {
+			"yeti": "yetipic"
+		},
+		"ctorArgs": ["Yeti", "206054811693613056", "0x00ffff", "yeti"]
+	},
+	{
 		"file": "randomcat.js",
 		"orig": "randomcat",
 		"aliases": {
