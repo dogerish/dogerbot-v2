@@ -1,5 +1,4 @@
 const PermCmd     = require("../cmd-types/permcmd.js");
-const utils       = require("../utils/utils.js");
 const cfg         = require("../config/cfg.json");
 
 class SetCmd extends PermCmd
@@ -18,13 +17,13 @@ class SetCmd extends PermCmd
 		let [cmd, val] = args.slice(1);
 		if (!cmd)
 		{
-			msg.channel.send(utils.ferr(args[0], "No command specified."));
+			this.error(msg, "No command specified.");
 			return 1;
 		}
 		cmd = this.parser.deAliasCmd(cmd);
 		if (!cmd[1] || cmd[1] === this)
 		{
-			msg.channel.send(utils.ferr(args[0], `\`${cmd[0]}\` can't be set.`));
+			this.error(msg, `\`${cmd[0]}\` can't be set.`);
 			return 1;
 		}
 		cmd = cmd[1];

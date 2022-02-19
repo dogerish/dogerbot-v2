@@ -13,7 +13,8 @@ class UptimeCmd extends BaseCmd
 		    m = Math.floor((ut /= n) %  n      ),
 		    h = Math.floor((ut /= n) % (n = 24)),
 		    d = Math.floor( ut /= n            );
-		msg.channel.send(
+		this.output(
+			msg,
 			  `Up for ${d}d ${h}h ${m}m ${s}s.`
 			+ ` Online since ${new Date(Date.now() - msg.client.uptime)}.`
 			+ ` Total milliseconds *(imprecise)*: ${msg.client.uptime}.`

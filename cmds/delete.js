@@ -1,6 +1,5 @@
 const { MessageManager } = require("discord.js");
 const RootCmd = require("../cmd-types/rootcmd.js");
-const utils   = require("../utils/utils.js");
 
 class DeleteCmd extends RootCmd
 {
@@ -18,19 +17,16 @@ class DeleteCmd extends RootCmd
 			try {
 				todel[i] = await msg.channel.messages.fetch(snowflake);
 			} catch (e)  {
-				msg.channel.send(utils.ferr(
-					args[0],
+				this.error(
+					msg,
 					`Could not resolve \`${snowflake}\` to a message.`
-				));
+				);
 				return -1;
 			}
 			// make sure this is a message from the bot
 			if (todel[i].author.id != msg.client.user.id)
 			{
-				msg.channel.send(utils.ferr(
-					args[0],
-					`${todel[i].url} isn't my message.`
-				));
+				this.error(msg, `${todel[i].url} isn't my message.`);
 				return -2;
 			}
 		}

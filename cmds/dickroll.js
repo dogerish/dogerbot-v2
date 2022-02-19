@@ -9,7 +9,7 @@ class DickRollCmd extends BaseCmd
 	{
 		if (super.call(msg, args)) return 1;
 		// send rick roll, you're welcome Avior
-		msg.channel.send("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+		this.output(msg, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 		return 0;
 	}
 }

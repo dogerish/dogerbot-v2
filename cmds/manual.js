@@ -1,6 +1,5 @@
 const BaseCmd      = require("../cmd-types/basecmd.js");
 const { readFile } = require("fs/promises");
-const utils        = require("../utils/utils.js");
 const cfg          = require("../config/cfg.json");
 const GetOpt       = require("../utils/getopt.js");
 
@@ -75,7 +74,7 @@ class ManCmd extends BaseCmd
 		{
 			if (go.opterr)
 			{
-				msg.channel.send(utils.ferr(args[0], go.opterr));
+				this.error(msg, go.opterr);
 				return 1;
 			}
 			switch (go.opt) { case 'f': case "whatis": whatis = true; }
@@ -88,7 +87,7 @@ class ManCmd extends BaseCmd
 		// unknown command
 		if (!cmd)
 		{
-			msg.channel.send(utils.ferr(args[0], `Unknown command: \`${cmdname}\``));
+			this.error(msg, `Unknown command: \`${cmdname}\``);
 			return 1;
 		}
 		// construct the embed
@@ -101,18 +100,15 @@ class ManCmd extends BaseCmd
 			// file not there, undocumented (already logged this on startup)
 			if (e.code == "ENOENT")
 			{
-				msg.channel.send(utils.ferr(
-					args[0],
-					`Sorry, \`${cmdname}\` is undocumented so far.`
-				));
+				this.error(msg, `Sorry, \`${cmdname}\` is undocumented so far.`);
 				return 1;
 			}
 			// unexpected error, log it
 			console.error(`Error (${args[0]}, ${e.code}):`, e);
-			msg.channel.send(utils.ferr(
-				args[0],
+			this.error(
+				msg,
 				`Internal error (code ${e.code}). Please make a bug report.`
-			));
+			);
 		}
 		// shortcut to sub the keys of a string in this context
 		let tmp;
@@ -137,7 +133,7 @@ class ManCmd extends BaseCmd
 				case "DESCR":
 					if (whatis)
 					{
-						msg.channel.send(post || "<UNDEFINED>");
+						this.output(msg, post || "<UNDEFINED>");
 						return 0;
 					}
 					embed.description = post;
@@ -162,13 +158,14 @@ class ManCmd extends BaseCmd
 			if (!f.value) { f.value = "<UNDEFINED>"; embed.fields[i] = f; }
 		});
 		// send the embed and log unexpected errors
-		msg.channel.send({ embed: embed })
+		let self = this;
+		this.output(msg, { embed: embed })
 		.catch(e => {
 			console.error(`Error (${args[0]}, ${e.code}):`, e);
-			msg.channel.send(utils.ferr(
-				args[0],
+			self.error(
+				msg,
 				`Internal error (code \`${e.code}\`). Please make a bug report.`
-			))
+			)
 		});
 		return 0;
 	}
