@@ -1,6 +1,5 @@
 const   STCmd     = require("../cmd-types/stcmd.js");
 const { STMatch } = require("sauertracker");
-const { ferr    } = require("../utils/utils.js");
 
 class MatchupCmd extends STCmd
 {
@@ -12,14 +11,14 @@ class MatchupCmd extends STCmd
 		if (super.call(msg, args)) return 1;
 		if (args.length < 3)
 		{
-			msg.channel.send(ferr(args[0], "You must give two or more players."));
+			this.error(msg, "You must give two or more players.");
 			return 1;
 		}
 		let emoji = "<a:spinking:865774704974888980>"; // spinning thinking :spinking:
-		msg.react(emoji).catch(() => msg.channel.send(emoji));
+		msg.react(emoji).catch(() => this.output(msg, emoji));
 		let match = await new STMatch(...args.slice(1)).teamsplit();
 		// send embed with good and evil teams as inline fields
-		msg.channel.send({ embed: { fields:
+		this.output(msg, { embed: { fields:
 		[
 			{ name: "good", value: match.good.join('\n'), inline: true },
 			{ name: "evil", value: match.evil.join('\n'), inline: true }

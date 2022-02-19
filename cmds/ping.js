@@ -9,7 +9,7 @@ class PingCmd extends BaseCmd
 	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{
 		if (super.call(msg, args)) return 1;
-		msg.channel.send(Date.now() - msg.createdAt + "ms");
+		this.output(msg, Date.now() - msg.createdAt + "ms");
 		return 0;
 	}
 }

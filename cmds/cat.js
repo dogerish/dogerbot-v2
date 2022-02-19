@@ -62,9 +62,10 @@ class CatCmd extends BaseCmd
 	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{
 		if (super.call(msg, args)) return 1;
+		let self = this;
 		const err = (/*String*/ brief) =>
 		{
-			msg.channel.send(utils.ferr(args[0], brief));
+			self.error(msg, brief);
 			return 1;
 		};
 		const getopt = new GetOpt("n,neg,a,add,d,del,", args);
@@ -88,7 +89,7 @@ class CatCmd extends BaseCmd
 			for (let at of msg.attachments) urls.push(at[1].url);
 			if (!urls.length) return err("No attachments or arguments found.");
 			this.add(urls);
-			msg.channel.send("Added URLs\n```\n" + urls.join('\n') + "\n```");
+			this.output(msg, "Added URLs\n```\n" + urls.join('\n') + "\n```");
 			return 0;
 		}
 		let n = args[getopt.optind];
@@ -105,7 +106,7 @@ class CatCmd extends BaseCmd
 		{
 			if (n <= 0 || n > this.urls.length) return err(`#${n} is out of bounds.`);
 			this.del(n - 1);
-			msg.channel.send("Deleted URL\n```\n" + url + "\n```");
+			this.output(msg, "Deleted URL\n```\n" + url + "\n```");
 			return 0;
 		}
 		n = '#' + n;
@@ -119,10 +120,10 @@ class CatCmd extends BaseCmd
 			let match = url.match(/\.[^\.]*$/);
 			if (match && [".mp4", ".mov"].includes(match[0].toLowerCase()))
 			{
-				msg.channel.send(`**${n}**\n${url}`);
+				this.output(msg, `**${n}**\n${url}`);
 				break;
 			}
-			msg.channel.send(
+			this.output(msg,
 				{
 					embed:
 					{

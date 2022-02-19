@@ -12,7 +12,8 @@ class ListCmd extends BaseCmd
 	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{
 		if (super.call(msg, args)) return 1;
-		msg.channel.send(
+		this.output(
+			msg,
 			  "Available commands: `"
 			+ Array.from(this.parser.commands.keys()).join("`, `")
 			+ '`'

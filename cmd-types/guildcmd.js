@@ -10,12 +10,7 @@ class GuildCmd extends BaseCmd
 	{
 		if (super.call(msg, args)) return 1;
 		if (!["dm", "unknown"].includes(msg.channel.type)) return 0;
-		msg.channel.send(
-			utils.ferr(
-				args[0],
-				"This command needs to be used in a server."
-			)
-		);
+		this.error(msg, "This command needs to be used in a server.");
 		return 1;
 	}
 }

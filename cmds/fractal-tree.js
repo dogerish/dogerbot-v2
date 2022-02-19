@@ -1,10 +1,9 @@
-const   BaseCmd             = require("../cmd-types/basecmd.js");
+const   DMCmd               = require("../cmd-types/dmcmd.js");
 const   GetOpt              = require("../utils/getopt.js");
-const   utils               = require("../utils/utils.js");
 const { createCanvas      } = require("canvas");
 const { MessageAttachment } = require("discord.js");
 
-class FractalTreeCmd extends BaseCmd
+class FractalTreeCmd extends DMCmd
 {
 	constructor(baseArgs) { super(...baseArgs); }
 
@@ -27,7 +26,7 @@ class FractalTreeCmd extends BaseCmd
 		{
 			if (go.opterr)
 			{
-				msg.channel.send(utils.ferr(args[0], go.opterr));
+				this.error(msg, go.opterr);
 				return 1;
 			}
 			let n = Number(go.optarg);
@@ -59,10 +58,7 @@ class FractalTreeCmd extends BaseCmd
 		try { cv  = createCanvas(x * 2, y); }
 		catch (e)
 		{
-			msg.channel.send(utils.ferr(
-				args[0],
-				"Failed to create canvas. Area likely too big."
-			));
+			this.error(msg, "Failed to create canvas. Area likely too big.");
 			return 1;
 		}
 		let ctx = cv.getContext("2d");
@@ -90,17 +86,18 @@ class FractalTreeCmd extends BaseCmd
 		ctx.stroke();
 		try
 		{
-			msg.channel.send(
+			this.output(
+				msg,
 				`${Date.now() - start}ms`,
 				new MessageAttachment(cv.toBuffer(), "tree.png")
 			);
 		}
 		catch (e)
 		{
-			msg.channel.send(utils.ferr(
-				args[0],
+			this.error(
+				msg,
 				"Failed to send canvas as buffer. Perhaps don't use zeroes."
-			));
+			);
 			return 1;
 		}
 		return 0;

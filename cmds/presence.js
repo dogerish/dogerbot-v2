@@ -1,6 +1,5 @@
 const RootCmd = require("../cmd-types/rootcmd.js");
 const GetOpt  = require("../utils/getopt.js");
-const utils   = require("../utils/utils.js");
 const cfg     = require("../config/cfg.json");
 
 class PresenceCmd extends RootCmd
@@ -15,7 +14,7 @@ class PresenceCmd extends RootCmd
 		{
 			if (go.opterr)
 			{
-				msg.channel.send(utils.ferr(args[0], go.opterr));
+				this.error(msg, go.opterr);
 				return 1;
 			}
 			switch (go.opt)
@@ -37,7 +36,7 @@ class PresenceCmd extends RootCmd
 				}
 			}
 			: cfg.dftPres || {};
-		msg.client.user.setPresence(toSet).then(pres => msg.channel.send("Status set."));
+		msg.client.user.setPresence(toSet).then(pres => this.output(msg, "Status set."));
 		return 0;
 	}
 }
