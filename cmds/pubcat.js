@@ -12,7 +12,7 @@ class PublicCatCmd extends CatCmd
 		this.pre = "[Request] ";
 		this.appfile = `resources/${namef}apps.txt`;
 		this.apps = fs.readFileSync(this.appfile).toString().split('\n')
-			.filter(app => app.length != 0);
+			.filter(app => app.length);
 	}
 
 	// writes the url list to the file
