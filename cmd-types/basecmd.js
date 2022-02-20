@@ -3,8 +3,15 @@ const utils = require("../utils/utils.js");
 // base for a command
 class BaseCmd
 {
-	constructor(/*String*/ orig, /*String*/ manpage)
+	constructor([
+		/*Discord.Client*/ client,
+		/*Parser*/         parser,
+		/*String*/         orig,
+		/*String*/         manpage
+	])
 	{
+		this.client = client;
+		this.parser = parser;
 		// config file for channels
 		this.chancfg = `config/user/set/${orig}.txt`;
 		this.chans = new Map();

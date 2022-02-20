@@ -3,8 +3,6 @@ const RootCmd = require("../cmd-types/rootcmd.js");
 
 class DeleteCmd extends RootCmd
 {
-	constructor(baseArgs) { super(baseArgs); }
-
 	// 0 on success
 	/*Number*/ async call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{

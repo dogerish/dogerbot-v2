@@ -4,7 +4,6 @@ const utils   = require("../utils/utils.js");
 // only works in guilds/servers
 class GuildCmd extends BaseCmd
 {
-	constructor(baseArgs) { super(...baseArgs); }
 	// returns 0 on pass
 	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{

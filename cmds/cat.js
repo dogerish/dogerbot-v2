@@ -16,7 +16,7 @@ class CatCmd extends BaseCmd
 		/*String*/ bday // birthday, specify as M-D format (January 2 -> 1-2)
 	)
 	{
-		super(...baseArgs);
+		super(baseArgs);
 		this.name  = name;
 		this.file  = `resources/${namef || name.toLowerCase()}pics.txt`;
 		this.urls  = String(fs.readFileSync(this.file)).split('\n');

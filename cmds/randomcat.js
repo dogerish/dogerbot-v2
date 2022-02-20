@@ -3,12 +3,12 @@ const CatCmd  = require("./cat.js");
 
 class RandomCatCmd extends BaseCmd
 {
-	constructor(baseArgs, /*Parser*/ parser)
+	constructor(baseArgs)
 	{
-		super(...baseArgs);
+		super(baseArgs);
 		// get all the cat commands
 		this.cats = new Map(
-			Array.from(parser.commands.entries()).filter(
+			Array.from(this.parser.commands.entries()).filter(
 				([key, cmd]) => cmd instanceof CatCmd
 			)
 		);

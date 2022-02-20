@@ -2,8 +2,6 @@ const BaseCmd = require("../cmd-types/basecmd.js");
 
 class UptimeCmd extends BaseCmd
 {
-	constructor(baseArgs) { super(...baseArgs); }
-
 	// 0 on success
 	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{

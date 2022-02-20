@@ -3,8 +3,6 @@ const { STMatch } = require("sauertracker");
 
 class MatchupCmd extends STCmd
 {
-	constructor(baseArgs) { super(baseArgs); }
-
 	// 0 on success
 	async /*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{

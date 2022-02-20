@@ -3,8 +3,6 @@ const { request } = require("https");
 
 class CatFactCmd extends BaseCmd
 {
-	constructor(baseArgs) { super(...baseArgs); }
-
 	// 0 on success
 	/*Promise<Number>*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{
