@@ -3,3 +3,4 @@ config/cfg.json
 config/user/*
 Session.vim
 *.swp
+.DS_Store
