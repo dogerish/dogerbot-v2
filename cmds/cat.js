@@ -19,8 +19,8 @@ class CatCmd extends BaseCmd
 		super(baseArgs);
 		this.name  = name;
 		this.file  = `resources/${namef || name.toLowerCase()}pics.txt`;
-		this.urls  = String(fs.readFileSync(this.file)).split('\n');
-		this.urls.pop();
+		this.urls  = String(fs.readFileSync(this.file)).split('\n')
+			.filter(url => url.length);
 		this.managers = [...cfg.rootusers, owner];
 		this.color = Number(color);
 		this.bday = bday;
