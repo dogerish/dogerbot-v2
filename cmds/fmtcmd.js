@@ -6,7 +6,7 @@ class FmtCmd extends BaseCmd
 {
 	constructor(baseArgs, /*String...*/ ...responses)
 	{
-		super(...baseArgs);
+		super(baseArgs);
 		this.responses = responses;
 	}
 

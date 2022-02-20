@@ -1,0 +1,14 @@
+#TITLE {cmdname}
+#DESCR Usage: `{cfg.prefix}{cmdname} [-lar] [<index>]`
+#OPTIONS
+`-a`, `--all`
+	Approves or rejects all applications
+`-l`, `--list`
+	Lists applications and then returns
+`-r`, `--reject`
+	Rejects applications instead of approving them
+#ARGUMENTS
+`[<index>]`
+	Optional; the index of the application to approve or reject.
+	If left unspecified, the last application will be used instead.
+This is a root only command.

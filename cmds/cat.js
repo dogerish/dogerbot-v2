@@ -16,7 +16,7 @@ class CatCmd extends BaseCmd
 		/*String*/ bday // birthday, specify as M-D format (January 2 -> 1-2)
 	)
 	{
-		super(...baseArgs);
+		super(baseArgs);
 		this.name  = name;
 		this.file  = `resources/${namef || name.toLowerCase()}pics.txt`;
 		this.urls  = String(fs.readFileSync(this.file)).split('\n');
@@ -24,6 +24,7 @@ class CatCmd extends BaseCmd
 		this.managers = [...cfg.rootusers, owner];
 		this.color = Number(color);
 		this.bday = bday;
+		this.pre = "";
 	}
 
 	// returns true if today is the cat's birthday
@@ -89,7 +90,10 @@ class CatCmd extends BaseCmd
 			for (let at of msg.attachments) urls.push(at[1].url);
 			if (!urls.length) return err("No attachments or arguments found.");
 			this.add(urls);
-			this.output(msg, "Added URLs\n```\n" + urls.join('\n') + "\n```");
+			this.output(
+				msg,
+				this.pre + "Added URLs\n```\n" + urls.join('\n') + "\n```"
+			);
 			return 0;
 		}
 		let n = args[getopt.optind];
@@ -106,7 +110,7 @@ class CatCmd extends BaseCmd
 		{
 			if (n <= 0 || n > this.urls.length) return err(`#${n} is out of bounds.`);
 			this.del(n - 1);
-			this.output(msg, "Deleted URL\n```\n" + url + "\n```");
+			this.output(msg, this.pre + "Deleted URL\n```\n" + url + "\n```");
 			return 0;
 		}
 		n = '#' + n;

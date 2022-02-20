@@ -3,12 +3,6 @@ const cfg         = require("../config/cfg.json");
 
 class SetCmd extends PermCmd
 {
-	constructor(baseArgs, /*Parser*/ parser, ...args)
-	{
-		super(baseArgs, ...args);
-		this.parser = parser;
-	}
-	
 	// 0 on success
 	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{

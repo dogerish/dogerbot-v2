@@ -5,12 +5,6 @@ const GetOpt       = require("../utils/getopt.js");
 
 class ManCmd extends BaseCmd
 {
-	constructor(baseArgs, /*Parser*/ parser)
-	{
-		super(...baseArgs);
-		this.parser = parser;
-	}
-
 	// substitute keys in with their values
 	// text inside of matching {} will be evaluated with eval(),
 	// and <INTERNAL ERROR> will be used if there is any error while evaluating

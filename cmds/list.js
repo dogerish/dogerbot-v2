@@ -2,12 +2,6 @@ const BaseCmd = require("../cmd-types/basecmd.js");
 
 class ListCmd extends BaseCmd
 {
-	constructor(baseArgs, /*Parser*/ parser)
-	{
-		super(...baseArgs);
-		this.parser = parser;
-	}
-
 	// 0 on success
 	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{

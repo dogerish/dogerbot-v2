@@ -5,7 +5,7 @@ class AICatPicCmd extends BaseCmd
 {
 	constructor(baseArgs)
 	{
-		super(...baseArgs);
+		super(baseArgs);
 		this.url     = `https://${this.domain = "thiscatdoesnotexist"}.com`;
 		this.attname = `${this.domain}.jpeg`;
 	}

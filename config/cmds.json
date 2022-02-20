@@ -199,6 +199,25 @@
 		"ARGS": []
 	},
 	{
+		"file": "pubcat.js",
+		"orig": "pubcat",
+		"manpage": "cat.txt",
+		"aliases": {
+		},
+		"ctorArgs": []
+	},
+	{
+		"file": "approve.js",
+		"orig": "approve",
+		"manpage": "approve.txt",
+		"aliases": {
+			"reject": "approve -r",
+			"ok": "approve",
+			"no": "approve -r"
+		},
+		"ctorArgs": ["pubcat"]
+	},
+	{
 		"file": "aicatpic.js",
 		"orig": "aicatpic",
 		"aliases": {

@@ -5,8 +5,6 @@ const { MessageAttachment } = require("discord.js");
 
 class FractalTreeCmd extends DMCmd
 {
-	constructor(baseArgs) { super(...baseArgs); }
-
 	// 0 on success
 	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{

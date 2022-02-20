@@ -5,3 +5,4 @@ logs/
 Session.vim
 *.swp
 base
+.DS_Store

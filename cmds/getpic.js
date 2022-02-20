@@ -7,7 +7,7 @@ class GetpicCmd extends BaseCmd
 {
 	constructor(baseArgs)
 	{
-		super(...baseArgs);
+		super(baseArgs);
 		this.functional = true;
 		this.udfunc(err =>
 		{
