@@ -181,6 +181,15 @@
 		},
 		"ctorArgs": ["Yeti", "206054811693613056", "0x00ffff", "yeti"]
 	},
+		{
+		"file": "cat.js",
+		"orig": "gandalfpic",
+		"manpage": "cat.txt",
+		"aliases": {
+			"gandalf": "gandalfpic"
+		},
+		"ctorArgs": ["Gandalf", "315763195727970305", "0x545454", "gandalf"]
+	},
 	{
 		"file": "randomcat.js",
 		"orig": "randomcat",
