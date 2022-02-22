@@ -181,7 +181,7 @@
 		},
 		"ctorArgs": ["Yeti", "206054811693613056", "0x00ffff", "yeti"]
 	},
-		{
+	{
 		"file": "cat.js",
 		"orig": "gandalfpic",
 		"manpage": "cat.txt",
