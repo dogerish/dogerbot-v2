@@ -214,7 +214,7 @@
 		"manpage": "cat.txt",
 		"aliases": {
 		},
-		"ctorArgs": []
+		"ctorArgs": ["Cat"]
 	},
 	{
 		"file": "approve.js",
@@ -227,6 +227,26 @@
 		},
 		"ctorArgs": ["pubcat"]
 	},
+	{
+		"file": "pubcat.js",
+		"orig": "pubdog",
+		"manpage": "cat.txt",
+		"aliases": {
+		},
+		"ctorArgs": ["Dog"]
+	},
+	{
+		"file": "approve.js",
+		"orig": "dogapprove",
+		"manpage": "approve.txt",
+		"aliases": {
+			"dreject": "dogapprove -r",
+			"dok": "dogapprove",
+			"dno": "dogapprove -r"
+		},
+		"ctorArgs": ["pubdog"]
+	},
+
 	{
 		"file": "aicatpic.js",
 		"orig": "aicatpic",
