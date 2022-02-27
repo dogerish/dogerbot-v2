@@ -141,7 +141,8 @@
 		"manpage": "cat.txt",
 		"aliases": {
 			"stan": "stanpic",
-			"sna" : "stanpic"
+			"sna" : "stanpic",
+			"Stanley": "stanpic"
 		},
 		"ctorArgs": ["Stanley", "160616449742864385", "0x0c6a66", "stan"]
 	},
@@ -150,7 +151,8 @@
 		"orig": "borispic",
 		"manpage": "cat.txt",
 		"aliases": {
-			"boris": "borispic"
+			"boris": "borispic",
+			"Boris": "borispic"
 		},
 		"ctorArgs": ["Boris", "222977034870063104", "0x78ba36", null, "7-22"]
 	},
@@ -159,7 +161,8 @@
 		"orig": "kalipic",
 		"manpage": "cat.txt",
 		"aliases": {
-			"kali": "kalipic"
+			"kali": "kalipic",
+			"Kali": "kalipic"
 		},
 		"ctorArgs": ["Kali", "675811287296638987", "0x00a513"]
 	},
@@ -168,7 +171,8 @@
 		"orig": "wilmapic",
 		"manpage": "cat.txt",
 		"aliases": {
-			"wilma": "wilmapic"
+			"wilma": "wilmapic",
+			"Wilma": "wilmapic"
 		},
 		"ctorArgs": ["Wilma", "862742996058112021", "0x42f5e0"]
 	},
@@ -177,7 +181,8 @@
 		"orig": "yetipic",
 		"manpage": "cat.txt",
 		"aliases": {
-			"yeti": "yetipic"
+			"yeti": "yetipic",
+			"Yeti": "yetipic"
 		},
 		"ctorArgs": ["Yeti", "206054811693613056", "0x00ffff", "yeti"]
 	},
@@ -186,10 +191,12 @@
 		"orig": "gandalfpic",
 		"manpage": "cat.txt",
 		"aliases": {
-			"gandalf": "gandalfpic"
+			"gandalf": "gandalfpic",
+			"Gandalf": "gandalfpic"
 		},
 		"ctorArgs": ["Gandalf", "315763195727970305", "0x545454", "gandalf"]
 	},
+
 	{
 		"file": "randomcat.js",
 		"orig": "randomcat",
