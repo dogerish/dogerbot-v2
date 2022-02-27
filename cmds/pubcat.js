@@ -5,10 +5,11 @@ const cfg    = require("../config/cfg.json");
 
 class PublicCatCmd extends CatCmd
 {
-	constructor(baseArgs)
+	constructor(baseArgs, /*String*/ what)
 	{
-		let namef = "pubcat";
-		super(baseArgs, "Community Cat", null, 0, namef);
+		let namef = `pub${what.toLowerCase()}`;
+		super(baseArgs, `Community ${what}`, null, 0, namef);
+		this.what = what;
 		this.pre = "[Request] ";
 		this.appfile = `resources/${namef}apps.txt`;
 		this.apps = fs.readFileSync(this.appfile).toString().split('\n')
@@ -36,7 +37,7 @@ class PublicCatCmd extends CatCmd
 	notifyroot(/*String*/ ...apps)
 	{
 		this.client.users.fetch(cfg.rootusers[0]).then(
-			user => user.send(`New public cat applications:\n${apps.join('\n')}`)
+			user => user.send(`New ${this.orig} applications:\n${apps.join('\n')}`)
 		);
 	}
 	// puts urls up for approval
