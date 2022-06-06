@@ -1,0 +1,7 @@
+#TITLE {cmdname}
+#DESCR Usage: `{cfg.prefix}{cmdname} [<message>...]`
+#ARGUMENTS
+`[<message>...]`
+	All arguments will be joined with a single space and appended to the mention. All mentions will be incapacitated.
+#OVERVIEW
+This command simply sends a message that @mentions the user who invoked the method, because `echo` cleans mentions before echoeing. Useful in the `timer` command.
