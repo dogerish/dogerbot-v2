@@ -7,7 +7,7 @@ class QuitCmd extends RootCmd
 	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{
 		if (super.call(msg, args)) return 1;
-		msg.channel.send("Going offline.").then(() => msg.client.destroy());
+		this.output(msg, "Going offline.").then(() => msg.client.destroy());
 		return 0;
 	}
 }

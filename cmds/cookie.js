@@ -9,7 +9,7 @@ class CookieCmd extends BaseCmd
 	// listcfg: filename of the blacklist config
 	constructor(baseArgs, /*String*/ listcfg, /*String*/ ...hearts)
 	{
-		super(...baseArgs);
+		super(baseArgs);
 		this.listcfg = `config/user/${listcfg}`;
 		this.blacklist = new Map();
 		for (let id of require("../" + this.listcfg)) this.blacklist.set(id);
@@ -115,7 +115,7 @@ class CookieCmd extends BaseCmd
 		while (go.next())
 		{
 			if (go.opterr)
-				{ msg.channel.send(utils.ferr(args[0], go.opterr)); return 1; }
+				{ this.error(msg, go.opterr); return 1; }
 			switch (go.opt)
 			{
 			case 'b': case "blacklist":
@@ -142,15 +142,13 @@ class CookieCmd extends BaseCmd
 		{
 			let user = msg.client.users.resolve(id);
 			if (user) { users.unshift(user); continue; }
-			msg.channel.send(
-				utils.ferr(args[0], `Failed to resolve \`${id}\`. Bad ID.`)
-			);
+			this.error(msg, `Failed to resolve \`${id}\`. Bad ID.`);
 			return 1;
 		}
 		let { fails, gotck } = await this.sendCookies(msg, users, args[0], quiet, m);
 		if (!fails.length) { msg.react('✅'); return 0; }
 		// send fails the boring way
-		msg.channel.send(
+		this.output(msg,
 			  `Cookies for \`${fails.join("`, `")}\`: ${"🍪 ".repeat(fails.length)}\n`
 			+ (m ? `*"${m}"*\n` : "")
 			+ (gotck ? `Thanks ${msg.author.username} ${this.hearts.random()}` : "")

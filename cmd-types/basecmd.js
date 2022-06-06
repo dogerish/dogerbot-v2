@@ -1,9 +1,17 @@
 const fs = require("fs");
+const utils = require("../utils/utils.js");
 // base for a command
 class BaseCmd
 {
-	constructor(/*String*/ orig, /*String*/ manpage)
+	constructor([
+		/*Discord.Client*/ client,
+		/*Parser*/         parser,
+		/*String*/         orig,
+		/*String*/         manpage
+	])
 	{
+		this.client = client;
+		this.parser = parser;
 		// config file for channels
 		this.chancfg = `config/user/set/${orig}.txt`;
 		this.chans = new Map();
@@ -17,6 +25,7 @@ class BaseCmd
 		fs.access(this.manpage, err => {
 			if (err) console.log(`Warning: ${orig}: '${this.manpage}' doesn't exist.`);
 		});
+		this.orig = orig;
 	}
 
 	// whether or not command is allowed in channel id
@@ -40,9 +49,21 @@ class BaseCmd
 	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{
 		if (!this.blockedIn(msg.channel.id)) return 0;
-		msg.react('❌');
+		msg.react('❌').catch(() => {});
 		return 1;
 	}
+
+	/*Promise<Discord.Message>*/ lower_error(
+		/*Function*/ output,
+		/*Discord.Message*/ msg,
+		/*String*/ brief, ...args
+	)
+	{ return output(msg, utils.ferr(this.orig, brief), ...args); }
+
+	/*Promise<Discord.Message>*/ error(/*Discord.Message*/ msg, /*String*/ brief, ...args)
+	{ return this.lower_error(this.output, msg, brief, ...args); }
+	/*Promise<Discord.Message>*/ output(/*Discord.Message*/ msg, ...args)
+	{ return msg.channel.send(...args); }
 }
 
 module.exports = BaseCmd;

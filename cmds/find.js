@@ -1,5 +1,4 @@
 const   STCmd      = require("../cmd-types/stcmd.js");
-const { ferr     } = require("../utils/utils.js");
 const { STPlayer } = require("sauertracker");
 
 class FindCmd extends STCmd
@@ -12,10 +11,10 @@ class FindCmd extends STCmd
 		try { players = await STPlayer.find(...args.slice(1)); }
 		catch (e)
 		{
-			msg.channel.send(e.message);
+			this.output(msg, e.message);
 			return 1;
 		}
-		msg.channel.send({ embed:
+		this.output(msg, { embed:
 		{
 			title:
 				`Top results for ${

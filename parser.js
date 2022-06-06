@@ -18,39 +18,51 @@ class Parser
 	}
 	
 	// evaluates an incoming message
-	/* Return value:
+	/* Return value elements:
 		 0: Success, command was called
-		 1: OK, message was ignored.
+		 1: Internal unhandled error in command
 		-1: Fail, unknown command
 	*/
-	async /*Number*/ onMessage(/*Discord.Message*/ message)
+	async /*Array<Number>*/ onMessage(/*Discord.Message*/ message)
 	{
+		let r = [];
 		// check prefix and ignore bots
-		if (!message.content.startsWith(cfg.prefix) || message.author.bot) return 1;
-		let args = this.parse(message.content.substr(cfg.prefix.length));
-		// undefined command
-		if (!this.commands.get(args[0]))
+		if (
+			   message.channel.type != "dm"
+			&& !message.content.startsWith(cfg.prefix)
+			|| message.author.bot
+		) return r;
+		let cmdstr = message.content;
+		if (cmdstr.startsWith(cfg.prefix)) cmdstr = cmdstr.substr(cfg.prefix.length);
+		let cmds = this.parse(cmdstr);
+		for (let args of cmds)
 		{
-			message.channel.send(utils.ferr(args[0], "Unknown command."));
-			return -1;
-		}
-		// try calling the command, if it fails say so without dying
-		try { await this.commands.get(args[0]).call(message, args); }
-		catch (e)
-		{
-			console.error(e);
-			message.channel.send(
-				utils.ferr(args[0],
+			// undefined command
+			if (!this.commands.get(args[0]))
+			{
+				message.channel.send(utils.ferr(args[0], "Unknown command."));
+				r.push(-1);
+				continue;
+			}
+			// try calling the command, if it fails say so without dying
+			try { await this.commands.get(args[0]).call(message, args); }
+			catch (e)
+			{
+				console.error(e);
+				message.channel.send(utils.ferr(
+					args[0],
 					  `Internal \`${e.name}\`:\n`
 					+ `\`\`\`\n${e.message}\n\`\`\`\n`
 					+ `<@${cfg.rootusers[0]}> needs to fix this - make an issue`
 					+ " if one doesn't already cover this: "
 					+ "<https://github.com/dogerish/dogerbot-v2/issues>"
-				)
-			);
-			return 1;
+				));
+				r.push(1);
+				continue;
+			}
+			r.push(0);
 		}
-		return 0;
+		return r;
 	}
 
 	// evaluates backlash escapes of a string and returns the result, with sequences substituted
@@ -90,14 +102,16 @@ class Parser
 	// de-alias cmdname to its command object
 	/*Array<arg0, ?BaseCmd>*/ deAliasCmd(/*String*/ cmdname)
 	{
-		let arg0 = this.parse(cmdname)[0];
+		let arg0 = this.parse(cmdname)[0][0];
 		return [arg0, this.commands.get(arg0)];
 	}
 
-	// parses the message and calls the command, returns the args from arg0 on
-	/*Array<String>*/ parse(/*String*/ cmdstr)
+	// parses the message into an array of arg arrays, each command denoted by the 0th arg
+	/*Array<Array<String>>*/ parse(/*String*/ cmdstr)
 	{
+		let cmds   = [];
 		let args   = [""];
+		let fin0   = false; // finished the first arg?
 		let torpc  = "";    // the original string of arg TO RePlaCe when substituting
 		let argi   = 0;     // index of this argument
 		let flip   = true;  // true if we just started an argument
@@ -109,13 +123,18 @@ class Parser
 			let cmd;
 			if (
 				   first
-				&& (flip && argi || i >= cmdstr.length)
+				&& (flip && argi || i >= cmdstr.length || fin0)
 				&& (cmd = this.aliases.get(args[0]))
 			)
 			{
 				cmdstr = cmdstr.replace(torpc, cmd);
 				args[argi = i = 0] = "";
-				first = false;
+				fin0 = first = false;
+			}
+			else if (fin0)
+			{
+				i--; // go back to semicolon so it moves to next command
+				first = fin0 = false;
 			}
 			if (i >= cmdstr.length) break;
 			if (flip)
@@ -137,7 +156,7 @@ class Parser
 				torpc = torpc.substr(0, torpc.length - 1);
 				// ignore sequential whitespaces
 				if (!torpc.length) break;
-				args[++argi] = "";
+				if (i != 0) args[++argi] = "";
 				flip = true;
 				break;
 			case '$':
@@ -174,12 +193,29 @@ class Parser
 				args[argi] += cmdstr[++i];
 				torpc      += cmdstr[i];
 				break;
+			case ';':
+				torpc = torpc.substr(0, torpc.length - 1);
+				if (first)
+				{
+					fin0 = true;
+					break;
+				}
+				cmdstr = cmdstr.substr(i + 1);
+				if (torpc == "") args.pop();
+				if (args.length && args[0] != "") cmds.push(args);
+				args = [""];
+				torpc = "";
+				argi = 0;
+				i = -1;
+				flip = first = true;
+				break;
 			default:
 				args[argi] += c;
 				break;
 			}
 		}
-		return args;
+		if (args[0] != "") cmds.push(args);
+		return cmds;
 	}
 }
 

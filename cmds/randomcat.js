@@ -1,15 +1,14 @@
 const BaseCmd = require("../cmd-types/basecmd.js");
 const CatCmd  = require("./cat.js");
-const utils   = require("../utils/utils.js");
 
 class RandomCatCmd extends BaseCmd
 {
-	constructor(baseArgs, /*Parser*/ parser)
+	constructor(baseArgs)
 	{
-		super(...baseArgs);
+		super(baseArgs);
 		// get all the cat commands
 		this.cats = new Map(
-			Array.from(parser.commands.entries()).filter(
+			Array.from(this.parser.commands.entries()).filter(
 				([key, cmd]) => cmd instanceof CatCmd
 			)
 		);
@@ -22,7 +21,7 @@ class RandomCatCmd extends BaseCmd
 		if (super.call(msg, args)) return 1;
 		if (!this.catkeys.length)
 		{
-			msg.channel.send(utils.ferr(args[0], "No cats found."));
+			this.error(msg, "No cats found.");
 			return 1;
 		}
 		// get and call a random cat command

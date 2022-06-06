@@ -48,6 +48,14 @@
 		"ARGS": []
 	},
 	{
+		"file": "delete.js",
+		"orig": "delete",
+		"aliases": {
+			"del": "delete"
+		},
+		"ctorArgs": []
+	},
+	{
 		"file": "cookie.js",
 		"orig": "cookie",
 		"aliases": {},
@@ -139,7 +147,8 @@
 		"manpage": "cat.txt",
 		"aliases": {
 			"stan": "stanpic",
-			"sna" : "stanpic"
+			"sna" : "stanpic",
+			"Stanley": "stanpic"
 		},
 		"ctorArgs": ["Stanley", "160616449742864385", "0x0c6a66", "stan"]
 	},
@@ -148,7 +157,8 @@
 		"orig": "borispic",
 		"manpage": "cat.txt",
 		"aliases": {
-			"boris": "borispic"
+			"boris": "borispic",
+			"Boris": "borispic"
 		},
 		"ctorArgs": ["Boris", "222977034870063104", "0x78ba36", null, "7-22"]
 	},
@@ -157,55 +167,42 @@
 		"orig": "kalipic",
 		"manpage": "cat.txt",
 		"aliases": {
-			"kali": "kalipic"
+			"kali": "kalipic",
+			"Kali": "kalipic"
 		},
 		"ctorArgs": ["Kali", "675811287296638987", "0x00a513"]
-	},
-	{
-		"file": "cat.js",
-		"orig": "dorypic",
-		"manpage": "cat.txt",
-		"aliases": {
-			"dory": "dorypic"
-		},
-		"ctorArgs": ["Dory", "410416782025949195", "0x2471a3"]
-	},
-	{
-		"file": "cat.js",
-		"orig": "miapic",
-		"manpage": "cat.txt",
-		"aliases": {
-			"mia": "miapic"
-		},
-		"ctorArgs": ["Mia", "410416782025949195", "0x2471a3"]
-	},
-	{
-		"file": "cat.js",
-		"orig": "mimipic",
-		"manpage": "cat.txt",
-		"aliases": {
-			"mimi": "mimipic"
-		},
-		"ctorArgs": ["Mimí", "410416782025949195", "0x2471a3", "mimi"]
-	},
-	{
-		"file": "cat.js",
-		"orig": "charliepic",
-		"manpage": "cat.txt",
-		"aliases": {
-			"charlie": "charliepic"
-		},
-		"ctorArgs": ["Charlie", "410416782025949195", "0x2471a3"]
 	},
 	{
 		"file": "cat.js",
 		"orig": "wilmapic",
 		"manpage": "cat.txt",
 		"aliases": {
-			"wilma": "wilmapic"
+			"wilma": "wilmapic",
+			"Wilma": "wilmapic"
 		},
-		"ctorArgs": ["Wilma", "690236857153486996", "0x42f5e0"]
+		"ctorArgs": ["Wilma", "862742996058112021", "0x42f5e0"]
 	},
+	{
+		"file": "cat.js",
+		"orig": "yetipic",
+		"manpage": "cat.txt",
+		"aliases": {
+			"yeti": "yetipic",
+			"Yeti": "yetipic"
+		},
+		"ctorArgs": ["Yeti", "206054811693613056", "0x00ffff", "yeti"]
+	},
+	{
+		"file": "cat.js",
+		"orig": "gandalfpic",
+		"manpage": "cat.txt",
+		"aliases": {
+			"gandalf": "gandalfpic",
+			"Gandalf": "gandalfpic"
+		},
+		"ctorArgs": ["Gandalf", "315763195727970305", "0x545454", "gandalf"]
+	},
+
 	{
 		"file": "randomcat.js",
 		"orig": "randomcat",
@@ -217,6 +214,45 @@
 		"ctorArgs": "CUSTOM_SET",
 		"ARGS": []
 	},
+	{
+		"file": "pubcat.js",
+		"orig": "pubcat",
+		"manpage": "cat.txt",
+		"aliases": {
+		},
+		"ctorArgs": ["Cat"]
+	},
+	{
+		"file": "approve.js",
+		"orig": "approve",
+		"manpage": "approve.txt",
+		"aliases": {
+			"reject": "approve -r",
+			"ok": "approve",
+			"no": "approve -r"
+		},
+		"ctorArgs": ["pubcat"]
+	},
+	{
+		"file": "pubcat.js",
+		"orig": "pubdog",
+		"manpage": "cat.txt",
+		"aliases": {
+		},
+		"ctorArgs": ["Dog"]
+	},
+	{
+		"file": "approve.js",
+		"orig": "dogapprove",
+		"manpage": "approve.txt",
+		"aliases": {
+			"dreject": "dogapprove -r",
+			"dok": "dogapprove",
+			"dno": "dogapprove -r"
+		},
+		"ctorArgs": ["pubdog"]
+	},
+
 	{
 		"file": "aicatpic.js",
 		"orig": "aicatpic",

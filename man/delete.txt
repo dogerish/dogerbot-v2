@@ -1,0 +1,6 @@
+#TITLE delete
+#DESCR Usage: `{cfg.prefix}{cmdname} <url>|<id>...`
+#ARGUMENTS
+Any number of message URLs or message IDs. The ending string of digits is considered the ID for each argument.
+The command must be run from the same channel as the message(s) that need deleting, and the bot will only delete its own message.
+This is for root users only.

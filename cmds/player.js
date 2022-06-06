@@ -1,5 +1,4 @@
 const   STCmd      = require("../cmd-types/stcmd.js");
-const { ferr     } = require("../utils/utils.js");
 const { STPlayer } = require("sauertracker");
 
 class PlayerCmd extends STCmd
@@ -26,21 +25,21 @@ class PlayerCmd extends STCmd
 		if (super.call(msg, args)) return 1;
 		if (!args[1])
 		{
-			msg.channel.send(ferr(args[0], "No name specified."));
+			this.output(msg, "No name specified.");
 			return 1;
 		}
-		msg.react('🤔').catch(e => msg.channel.send('🤔')); // :thinking:
+		msg.react('🤔').catch(e => this.output(msg, '🤔')); // :thinking:
 
 		let player = new STPlayer(args[1]);
 		try { await player.fetch(); }
 		catch (e)
 		{
-			msg.channel.send(ferr(args[0], e.message));
+			this.error(msg, e.message);
 			return 1;
 		}
 
 		let duels = player.duels;
-		msg.channel.send({ embed:
+		this.output(msg, { embed:
 		{
 			title: player.name,
 			thumbnail: { url: player.country.flag },

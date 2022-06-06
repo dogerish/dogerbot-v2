@@ -6,7 +6,7 @@ class FmtCmd extends BaseCmd
 {
 	constructor(baseArgs, /*String...*/ ...responses)
 	{
-		super(...baseArgs);
+		super(baseArgs);
 		this.responses = responses;
 	}
 
@@ -14,7 +14,7 @@ class FmtCmd extends BaseCmd
 	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{
 		if (super.call(msg, args)) return 1;
-		msg.channel.send(
+		this.output(msg,
 			this.responses.random().replace("{}", 
 				utils.cleanString(args.slice(1).join(' '), msg)
 			)

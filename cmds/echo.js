@@ -6,8 +6,6 @@ const Parser  = require("../parser.js");
 // echo command
 class EchoCmd extends BaseCmd
 {
-	constructor(baseArgs) { super(...baseArgs); }
-
 	// 0 on success
 	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{
@@ -19,7 +17,7 @@ class EchoCmd extends BaseCmd
 		{
 			if (go.opterr)
 			{
-				msg.channel.send(utils.ferr(args[0], go.opterr));
+				this.error(msg, go.opterr);
 				return 1;
 			}
 			switch (go.opt)
@@ -29,7 +27,8 @@ class EchoCmd extends BaseCmd
 			}
 		}
 		let newargs = args.slice(go.optind);
-		msg.channel.send(
+		this.output(
+			msg,
 			utils.cleanString(
 				(ebe ? newargs.map(Parser.evalbses) : newargs)
 					.join(delim)

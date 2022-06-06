@@ -15,7 +15,7 @@ const parser = new Parser(commands, aliases);
 for (let cmd of cmds)
 {
 	let tmp      = require("./cmds/" + cmd.file);
-	cmd.baseArgs = [cmd.orig, cmd.manpage];
+	cmd.baseArgs = [client, parser, cmd.orig, cmd.manpage];
 	let addcmd   = (...args) => commands.set(cmd.orig, new tmp(cmd.baseArgs, ...args));
 	if (cmd.ctorArgs instanceof Array) addcmd(...cmd.ctorArgs);
 	// exceptions to constructor args
