@@ -6,6 +6,15 @@
 		"ctorArgs": []
 	},
 	{
+		"file": "mention.js",
+		"orig": "mention",
+		"aliases": {
+			"highlight": "mention",
+			"hl": "mention"
+		},
+		"ctorArgs": []
+	},
+	{
 		"file": "quit.js",
 		"orig": "quit",
 		"aliases": {},
@@ -137,6 +146,12 @@
 	{
 		"file": "uptime.js",
 		"orig": "uptime",
+		"aliases": {},
+		"ctorArgs": []
+	},
+	{
+		"file": "timer.js",
+		"orig": "timer",
 		"aliases": {},
 		"ctorArgs": []
 	},

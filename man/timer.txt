@@ -1,0 +1,14 @@
+#TITLE {cmdname}
+#DESCR Usage: `{cfg.prefix}{cmdname} [-l|(-c <timer_id>)] <duration> [<cmdstr>]`
+#OPTIONS
+`-l`, `--list`
+	List running timers and return.
+`-c`, `--clear` <timer_id>
+	Clear the running timer specified by timer_id. This id is shown as the first value when a timer is listed.
+	`<id>: <callback> at <endTime>`
+#ARGUMENTS
+`<duration>`
+	The duration of the timer in the format <hours>:<minutes>:<seconds>. Hours or both hours and minutes may be omitted.
+`[<cmdstr>]`
+	Optionally a command string that will be executed when the timer runs out. This is also the callback.
+	By default, the user will be mentioned with a message saying the time's up.

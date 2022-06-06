@@ -25,16 +25,23 @@ class Parser
 	*/
 	async /*Array<Number>*/ onMessage(/*Discord.Message*/ message)
 	{
-		let r = [];
 		// check prefix and ignore bots
 		if (
 			   message.channel.type != "dm"
 			&& !message.content.startsWith(cfg.prefix)
 			|| message.author.bot
-		) return r;
+		) return [];
 		let cmdstr = message.content;
 		if (cmdstr.startsWith(cfg.prefix)) cmdstr = cmdstr.substr(cfg.prefix.length);
-		let cmds = this.parse(cmdstr);
+		return this.exec(message, cmdstr);
+	}
+
+	async /*Array<Number>*/ exec(/*Discord.Message*/ message, /*String*/ cmdstr)
+	{ return this.callCmds(message, this.parse(cmdstr)); }
+
+	async /*Array<Number>*/ callCmds(/*Discord.Message*/ message, /*Array<Array<String>>*/ cmds)
+	{
+		let r = [];
 		for (let args of cmds)
 		{
 			// undefined command
