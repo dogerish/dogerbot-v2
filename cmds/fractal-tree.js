@@ -41,19 +41,24 @@ class FractalTreeCmd extends DMCmd
 		// calculate the bounding box this will use (upside down)
 		let x  = 0,
 		    y  = 0,
+		    sy = 0, // starting y, lowest point of the fractal
 		    sl = startlen,
-		    a  = Math.PI / 2;
+		    ax = Math.PI / 2,
+		    ay = Math.PI / 2;
 		for (let d = 0; d < maxdepth; d++)
 		{
 			// follow the branches straight up
 			y  += ((d % 2) ? Math.sin(Math.PI / 2 + angInc) : 1) * sl;
-			x  += Math.cos(a) * sl;
+			sy += Math.sin(ay) * sl;
+			x  += Math.cos(ax) * sl;
 			// angle for x, try to stay horizontal
-			a  += (a > 0) ? -angInc : angInc;
+			ax += (ax > 0) ? -angInc : angInc;
+			ay += (ay > -Math.PI / 2) ? -angInc : angInc;
 			sl *= coef;
 		}
+		if (sy > 0) sy = 0;
 		let cv;
-		try { cv  = createCanvas(x * 2, y); }
+		try { cv  = createCanvas(x * 2, y - sy); }
 		catch (e)
 		{
 			this.error(msg, "Failed to create canvas. Area likely too big.");
@@ -79,7 +84,7 @@ class FractalTreeCmd extends DMCmd
 		ctx.fillRect(0, 0, cv.width, cv.height);
 		// draw the tree
 		ctx.beginPath();
-		branch(x, y, startlen, Math.PI / -2, 0);
+		branch(x, y + sy, startlen, Math.PI / -2, 0);
 		ctx.closePath();
 		ctx.stroke();
 		try
