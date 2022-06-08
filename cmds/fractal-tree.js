@@ -87,13 +87,11 @@ class FractalTreeCmd extends DMCmd
 		branch(x, y + sy, startlen, Math.PI / -2, 0);
 		ctx.closePath();
 		ctx.stroke();
-		try
-		{
-			this.output(
-				msg,
-				`${Date.now() - start}ms`,
-				new MessageAttachment(cv.toBuffer(), "tree.png")
-			);
+		try {
+			this.output(msg, {
+				content: `${Date.now() - start}ms`,
+				files: [cv.toBuffer()]
+			});
 		}
 		catch (e)
 		{

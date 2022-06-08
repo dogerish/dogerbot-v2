@@ -129,12 +129,12 @@ class CatCmd extends BaseCmd
 			}
 			this.output(msg,
 				{
-					embed:
-					{
+					embeds:
+					[{
 						title: `${this.getBdayString()} ${n}`,
 						image: { url: url },
 						color: this.color
-					}
+					}]
 				}
 			).catch(() => err(`**${n}** is invalid.\n\`\`\`\n${url}\n\`\`\``));
 			break;

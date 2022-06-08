@@ -8,7 +8,7 @@ class GuildCmd extends BaseCmd
 	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{
 		if (super.call(msg, args)) return 1;
-		if (!["dm", "unknown"].includes(msg.channel.type)) return 0;
+		if (!["DM", "UNKNOWN"].includes(msg.channel.type)) return 0;
 		this.error(msg, "This command needs to be used in a server.");
 		return 1;
 	}

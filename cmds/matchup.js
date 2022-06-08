@@ -16,12 +16,12 @@ class MatchupCmd extends STCmd
 		msg.react(emoji).catch(() => this.output(msg, emoji));
 		let match = await new STMatch(...args.slice(1)).teamsplit();
 		// send embed with good and evil teams as inline fields
-		this.output(msg, { embed: { fields:
+		this.output(msg, { embeds: [{ fields:
 		[
 			{ name: "good", value: match.good.join('\n'), inline: true },
 			{ name: "evil", value: match.evil.join('\n'), inline: true }
 		]
-		}});
+		}]});
 		return 0;
 	}
 }

@@ -14,8 +14,8 @@ class FindCmd extends STCmd
 			this.output(msg, e.message);
 			return 1;
 		}
-		this.output(msg, { embed:
-		{
+		this.output(msg, { embeds:
+		[{
 			title:
 				`Top results for ${
 					args[1] ? `\`${args[1]}\`` : "all players"
@@ -28,7 +28,7 @@ class FindCmd extends STCmd
 					+ `(${p.stats.total.frags} frags, ${p.country.name})\n`,
 				""
 			)
-		}
+		}]
 		});
 		return 0;
 	}

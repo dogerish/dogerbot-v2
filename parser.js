@@ -27,7 +27,7 @@ class Parser
 	{
 		// check prefix and ignore bots
 		if (
-			   message.channel.type != "dm"
+			   message.channel.type != "DM"
 			&& !message.content.startsWith(cfg.prefix)
 			|| message.author.bot
 		) return [];
