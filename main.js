@@ -8,7 +8,16 @@ const cmds    = require("./config/cmds.json");
 let commands = new Map();
 let aliases  = new Map();
 /* instances */
-const client = new Discord.Client();
+const client = new Discord.Client({
+	intents: [
+		"GUILDS",
+		"GUILD_MESSAGES",
+		"GUILD_MESSAGE_REACTIONS",
+		"DIRECT_MESSAGES",
+		"DIRECT_MESSAGE_REACTIONS"
+	],
+	partials: ["CHANNEL"]
+});
 const parser = new Parser(commands, aliases);
 
 // load the commands
@@ -33,7 +42,7 @@ for (let cmd of cmds)
 	for (let kv of Object.entries(cmd.aliases)) aliases.set(...kv);
 }
 
-client.on("message", msg => parser.onMessage(msg));
+client.on("messageCreate", msg => parser.onMessage(msg));
 client.on("ready", ()  =>
 {
 	console.log(`${client.user.username} online.`);

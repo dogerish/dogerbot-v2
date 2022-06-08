@@ -4,13 +4,13 @@ const utils   = require("../utils/utils.js");
 // replies in DMs
 class DMCmd extends BaseCmd
 {
-	async /*Promise<Discord.Message>*/ output(/*Discord.Message*/ msg, ...args)
+	async /*Promise<Discord.Message>*/ output(/*Discord.Message*/ msg, data)
 	{
-		if (msg.channel.type == "dm") return super.output(msg, ...args);
+		if (msg.channel.type == "DM") return super.output(msg, data);
 		try
 		{
 			await msg.react('📧');
-			return await msg.author.send(...args);
+			return await msg.author.send(data);
 		}
 		catch (e)
 		{

@@ -39,8 +39,8 @@ class CookieCmd extends BaseCmd
 	{
 		m = m ? m : msg.author.username + " sent you a cookie!";
 		return {
-			embed:
-			{
+			embeds:
+			[{
 				title      : ":cookie:",
 				description: m,
 				color      : 0x8a4b38,
@@ -53,7 +53,7 @@ class CookieCmd extends BaseCmd
 						value: `${cfg.prefix}${arg0} -i ${msg.author.id}`
 					}
 				]
-			}
+			}]
 		};
 	}
 

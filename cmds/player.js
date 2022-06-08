@@ -39,8 +39,8 @@ class PlayerCmd extends STCmd
 		}
 
 		let duels = player.duels;
-		this.output(msg, { embed:
-		{
+		this.output(msg, { embeds:
+		[{
 			title: player.name,
 			thumbnail: { url: player.country.flag },
 			fields:
@@ -77,7 +77,7 @@ class PlayerCmd extends STCmd
 				PlayerCmd.statfield(player.stats.effic, "Efficiency Stats"),
 				PlayerCmd.statfield(player.stats.total, "Total Stats")
 			]
-		}
+		}]
 		});
 		return 0;
 	}

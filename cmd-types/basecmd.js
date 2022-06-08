@@ -56,14 +56,14 @@ class BaseCmd
 	/*Promise<Discord.Message>*/ lower_error(
 		/*Function*/ output,
 		/*Discord.Message*/ msg,
-		/*String*/ brief, ...args
+		/*String*/ brief, data
 	)
-	{ return output(msg, utils.ferr(this.orig, brief), ...args); }
+	{ return output(msg, { content: utils.ferr(this.orig, brief), ...data }); }
 
-	/*Promise<Discord.Message>*/ error(/*Discord.Message*/ msg, /*String*/ brief, ...args)
-	{ return this.lower_error(this.output, msg, brief, ...args); }
-	/*Promise<Discord.Message>*/ output(/*Discord.Message*/ msg, ...args)
-	{ return msg.channel.send(...args); }
+	/*Promise<Discord.Message>*/ error(/*Discord.Message*/ msg, /*String*/ brief, data)
+	{ return this.lower_error(this.output, msg, brief, data); }
+	/*Promise<Discord.Message>*/ output(/*Discord.Message*/ msg, data)
+	{ return msg.channel.send(data); }
 }
 
 module.exports = BaseCmd;

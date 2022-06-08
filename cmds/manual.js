@@ -153,7 +153,7 @@ class ManCmd extends BaseCmd
 		});
 		// send the embed and log unexpected errors
 		let self = this;
-		this.output(msg, { embed: embed })
+		this.output(msg, { embeds: [embed] })
 		.catch(e => {
 			console.error(`Error (${args[0]}, ${e.code}):`, e);
 			self.error(

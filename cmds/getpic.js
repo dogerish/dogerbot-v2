@@ -37,14 +37,14 @@ class GetpicCmd extends BaseCmd
 		{
 			if (go.opterr)
 			{
-				msg.channel.send(utils.ferr(args[0], go.opterr));
+				this.error(msg, go.opterr);
 				return 1;
 			}
 			switch (go.opt)
 			{
 			case 'u': case "update":
 				this.udfunc();
-				msg.channel.send("Updating.");
+				this.output(msg, "Updating.");
 				return 0;
 			}
 		}
@@ -52,18 +52,15 @@ class GetpicCmd extends BaseCmd
 		// not functional or no name given
 		if (!this.functional || !name)
 		{
-			msg.channel.send(utils.ferr(
-				args[0],
-				this.functional ? "No map name given." : "Not functional."
-			));
+			this.error(msg, this.functional ? "No map name given." : "Not functional.");
 			return 1;
 		}
 		// no relative paths
 		name = name.replace(/\.\.\//g, "");
-		msg.channel.send({ files: [`base/${name}.jpg`] }).catch(e =>
+		this.output(msg, { files: [`base/${name}.jpg`] }).catch(e =>
 		{
 			if (e.code == "ENOENT")
-				msg.channel.send(utils.ferr(args[0], `Couldn't find \`${name}\`.`));
+				this.error(msg, `Couldn't find \`${name}\`.`);
 			else console.error(e);
 		});
 		return 0;
