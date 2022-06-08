@@ -9,10 +9,10 @@
 	The angle to add and subtract on each iteration. Each branch will be offset `<increment>` **degreees** from its parent branch's rotation.
 	*Default: 30*
 `-m`, `--maxdepth` `<depth>`
-	The maximum amount of recursion, or the number of generations. The higher `<depth>` is, the longer it will take to create the fractal.
+	The maximum amount of recursion, or the number of generations. The higher `<depth>` is, the longer it will take to create the fractal. `<depth>` must fall in the interval [1,17].
 	*Default: 15; Maximum: 17*
 `-l`, `--startlen` `<length>`
-	The length of the first branch, or the trunk/stem, in pixels.
+	The length of the first branch, or the trunk/stem, in pixels. Must be greater than 1.
 	*Default: 150*
 `-b`, `--bgcolor` `<color>`
 	The background CSS `color` to use.
@@ -35,4 +35,4 @@ Recursively generates and sends a fractal tree with the given attributes using `
 `{cfg.prefix}{cmdname} --maxdepth 5 --angInc 35`
 
 #ERRORS
-Errors happen when something goes wrong while creating the canvas or when the bot attempts to convert the canvas into a buffer for sending. They are usually caused by the canvas having zero or too many total pixels. The zero case is because the calculated size of the fractal tree is zero, because the starting length, maximum depth, angle increment, or coef are zero or essentially zero.
+Errors happen when something goes wrong while creating the canvas or when the bot attempts to convert the canvas into a buffer for sending. They are usually caused by the canvas having zero or too many total pixels.
