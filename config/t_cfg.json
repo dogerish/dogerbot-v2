@@ -4,9 +4,9 @@
 	"rootusers": ["<user ID>"],
 	"dftPres": {
 		"status": "online",
-		"activity": {
+		"activities": [{
 			"type": "LISTENING",
 			"name": "<prefix>man"
-		}
+		}]
 	}
 }

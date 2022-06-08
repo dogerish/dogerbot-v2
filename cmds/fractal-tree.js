@@ -30,12 +30,12 @@ class FractalTreeCmd extends DMCmd
 			let n = Number(go.optarg);
 			switch (go.opt)
 			{
-			case 'c': case "coef"    : coef     = n;               break;
-			case 'a': case "angInc"  : angInc   = n * Math.PI/180; break;
-			case 'm': case "maxdepth": maxdepth = Math.min(n, 17); break;
-			case 'l': case "startlen": startlen = n;               break;
-			case 'b': case "bgcolor" : bgcolor  = go.optarg;       break;
-			case 's': case "stroke"  : stroke   = go.optarg;       break;
+			case 'c': case "coef"    : coef     = n;                            break;
+			case 'a': case "angInc"  : angInc   = n * Math.PI/180;              break;
+			case 'm': case "maxdepth": maxdepth = Math.max(1, Math.min(n, 17)); break;
+			case 'l': case "startlen": startlen = Math.max(1, n);               break;
+			case 'b': case "bgcolor" : bgcolor  = go.optarg;                    break;
+			case 's': case "stroke"  : stroke   = go.optarg;                    break;
 			}
 		}
 		// calculate the bounding box this will use (upside down)
@@ -58,7 +58,7 @@ class FractalTreeCmd extends DMCmd
 		}
 		if (sy > 0) sy = 0;
 		let cv;
-		try { cv  = createCanvas(x * 2, y - sy); }
+		try { cv  = createCanvas(x * 2 + 1, y - sy); }
 		catch (e)
 		{
 			this.error(msg, "Failed to create canvas. Area likely too big.");
@@ -95,10 +95,7 @@ class FractalTreeCmd extends DMCmd
 		}
 		catch (e)
 		{
-			this.error(
-				msg,
-				"Failed to send canvas as buffer. Perhaps don't use zeroes."
-			);
+			this.error(msg, "Failed to send canvas.");
 			return 1;
 		}
 		return 0;

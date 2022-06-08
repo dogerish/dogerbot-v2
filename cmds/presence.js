@@ -27,16 +27,17 @@ class PresenceCmd extends RootCmd
 
 		let toSet = (args.length > 1)
 			? {
-				status  : status,
-				activity:
-				{
+				status: status,
+				activities:
+				[{
 					name: args.slice(go.optind).join(' '),
 					type: type,
 					url: url
-				}
+				}]
 			}
 			: cfg.dftPres || {};
-		msg.client.user.setPresence(toSet).then(pres => this.output(msg, "Status set."));
+		msg.client.user.setPresence(toSet);
+		this.output(msg, "Status set.");
 		return 0;
 	}
 }
