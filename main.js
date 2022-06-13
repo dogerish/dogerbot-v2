@@ -1,4 +1,5 @@
 /* modules */
+const util    = require("util");
 const Discord = require("discord.js");
 const Parser  = require("./parser.js");
 /* config */
@@ -42,9 +43,19 @@ for (let cmd of cmds)
 	for (let kv of Object.entries(cmd.aliases)) aliases.set(...kv);
 }
 
-client.on("messageCreate", msg => parser.onMessage(msg));
-client.on("ready", ()  =>
+let authority = cfg.rootusers[0];
+function onError(error, message)
 {
+	if (message)
+		error.stack += `\n    at ${util.inspect(message.content)}\n    at ${message.url}`;
+	console.error(error);
+	authority?.send("```\n" + error.stack + "\n```").catch(e => null);
+}
+client.on("error", onError);
+client.on("messageCreate", msg => parser.onMessage(msg).catch(e => onError(e, msg)));
+client.on("ready", async ()  =>
+{
+	authority = await client.users.fetch(authority);
 	console.log(`${client.user.username} online.`);
 	client.user.setPresence(cfg.dftPres || {});
 });

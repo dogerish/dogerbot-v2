@@ -9,7 +9,7 @@ class StringType
 		this.open = open;
 		this.close = close ?? open;
 		this.greedy = greedy ?? false;
-		this.reduce = reducer ?? ((message, content, error) => content);
+		this.reduce = reducer ?? ((content, parser, message, error) => content);
 	}
 
 	/*Boolean*/ startsAt(/*String*/ source, /*Number*/ from)
@@ -58,8 +58,8 @@ class Parser
 	static /*Array<StringType>*/ stringTypes = [
 		new StringType('"'),
 		new StringType("'"),
-		new StringType("$'", "'", false, (m, c, e) => Parser.evalbses(c)),
-		new StringType("$(", ")", false, function(m, c, e) {
+		new StringType("$'", "'", false, c => Parser.evalbses(c)),
+		new StringType("$(", ")", false, async (c, p, m, e) => {
 			// make sure we have a message
 			if (!m)
 			{
@@ -68,8 +68,8 @@ class Parser
 			}
 			// push the context onto the context stack
 			let o = "";
-			m.context.push(new Context(async d => o += (d.content ?? d ?? "")));
-			this.exec(m, c);
+			m.context.push(new Context(d => o += (d.content ?? d ?? "")));
+			await p.exec(m, c);
 			m.context.pop();
 			// return the text output of the command
 			return o;
@@ -106,11 +106,11 @@ class Parser
 		let cmdstr = message.content;
 		if (cmdstr.startsWith(cfg.prefix)) cmdstr = cmdstr.substr(cfg.prefix.length);
 		message.context = [null];
-		return this.exec(message, cmdstr);
+		return await this.exec(message, cmdstr);
 	}
 
 	async /*Array<Number>*/ exec(/*Discord.Message*/ message, /*String*/ cmdstr)
-	{ return this.callCmds(message, this.parse(message, cmdstr)); }
+	{ return await this.callCmds(message, await this.parse(message, cmdstr)); }
 
 	async /*Array<Number>*/ callCmds(/*Discord.Message*/ message, /*Array<Array<String>>*/ cmds)
 	{
@@ -181,17 +181,18 @@ class Parser
 	}
 
 	// de-alias cmdname to its command object
-	/*Array<arg0, ?BaseCmd>*/ deAliasCmd(/*String*/ cmdname)
+	async /*Array<arg0, ?BaseCmd>*/ deAliasCmd(/*String*/ cmdname)
 	{
-		let arg0 = this.parse(null, cmdname)[0][0];
+		let arg0 = await this.parse(null, cmdname)[0][0];
 		return [arg0, this.commands.get(arg0)];
 	}
 
 	// describe an error
 	static /*String*/ ferr(error, cmdstr, i)
 	{ return error + "\n```\n" + cmdstr + "\n" + " ".repeat(i) + "^\n```"; }
+
 	// parses the message into an array of arg arrays, each command denoted by the 0th arg
-	/*Array<Array<String>>*/ parse(
+	async /*Array<Array<String>>*/ parse(
 		/*Discord.Message*/ message,
 		/*String*/ cmdstr,
 		/*function(String error)*/ error_func
@@ -249,7 +250,7 @@ class Parser
 					return [];
 				}
 				if (r.end == -1) r.end += cmdstr.length;
-				let s = st.reduce.apply(this, [message, r.content, error]);
+				let s = await st.reduce(r.content, this, message, error);
 				// bail on error
 				if (s == null) return [];
 				// append to argument and continue
