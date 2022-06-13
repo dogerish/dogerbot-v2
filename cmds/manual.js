@@ -77,7 +77,7 @@ class ManCmd extends BaseCmd
 		// trim args down to omit options
 		args = [args[0], ...args.slice(go.optind)];
 		// default name to this command name and dealias it
-		let [cmdname, cmd] = this.parser.deAliasCmd(args[1] || args[0]);
+		let [cmdname, cmd] = await this.parser.deAliasCmd(msg, args[1] || args[0]);
 		// unknown command
 		if (!cmd)
 		{

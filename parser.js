@@ -130,14 +130,11 @@ class Parser
 			try { r.push(await this.commands.get(args[0]).call(message, args)); }
 			catch (e)
 			{
-				console.error(e);
+				message.client.errorProcedure(e, message);
 				message.channel.send(utils.ferr(
 					args[0],
-					  `Internal \`${e.name}\`:\n`
-					+ `\`\`\`\n${e.message}\n\`\`\`\n`
-					+ `<@${cfg.rootusers[0]}> needs to fix this - make an issue`
-					+ " if one doesn't already cover this: "
-					+ "<https://github.com/dogerish/dogerbot-v2/issues>"
+					  `Internal \`${e.name}\`:\nContact my owner or make an `
+					+ `issue if one doesn't already cover this: <${cfg.issues}>`
 				)).catch(console.error);
 				r.push(-2);
 				continue;
@@ -181,9 +178,9 @@ class Parser
 	}
 
 	// de-alias cmdname to its command object
-	async /*Array<arg0, ?BaseCmd>*/ deAliasCmd(/*String*/ cmdname)
+	async /*Array<arg0, ?BaseCmd>*/ deAliasCmd(/*Discord.Message*/ message, /*String*/ cmdname)
 	{
-		let arg0 = await this.parse(null, cmdname)[0][0];
+		let [[arg0]] = await this.parse(message, cmdname);
 		return [arg0, this.commands.get(arg0)];
 	}
 
@@ -255,7 +252,7 @@ class Parser
 				if (s == null) return [];
 				// append to argument and continue
 				args[argi] += s;
-				torpc += cmdstr.substr(i, r.end);
+				torpc += cmdstr.substr(i, r.end - i + 1);
 				i = r.end;
 				continue;
 			}

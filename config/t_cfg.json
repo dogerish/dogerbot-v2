@@ -1,6 +1,7 @@
 {
 	"token" :    "<token>",
 	"prefix":    "<prefix>",
+	"issues": "https://github.com/dogerish/dogerbot-v2/issues",
 	"rootusers": ["<user ID>"],
 	"dftPres": {
 		"status": "online",

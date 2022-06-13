@@ -51,6 +51,7 @@ function onError(error, message)
 	console.error(error);
 	authority?.send("```\n" + error.stack + "\n```").catch(e => null);
 }
+client.errorProcedure = onError;
 client.on("error", onError);
 client.on("messageCreate", msg => parser.onMessage(msg).catch(e => onError(e, msg)));
 client.on("ready", async ()  =>
