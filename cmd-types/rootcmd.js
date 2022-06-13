@@ -10,7 +10,7 @@ class RootCmd extends BaseCmd
 	{
 		if (super.call(msg, args)) return 1;
 		if (cfg.rootusers.includes(msg.author.id)) return 0;
-		msg.channel.send(utils.ferr(args[0], "This is only accesible to root users."));
+		this.error(msg, "This is only accesible to root users.");
 		return 1;
 	}
 }

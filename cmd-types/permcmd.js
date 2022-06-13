@@ -20,14 +20,7 @@ class PermCmd extends GuildCmd
 		if (super.call(msg, args)) return 1;
 		if (this.perms.some(perm => msg.member.permissions.has(perm, this.checkAdmin)))
 			return 0;
-		msg.channel.send(
-			utils.ferr(
-				args[0],
-				  "You must have at least one of these permissions: `"
-				+ this.perms.join("`, `")
-				+ "`."
-			)
-		);
+		this.error(msg, `You need any of these permissions: ${this.perms.join(", ")}.`);
 		return 1;
 	}
 }

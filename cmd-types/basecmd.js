@@ -1,5 +1,6 @@
 const fs = require("fs");
 const utils = require("../utils/utils.js");
+const Context = require("../context.js");
 // base for a command
 class BaseCmd
 {
@@ -58,12 +59,22 @@ class BaseCmd
 		/*Discord.Message*/ msg,
 		/*String*/ brief, data
 	)
-	{ return output(msg, { content: utils.ferr(this.orig, brief), ...data }); }
+	{
+		let d = { content: utils.ferr(this.orig, brief), ...data };
+		let ctx = msg.context[msg.context.length - 1];
+		if (ctx && ctx.error) return ctx.error(d);
+		if (ctx) return msg.channel.send(d);
+		return output(msg, d);
+	}
 
 	/*Promise<Discord.Message>*/ error(/*Discord.Message*/ msg, /*String*/ brief, data)
 	{ return this.lower_error(this.output, msg, brief, data); }
 	/*Promise<Discord.Message>*/ output(/*Discord.Message*/ msg, data)
-	{ return msg.channel.send(data); }
+	{
+		let ctx = msg.context[msg.context.length - 1];
+		if (ctx && ctx.output) return ctx.output(data);
+		return msg.channel.send(data);
+	}
 }
 
 module.exports = BaseCmd;
