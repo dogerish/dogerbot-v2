@@ -4,7 +4,7 @@ const cfg         = require("../config/cfg.json");
 class SetCmd extends PermCmd
 {
 	// 0 on success
-	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
+	async /*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{
 		if (!cfg.rootusers.includes(msg.author.id) && super.call(msg, args))
 			return 1;
@@ -14,7 +14,7 @@ class SetCmd extends PermCmd
 			this.error(msg, "No command specified.");
 			return 1;
 		}
-		cmd = this.parser.deAliasCmd(cmd);
+		cmd = await this.parser.deAliasCmd(msg, cmd);
 		if (!cmd[1] || cmd[1] === this)
 		{
 			this.error(msg, `\`${cmd[0]}\` can't be set.`);

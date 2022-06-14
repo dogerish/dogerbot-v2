@@ -1,8 +1,80 @@
-const cfg   = require("./config/cfg.json");
-const utils = require("./utils/utils.js");
+const cfg     = require("./config/cfg.json");
+const utils   = require("./utils/utils.js");
+const Context = require("./context.js");
+
+class StringType
+{
+	constructor(/*String*/ open, /*String*/ close, /*Boolean*/ greedy, reducer)
+	{
+		this.open = open;
+		this.close = close ?? open;
+		this.greedy = greedy ?? false;
+		this.reduce = reducer ?? ((content, parser, message, error) => content);
+	}
+
+	/*Boolean*/ startsAt(/*String*/ source, /*Number*/ from)
+	{ return source.startsWith(this.open, from); }
+
+	// parses from a starting index in a string to get a string defined in it
+	// the from index should be before or at the start of the opening sequence
+	// returns an object containing the string and the start & end source indices
+	// start or end index is -1 if the respective piece is missing
+	/* Example:
+	 * source = " thingies {open}string contents \\{close} other stuff{close} more"
+	 * from = 0
+	 * open = "{open}"
+	 * close = "{close}"
+	 * return = { start: 10, end: 50, content: "string contents {close} other stuff" }
+	 */
+	/*Object*/ getstring(/*String*/ source, /*Number*/ from)
+	{
+		// find first unescaped instance of {open}
+		let start = from;
+		do start = source.indexOf(this.open, start);
+		while (start > from && source[start - 1] == '\\' && start++);
+		if (start < 0) return { start: -1, end: undefined, content: undefined };
+
+		let content = "";
+		let end = start + this.open.length;
+		let depth = 1;
+		while (end <= source.length - this.close.length)
+		{
+			if (source.startsWith(this.close, end)) { if (--depth == 0) break; }
+			else if (source.startsWith(this.open, end)) depth++;
+			else if (source[end] == '\\' && source.startsWith(this.close, end + 1))
+				end++;
+			content += source[end++];
+		}
+		// closing piece wasn't found
+		if (depth > 0) return { start, end: -1, content: content + source.substr(end) };
+		// normal
+		return { start, end: end + this.close.length - 1, content };
+	}
+	/*String*/ toString() { return `${this.open}...${this.close} type string`; }
+}
 
 class Parser
 {
+	static /*Array<StringType>*/ stringTypes = [
+		new StringType('"'),
+		new StringType("'"),
+		new StringType("$'", "'", false, c => Parser.evalbses(c)),
+		new StringType("$(", ")", false, async (c, p, m, e) => {
+			// make sure we have a message
+			if (!m)
+			{
+				e("Nested command needs a Message");
+				return null;
+			}
+			// push the context onto the context stack
+			let o = "";
+			m.context.push(new Context(d => o += (d.content ?? d ?? "")));
+			await p.exec(m, c);
+			m.context.pop();
+			// return the text output of the command
+			return o;
+		})
+	];
 	/*
 	commands: Map<String, Object>: { "<primary alias>": <Object with call() method>... }
 		function(message, args);
@@ -33,11 +105,12 @@ class Parser
 		) return [];
 		let cmdstr = message.content;
 		if (cmdstr.startsWith(cfg.prefix)) cmdstr = cmdstr.substr(cfg.prefix.length);
-		return this.exec(message, cmdstr);
+		message.context = [null];
+		return await this.exec(message, cmdstr);
 	}
 
 	async /*Array<Number>*/ exec(/*Discord.Message*/ message, /*String*/ cmdstr)
-	{ return this.callCmds(message, this.parse(cmdstr)); }
+	{ return await this.callCmds(message, await this.parse(message, cmdstr)); }
 
 	async /*Array<Number>*/ callCmds(/*Discord.Message*/ message, /*Array<Array<String>>*/ cmds)
 	{
@@ -47,27 +120,25 @@ class Parser
 			// undefined command
 			if (!this.commands.get(args[0]))
 			{
-				message.channel.send(utils.ferr(args[0], "Unknown command."));
+				message.channel.send(utils.ferr(args[0], "Unknown command.")).catch(
+					console.error
+				);
 				r.push(-1);
 				continue;
 			}
 			// try calling the command, if it fails say so without dying
-			try { await this.commands.get(args[0]).call(message, args); }
+			try { r.push(await this.commands.get(args[0]).call(message, args)); }
 			catch (e)
 			{
-				console.error(e);
+				message.client.errorProcedure(e, message);
 				message.channel.send(utils.ferr(
 					args[0],
-					  `Internal \`${e.name}\`:\n`
-					+ `\`\`\`\n${e.message}\n\`\`\`\n`
-					+ `<@${cfg.rootusers[0]}> needs to fix this - make an issue`
-					+ " if one doesn't already cover this: "
-					+ "<https://github.com/dogerish/dogerbot-v2/issues>"
-				));
-				r.push(1);
+					  `Internal \`${e.name}\`:\nContact my owner or make an `
+					+ `issue if one doesn't already cover this: <${cfg.issues}>`
+				)).catch(console.error);
+				r.push(-2);
 				continue;
 			}
-			r.push(0);
 		}
 		return r;
 	}
@@ -107,15 +178,27 @@ class Parser
 	}
 
 	// de-alias cmdname to its command object
-	/*Array<arg0, ?BaseCmd>*/ deAliasCmd(/*String*/ cmdname)
+	async /*Array<arg0, ?BaseCmd>*/ deAliasCmd(/*Discord.Message*/ message, /*String*/ cmdname)
 	{
-		let arg0 = this.parse(cmdname)[0][0];
+		let [[arg0]] = await this.parse(message, cmdname);
 		return [arg0, this.commands.get(arg0)];
 	}
 
+	// describe an error
+	static /*String*/ ferr(error, cmdstr, i)
+	{ return error + "\n```\n" + cmdstr + "\n" + " ".repeat(i) + "^\n```"; }
+
 	// parses the message into an array of arg arrays, each command denoted by the 0th arg
-	/*Array<Array<String>>*/ parse(/*String*/ cmdstr)
+	async /*Array<Array<String>>*/ parse(
+		/*Discord.Message*/ message,
+		/*String*/ cmdstr,
+		/*function(String error)*/ error_func
+	)
 	{
+		error_func ??= message ?
+			(err => message.channel.send(utils.ferr("parse", err))) :
+			console.error;
+
 		let cmds   = [];
 		let args   = [""];
 		let fin0   = false; // finished the first arg?
@@ -123,8 +206,10 @@ class Parser
 		let argi   = 0;     // index of this argument
 		let flip   = true;  // true if we just started an argument
 		let first  = true;  // true if we just started parsing
-		let dolstr = false; // true if in a dollar string ($'')
-		for (let i = 0; i <= cmdstr.length; i++)
+
+		let i;
+		let error = e => error_func(Parser.ferr(e, cmdstr, i));
+		for (i = 0; i <= cmdstr.length; i++)
 		{
 			// substitute alias if one exists and start over once
 			let cmd;
@@ -151,74 +236,72 @@ class Parser
 				flip = false;
 			}
 
+			// check for string
+			let st = Parser.stringTypes.find(e => e.startsAt(cmdstr, i));
+			if (st)
+			{
+				let r = st.getstring(cmdstr, i);
+				if (r.end == -1 && !st.greedy)
+				{
+					error(`${st} missing closing delimiter`);
+					return [];
+				}
+				if (r.end == -1) r.end += cmdstr.length;
+				let s = await st.reduce(r.content, this, message, error);
+				// bail on error
+				if (s == null) return [];
+				// append to argument and continue
+				args[argi] += s;
+				torpc += cmdstr.substr(i, r.end - i + 1);
+				i = r.end;
+				continue;
+			}
+			// no string found, evaluate character
 			let c = cmdstr[i];
 			torpc += c;
 			switch (c)
 			{
-			// next arg on whitespace which is outside of quotes
-			case ' ' :
-			case '\t':
-			case '\n':
-				// unadd this character
-				torpc = torpc.substr(0, torpc.length - 1);
-				// ignore sequential whitespaces
-				if (!torpc.length) break;
-				if (i != 0) args[++argi] = "";
-				flip = true;
-				break;
-			case '$':
-				if (cmdstr[i + 1] === "'") dolstr = true;
-				else args[argi] += c;
-				break;
-			case '"':
-			case "'":
-				let ss = cmdstr.substr(i + 1);
-				// str til next unescaped quote
-				let tmp = ss.match(new RegExp(`(.*?)(?<!\\\\)${c}`));
-				// search failed, take until end of message
-				if (!tmp) tmp = [ss, ss];
-				// turn all escaped quotes into normal quotes
-				tmp[1] = tmp[1].replace(
-					new RegExp(`\\\\${c}`, 'g'),
-					c
-				);
-				torpc += tmp[0];
-				i     += tmp[0].length;
-				// evaluate bses in a dollar string ($'')
-				tmp = dolstr ? Parser.evalbses(tmp[1]) : tmp[1];
-				args[argi] += tmp;
-				dolstr = false; // reset
-				break;
-			case '\\':
-				// don't read next char if it's not there
-				if (i + 1 >= cmdstr.length)
-				{
+					// next arg on whitespace which is outside of quotes
+				case ' ' :
+				case '\t':
+				case '\n':
+					// unadd this character
+					torpc = torpc.substr(0, torpc.length - 1);
+					// ignore sequential whitespaces
+					if (!torpc.length) break;
+					if (i != 0) args[++argi] = "";
 					flip = true;
-					argi++;
 					break;
-				}
-				args[argi] += cmdstr[++i];
-				torpc      += cmdstr[i];
-				break;
-			case ';':
-				torpc = torpc.substr(0, torpc.length - 1);
-				if (first)
-				{
-					fin0 = true;
+				case '\\':
+					// don't read next char if it's not there
+					if (i + 1 >= cmdstr.length)
+					{
+						flip = true;
+						argi++;
+						break;
+					}
+					args[argi] += cmdstr[++i];
+					torpc      += cmdstr[i];
 					break;
-				}
-				cmdstr = cmdstr.substr(i + 1);
-				if (torpc == "") args.pop();
-				if (args.length && args[0] != "") cmds.push(args);
-				args = [""];
-				torpc = "";
-				argi = 0;
-				i = -1;
-				flip = first = true;
-				break;
-			default:
-				args[argi] += c;
-				break;
+				case ';':
+					torpc = torpc.substr(0, torpc.length - 1);
+					if (first)
+					{
+						fin0 = true;
+						break;
+					}
+					cmdstr = cmdstr.substr(i + 1);
+					if (torpc == "") args.pop();
+					if (args.length && args[0] != "") cmds.push(args);
+					args = [""];
+					torpc = "";
+					argi = 0;
+					i = -1;
+					flip = first = true;
+					break;
+				default:
+					args[argi] += c;
+					break;
 			}
 		}
 		if (args[0] != "") cmds.push(args);
