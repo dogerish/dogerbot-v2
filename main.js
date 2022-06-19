@@ -24,21 +24,9 @@ for (let cmd of cmds)
 {
 	let tmp      = require("./cmds/" + cmd.file);
 	cmd.baseArgs = [client, parser, cmd.orig, cmd.manpage];
-	let addcmd   = (...args) => commands.set(cmd.orig, new tmp(cmd.baseArgs, ...args));
-	if (cmd.ctorArgs instanceof Array) addcmd(...cmd.ctorArgs);
-	// exceptions to constructor args
-	else
-		switch (cmd.ctorArgs)
-		{
-		case "CUSTOM_SET": addcmd(parser, ...cmd.ARGS); break;
-		default:
-			console.error(
-				  `Method for constructing ${cmd.orig} unknown (${cmd.ctorArgs}).`
-				+ ` Not constructed.`
-			);
-			continue;
-		}
-	for (let kv of Object.entries(cmd.aliases)) aliases.set(...kv);
+	commands.set(cmd.orig, new tmp(cmd.baseArgs, ...cmd.ctorArgs));
+	for (let kv of Object.entries(cmd.aliases))
+		aliases.set(...kv);
 }
 
 let authority = cfg.rootusers[0];

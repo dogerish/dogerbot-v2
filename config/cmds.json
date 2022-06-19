@@ -30,8 +30,7 @@
 		"file": "set.js",
 		"orig": "set",
 		"aliases": {},
-		"ctorArgs": "CUSTOM_SET",
-		"ARGS": [["MANAGE_CHANNELS"]]
+		"ctorArgs": [["MANAGE_CHANNELS"]]
 	},
 	{
 		"file": "manual.js",
@@ -43,8 +42,7 @@
 			"describe": "manual -f",
 			"brief": "manual -f"
 		},
-		"ctorArgs": "CUSTOM_SET",
-		"ARGS": []
+		"ctorArgs": []
 	},
 	{
 		"file": "list.js",
@@ -53,8 +51,7 @@
 			"commands": "list",
 			"help": "list"
 		},
-		"ctorArgs": "CUSTOM_SET",
-		"ARGS": []
+		"ctorArgs": []
 	},
 	{
 		"file": "delete.js",
@@ -220,8 +217,7 @@
 			"cat": "randomcat",
 			"catpic": "randomcat"
 		},
-		"ctorArgs": "CUSTOM_SET",
-		"ARGS": []
+		"ctorArgs": []
 	},
 	{
 		"file": "pubcat.js",
