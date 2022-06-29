@@ -39,6 +39,7 @@ function onError(error, message)
 }
 client.errorProcedure = onError;
 client.on("error", onError);
+process.on("unhandledRejection", onError);
 client.on("messageCreate", msg => parser.onMessage(msg).catch(e => onError(e, msg)));
 client.on("ready", async ()  =>
 {
