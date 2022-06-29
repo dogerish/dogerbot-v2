@@ -73,11 +73,11 @@ class CookieCmd extends BaseCmd
 	{
 		let ret = { fails: [], gotck: false };
 		// nothing to do
-		if (!users.length) { msg.react('🍪'); return ret; }
+		if (!users.length) { msg.react('🍪').catch(e => null); return ret; }
 		let promises = [];
 		let tosend   = this.getMsg(msg, arg0, m);
 		// starting to send
-		msg.react('🛫');
+		msg.react('🛫').catch(e => null);
 		for (let user of users)
 		{
 			if (user === user.client.user)
