@@ -120,14 +120,15 @@ class CookieCmd extends BaseCmd
 			{
 			case 'b': case "blacklist":
 				this.blist(msg.author.id); this.savebl();
-				msg.react('👌'/*ok_hand*/);
+				msg.react('👌'/*ok_hand*/).catch(e => null);
 				done = true; break;
 			case 'w': case "whitelist":
 				this.wlist(msg.author.id); this.savebl();
-				msg.react('👍'/*+1*/);
+				msg.react('👍'/*+1*/).catch(e => null);
 				done = true; break;
 			case 'l': case "list":
-				msg.react(this.wantsDMs(msg.author.id) ? '⬜' : '⬛');
+				msg.react(this.wantsDMs(msg.author.id) ? '⬜' : '⬛')
+					.catch(e => null);
 				done = true; break;
 			case 'q': case "quiet"  : quiet = true;        break;
 			case 'i': case "id"     : ids.push(go.optarg); break;
@@ -146,7 +147,7 @@ class CookieCmd extends BaseCmd
 			return 1;
 		}
 		let { fails, gotck } = await this.sendCookies(msg, users, args[0], quiet, m);
-		if (!fails.length) { msg.react('✅'); return 0; }
+		if (!fails.length) { msg.react('✅').catch(e => null); return 0; }
 		// send fails the boring way
 		this.output(msg,
 			  `Cookies for \`${fails.join("`, `")}\`: ${"🍪 ".repeat(fails.length)}\n`
