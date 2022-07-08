@@ -1,3 +1,5 @@
+#! /usr/local/bin/node
+
 /* modules */
 const util    = require("util");
 const Discord = require("discord.js");
