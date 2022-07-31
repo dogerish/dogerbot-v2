@@ -188,6 +188,16 @@ class Parser
 	static /*String*/ ferr(error, cmdstr, i)
 	{ return error + "\n```\n" + cmdstr + "\n" + " ".repeat(i) + "^\n```"; }
 
+	// dealiases an arg0 once (not recursively) and returns the result
+	deAliasOnce(/*String*/ arg0)
+	{
+		let original = arg0;
+		// convert custom emoji to custom emoji name
+		arg0 = arg0.replaceAll(/<a?:([A-z_]+):\d+>/g, '$1');
+		// get alias
+		return this.aliases.get(arg0) ?? ((original === arg0) ? undefined : arg0);
+	}
+
 	// parses the message into an array of arg arrays, each command denoted by the 0th arg
 	async /*Array<Array<String>>*/ parse(
 		/*Discord.Message*/ message,
@@ -216,7 +226,7 @@ class Parser
 			if (
 				   first
 				&& (flip && argi || i >= cmdstr.length || fin0)
-				&& (cmd = this.aliases.get(args[0]))
+				&& (cmd = this.deAliasOnce(args[0]))
 			)
 			{
 				cmdstr = cmdstr.replace(torpc, cmd);
