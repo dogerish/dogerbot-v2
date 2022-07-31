@@ -36,11 +36,11 @@
 		"file": "manual.js",
 		"orig": "manual",
 		"aliases": {
-			"man": "manual",
-			"usage": "manual -f",
-			"descr": "manual -f",
+			"man":      "manual",
+			"usage":    "manual -f",
+			"descr":    "manual -f",
 			"describe": "manual -f",
-			"brief": "manual -f"
+			"brief":    "manual -f"
 		},
 		"ctorArgs": []
 	},
@@ -85,13 +85,14 @@
 		]
 	},
 	{
-		"file"   : "fmtcmd.js",
-		"orig"   : "greet",
+		"file": "fmtcmd.js",
+		"orig": "greet",
 		"manpage": "fmtcmd.txt",
 		"aliases": {
-			"hi"     : "greet",
-			"hello"  : "greet",
-			"welcome": "greet"
+			"hi":      "greet",
+			"hello":   "greet",
+			"welcome": "greet",
+			"👋":      "greet"
 		},
 		"ctorArgs": [
 			"Hello, {}",
@@ -101,12 +102,12 @@
 		]
 	},
 	{
-		"file"   : "fmtcmd.js",
-		"orig"   : "laugh",
+		"file": "fmtcmd.js",
+		"orig": "laugh",
 		"manpage": "fmtcmd.txt",
 		"aliases": {
 			"funny": "laugh",
-			"haha" : "laugh"
+			"haha": "laugh"
 		},
 		"ctorArgs": [
 			"{}, you're so funny!",
@@ -152,8 +153,9 @@
 		"orig": "stanpic",
 		"manpage": "cat.txt",
 		"aliases": {
-			"stan": "stanpic",
-			"sna" : "stanpic",
+			"stan":    "stanpic",
+			"sna":     "stanpic",
+			"stanley": "stanpic",
 			"Stanley": "stanpic"
 		},
 		"ctorArgs": ["Stanley", "160616449742864385", "0x0c6a66", "stan"]
@@ -213,9 +215,13 @@
 		"file": "randomcat.js",
 		"orig": "randomcat",
 		"aliases": {
-			"rcat": "randomcat",
-			"cat": "randomcat",
-			"catpic": "randomcat"
+			"rcat":   "randomcat",
+			"cat":    "randomcat",
+			"catpic": "randomcat",
+			"🐱":     "randomcat",
+			"🐱pic":  "randomcat",
+			"🐈":     "randomcat",
+			"🐈pic":  "randomcat"
 		},
 		"ctorArgs": []
 	},
@@ -224,6 +230,7 @@
 		"orig": "pubcat",
 		"manpage": "cat.txt",
 		"aliases": {
+		    "pub🐱": "pubcat"
 		},
 		"ctorArgs": ["Cat"]
 	},
@@ -233,8 +240,8 @@
 		"manpage": "approve.txt",
 		"aliases": {
 			"reject": "approve -r",
-			"ok": "approve",
-			"no": "approve -r"
+			"ok":     "approve",
+			"no":     "approve -r"
 		},
 		"ctorArgs": ["pubcat"]
 	},
@@ -243,6 +250,11 @@
 		"orig": "pubdog",
 		"manpage": "cat.txt",
 		"aliases": {
+		    "dog":   "pubdog",
+		    "🐶":    "pubdog",
+		    "🐕":    "pubdog",
+		    "pub🐶": "pubdog",
+		    "pub🐕": "pubdog"
 		},
 		"ctorArgs": ["Dog"]
 	},
@@ -252,8 +264,8 @@
 		"manpage": "approve.txt",
 		"aliases": {
 			"dreject": "dogapprove -r",
-			"dok": "dogapprove",
-			"dno": "dogapprove -r"
+			"dok":     "dogapprove",
+			"dno":     "dogapprove -r"
 		},
 		"ctorArgs": ["pubdog"]
 	},
@@ -303,7 +315,10 @@
 	{
 		"file": "catfact.js",
 		"orig": "catfact",
-		"aliases": {},
+		"aliases": {
+		    "🐱fact": "catfact",
+		    "🐈fact": "catfact"
+		},
 		"ctorArgs": []
 	}
 ]
