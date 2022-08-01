@@ -8,8 +8,6 @@ const Parser  = require("./parser.js");
 const cfg     = require("./config/cfg.json");
 const cmds    = require("./config/cmds.json");
 
-let commands = new Map();
-let aliases  = new Map();
 /* instances */
 const client = new Discord.Client({
 	intents: [
@@ -19,16 +17,14 @@ const client = new Discord.Client({
 	],
 	partials: ["CHANNEL"]
 });
-const parser = new Parser(commands, aliases);
+const parser = new Parser(new Map(), new Map());
 
 // load the commands
-for (let cmd of cmds)
+for (const cmd of cmds)
 {
-	let tmp      = require("./cmds/" + cmd.file);
-	cmd.baseArgs = [client, parser, cmd.orig, cmd.manpage];
-	commands.set(cmd.orig, new tmp(cmd.baseArgs, ...cmd.ctorArgs));
-	for (let kv of Object.entries(cmd.aliases))
-		aliases.set(...kv);
+	let CmdClass = require("./cmds/" + cmd.file);
+	let baseArgs = [client, parser, cmd];
+	parser.commands.set(cmd.orig, new CmdClass(baseArgs, ...cmd.ctorArgs));
 }
 
 let authority = cfg.rootusers[0];

@@ -14,6 +14,7 @@ class FmtCmd extends BaseCmd
 	/*Number*/ call(/*Discord.Message*/ msg, /*Array<String>*/ args)
 	{
 		if (super.call(msg, args)) return 1;
+		if (args.length < 2) args.push(msg.author.username);
 		this.output(msg,
 			this.responses.random().replace("{}", 
 				utils.cleanString(args.slice(1).join(' '), msg)

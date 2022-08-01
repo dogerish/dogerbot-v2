@@ -7,8 +7,11 @@ class BaseCmd
 	constructor([
 		/*Discord.Client*/ client,
 		/*Parser*/         parser,
-		/*String*/         orig,
-		/*String*/         manpage
+		{
+			/*String*/        orig,
+			/*String*/        manpage,
+			/*Array<String>*/ aliases
+		}
 	])
 	{
 		this.client = client;
@@ -26,6 +29,10 @@ class BaseCmd
 		fs.access(this.manpage, err => {
 			if (err) console.log(`Warning: ${orig}: '${this.manpage}' doesn't exist.`);
 		});
+		this.aliases = aliases;
+		// add aliases to parser
+		for (let kv of Object.entries(aliases))
+			parser.aliases.set(...kv);
 		this.orig = orig;
 	}
 
