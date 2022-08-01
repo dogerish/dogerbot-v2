@@ -86,6 +86,15 @@ class ManCmd extends BaseCmd
 		}
 		// construct the embed
 		let embed = { fields: [] }, curField;
+		if (Object.keys(cmd.aliases).length > 0)
+		{
+			embed.fields.push({
+				name: "ALIASES",
+				value: Object.entries(cmd.aliases).reduce(
+					(acc, [a,v]) => `${acc}\n${a} -> \`${v}\``, ''
+				)
+			});
+		}
 		let data;
 		// try reading and notify of failures
 		try { data = (await readFile(cmd.manpage)).toString().split('\n'); }
